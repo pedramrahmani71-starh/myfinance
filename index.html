@@ -14,12 +14,16 @@
         .card { background: #161b24; border-radius: 20px; padding: 20px; margin-bottom: 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.5); border: 1px solid #1e2630; }
         .card h3 { font-size: 14px; color: #8899aa; margin-bottom: 6px; font-weight: 400; }
         .card .value { font-size: 32px; font-weight: 700; direction: ltr; text-align: left; background: linear-gradient(135deg, #f0f4fa, #b0c4db); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .input-row { display: flex; gap: 10px; margin-top: 14px; }
-        .input-row input { flex: 1; padding: 12px 16px; border: none; border-radius: 14px; background: #1e2630; color: #e8edf5; font-size: 16px; text-align: center; outline: none; border: 1px solid transparent; }
+        .input-row { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+        .input-row input { flex: 2; padding: 12px 16px; border: none; border-radius: 14px; background: #1e2630; color: #e8edf5; font-size: 16px; text-align: center; outline: none; border: 1px solid transparent; min-width: 100px; }
         .input-row input:focus { border-color: #3b82f6; background: #232b36; }
-        .input-row button { padding: 12px 22px; border: none; border-radius: 14px; background: linear-gradient(135deg, #3b82f6, #2563eb); color: #fff; font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 14px; box-shadow: 0 4px 12px rgba(59,130,246,0.3); }
-        .input-row button:hover { transform: scale(1.02); box-shadow: 0 6px 16px rgba(59,130,246,0.4); }
-        .input-row button.remove-btn { background: linear-gradient(135deg, #ef4444, #dc2626) !important; box-shadow: 0 4px 12px rgba(239,68,68,0.3) !important; }
+        .input-row .btn-group { display: flex; gap: 8px; flex: 1; }
+        .input-row button { padding: 12px 18px; border: none; border-radius: 14px; color: #fff; font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 14px; flex: 1; }
+        .input-row button.deposit { background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 4px 12px rgba(16,185,129,0.3); }
+        .input-row button.deposit:hover { transform: scale(1.02); }
+        .input-row button.withdraw { background: linear-gradient(135deg, #ef4444, #dc2626); box-shadow: 0 4px 12px rgba(239,68,68,0.3); }
+        .input-row button.withdraw:hover { transform: scale(1.02); }
+        .input-row button.remove-btn { background: linear-gradient(135deg, #6b7280, #4b5563); flex: 0.5; }
         .total { background: #1a232e; padding: 16px; border-radius: 16px; text-align: center; font-size: 18px; font-weight: 600; margin-top: 12px; border: 1px solid #2d3748; }
         .rate-box { background: #0f151e; padding: 12px 16px; border-radius: 16px; text-align: center; margin-bottom: 16px; font-size: 14px; color: #8899aa; border: 1px solid #1e2630; }
         .rate-box span { color: #4ade80; font-weight: 700; }
@@ -28,10 +32,11 @@
         .history-item { display: flex; justify-content: space-between; padding: 8px 4px; border-bottom: 1px solid #1a232e; font-size: 14px; color: #b0c4db; }
         .history-item .amount { font-weight: 600; color: #e8edf5; }
         .history-item .date { color: #6a7b8c; font-size: 12px; }
+        .history-item .withdraw-amount { color: #ef4444; }
         .empty-history { color: #6a7b8c; text-align: center; padding: 16px 0; font-size: 14px; }
         .btn-danger { background: linear-gradient(135deg, #ef4444, #dc2626) !important; box-shadow: 0 4px 12px rgba(239,68,68,0.3) !important; }
         .flex-row { display: flex; gap: 10px; margin-top: 12px; }
-        .flex-row button { flex: 1; }
+        .flex-row button { flex: 1; padding: 12px; border: none; border-radius: 14px; color: #fff; font-weight: 600; cursor: pointer; transition: 0.2s; }
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: #0b0e14; }
         ::-webkit-scrollbar-thumb { background: #2d3748; border-radius: 10px; }
@@ -39,8 +44,13 @@
         .add-currency-section { display: flex; gap: 10px; margin-top: 12px; }
         .add-currency-section input { flex: 1; padding: 12px 16px; border: none; border-radius: 14px; background: #1e2630; color: #e8edf5; font-size: 16px; outline: none; border: 1px solid transparent; }
         .add-currency-section input:focus { border-color: #3b82f6; background: #232b36; }
-        .add-currency-section button { padding: 12px 22px; border: none; border-radius: 14px; background: linear-gradient(135deg, #10b981, #059669); color: #fff; font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 14px; box-shadow: 0 4px 12px rgba(16,185,129,0.3); }
+        .add-currency-section button { padding: 12px 22px; border: none; border-radius: 14px; background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: #fff; font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 14px; box-shadow: 0 4px 12px rgba(139,92,246,0.3); }
         .add-currency-section button:hover { transform: scale(1.02); }
+        @media (max-width: 480px) {
+            .input-row { flex-direction: column; }
+            .input-row input { width: 100%; }
+            .input-row .btn-group { width: 100%; }
+        }
     </style>
 </head>
 <body>
@@ -84,7 +94,7 @@
 </div>
 
 <div class="flex-row">
-    <button onclick="clearAllData()" class="btn-danger" style="padding:12px;border:none;border-radius:14px;color:#fff;font-weight:600;cursor:pointer;">🗑️ پاک کردن همه</button>
+    <button onclick="clearAllData()" class="btn-danger">🗑️ پاک کردن همه</button>
 </div>
 
 <!-- تاریخچه -->
@@ -107,7 +117,6 @@
     const rialRate = 58000;
     let transactions = [];
     let chartInstance = null;
-    let priceInterval = null;
 
     // ---------- دریافت نرخ از CoinGecko ----------
     async function fetchRates() {
@@ -172,8 +181,11 @@
                 <div class="value" id="value-${c.id}">${c.amount.toLocaleString()}</div>
                 <div class="input-row">
                     <input type="number" id="input-${c.id}" placeholder="مقدار ${c.label}">
-                    <button onclick="addTransaction('${c.id}')">ثبت</button>
-                    ${currencies.length > 1 ? `<button class="remove-btn" onclick="removeCurrency('${c.id}')">🗑️</button>` : ''}
+                    <div class="btn-group">
+                        <button class="deposit" onclick="updateAmount('${c.id}', 'deposit')">➕ واریز</button>
+                        <button class="withdraw" onclick="updateAmount('${c.id}', 'withdraw')">➖ برداشت</button>
+                        ${currencies.length > 1 ? `<button class="remove-btn" onclick="removeCurrency('${c.id}')">🗑️</button>` : ''}
+                    </div>
                 </div>
             `;
             container.appendChild(card);
@@ -184,6 +196,32 @@
         saveData();
     }
 
+    // ---------- واریز/برداشت ----------
+    function updateAmount(id, type) {
+        const currency = currencies.find(c => c.id === id);
+        if (!currency) return;
+        const input = document.getElementById(`input-${id}`);
+        const amount = parseFloat(input.value);
+        if (!amount || amount <= 0) return alert('مقدار معتبر وارد کن');
+
+        if (type === 'withdraw' && amount > currency.amount) {
+            alert(`موجودی کافی نیست! موجودی فعلی: ${currency.amount.toLocaleString()}`);
+            return;
+        }
+
+        const newAmount = type === 'deposit' ? currency.amount + amount : currency.amount - amount;
+        currency.amount = newAmount;
+        input.value = '';
+
+        transactions.push({
+            label: `${type === 'deposit' ? '➕' : '➖'} ${currency.symbol} ${currency.label} ${type === 'deposit' ? '+' : '-'}${amount.toLocaleString()}`,
+            amount: amount,
+            type: type,
+            date: new Date().toLocaleString('fa-IR')
+        });
+        renderCurrencies();
+    }
+
     // ---------- افزودن/حذف ارز ----------
     function addNewCurrency() {
         const input = document.getElementById('newCurrencyInput');
@@ -191,7 +229,6 @@
         if (!id) return alert('لطفاً شناسه ارز رو وارد کن');
         if (currencies.find(c => c.id === id)) return alert('این ارز قبلاً اضافه شده');
         
-        // دریافت اطلاعات ارز از CoinGecko
         fetch(`https://api.coingecko.com/api/v3/coins/${id}`)
             .then(res => res.json())
             .then(data => {
@@ -220,23 +257,6 @@
         fetchRates();
     }
 
-    // ---------- تراکنش ----------
-    function addTransaction(id) {
-        const currency = currencies.find(c => c.id === id);
-        if (!currency) return;
-        const input = document.getElementById(`input-${id}`);
-        const amount = parseFloat(input.value);
-        if (!amount || amount <= 0) return alert('مقدار معتبر وارد کن');
-        currency.amount += amount;
-        input.value = '';
-        transactions.push({
-            label: `${currency.symbol} ${currency.label} +${amount.toLocaleString()}`,
-            amount: amount,
-            date: new Date().toLocaleString('fa-IR')
-        });
-        renderCurrencies();
-    }
-
     // ---------- محاسبه مجموع ----------
     function updateTotal() {
         let totalUsd = 0;
@@ -262,13 +282,14 @@
             return;
         }
         let html = '';
-        const reversed = [...transactions].reverse().slice(0, 15);
+        const reversed = [...transactions].reverse().slice(0, 20);
         for (let t of reversed) {
+            const amountClass = t.type === 'withdraw' ? 'withdraw-amount' : '';
             html += `
                 <div class="history-item">
                     <span>${t.label}</span>
                     <span>
-                        <span class="amount">${t.amount.toLocaleString()}</span>
+                        <span class="amount ${amountClass}">${t.type === 'withdraw' ? '-' : '+'}${t.amount.toLocaleString()}</span>
                         <span class="date">${t.date}</span>
                     </span>
                 </div>
@@ -355,8 +376,7 @@
     loadData();
     renderCurrencies();
     fetchRates();
-    // به‌روزرسانی هر ۶۰ ثانیه
-    priceInterval = setInterval(fetchRates, 60000);
+    setInterval(fetchRates, 60000);
 </script>
 </body>
 </html>
