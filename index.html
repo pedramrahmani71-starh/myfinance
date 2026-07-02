@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>داشبورد مالی</title>
+    <style>
+        body {
+            font-family: Tahoma, sans-serif;
+            background: #121212;
+            color: #fff;
+            padding: 20px;
+            max-width: 500px;
+            margin: 0 auto;
+            direction: rtl;
+        }
+        .card {
+            background: #1e1e1e;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        }
+        .card h3 {
+            margin: 0 0 8px 0;
+            color: #a0a0a0;
+            font-size: 16px;
+        }
+        .card .value {
+            font-size: 28px;
+            font-weight: bold;
+            direction: ltr;
+            text-align: left;
+        }
+        .input-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+        }
+        .input-row input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            background: #2a2a2a;
+            color: #fff;
+            font-size: 16px;
+            text-align: center;
+        }
+        .input-row button {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 10px;
+            background: #3b82f6;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .input-row button:hover {
+            background: #2563eb;
+        }
+        .total {
+            background: #2a2a2a;
+            padding: 14px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 18px;
+            margin-top: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 style="text-align:center;">💰 داشبورد مالی</h1>
+
+    <div class="card">
+        <h3>🇺🇸 دلار</h3>
+        <div class="value" id="usd-value">۰</div>
+        <div class="input-row">
+            <input type="number" id="usd-input" placeholder="مبلغ دلار">
+            <button onclick="update('usd')">ثبت</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>🇮🇷 ریال</h3>
+        <div class="value" id="rial-value">۰</div>
+        <div class="input-row">
+            <input type="number" id="rial-input" placeholder="مبلغ ریال">
+            <button onclick="update('rial')">ثبت</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>₿ کریپتو (تتر)</h3>
+        <div class="value" id="crypto-value">۰</div>
+        <div class="input-row">
+            <input type="number" id="crypto-input" placeholder="مبلغ تتر">
+            <button onclick="update('crypto')">ثبت</button>
+        </div>
+    </div>
+
+    <div class="total" id="total-display">
+        مجموع (تومان): ۰
+    </div>
+
+    <script>
+        let usd = 0, rial = 0, crypto = 0;
+        const rate = 58000;
+
+        function update(type) {
+            let input, display;
+            if (type === 'usd') {
+                input = document.getElementById('usd-input');
+                display = document.getElementById('usd-value');
+                usd = parseFloat(input.value) || 0;
+                display.textContent = usd.toLocaleString();
+            } else if (type === 'rial') {
+                input = document.getElementById('rial-input');
+                display = document.getElementById('rial-value');
+                rial = parseFloat(input.value) || 0;
+                display.textContent = rial.toLocaleString();
+            } else if (type === 'crypto') {
+                input = document.getElementById('crypto-input');
+                display = document.getElementById('crypto-value');
+                crypto = parseFloat(input.value) || 0;
+                display.textContent = crypto.toLocaleString();
+            }
+            updateTotal();
+        }
+
+        function updateTotal() {
+            const totalToman = (usd * rate) + rial + (crypto * rate);
+            document.getElementById('total-display').textContent = 
+                `مجموع (تومان): ${totalToman.toLocaleString()}`;
+        }
+    </script>
+
+</body>
+</html>
