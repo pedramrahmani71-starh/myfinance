@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>داشبورد مالی حرفه‌ای</title>
+    <title>کیف پول من</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -16,49 +16,59 @@
         }
         body {
             font-family: 'Vazirmatn', sans-serif;
-            background: #0b0e14;
+            background: #0a0c12;
             color: #e8edf5;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
             padding: 0 0 80px 0;
             direction: rtl;
         }
-        /* هدر */
+        /* هدر شیشه‌ای */
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 20px 20px 12px 20px;
-            background: linear-gradient(135deg, #0f1520, #1a232e);
-            border-bottom: 1px solid #1e2630;
+            background: rgba(10, 12, 18, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
         .header h1 {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 700;
-            background: linear-gradient(135deg, #f0f4fa, #4ade80);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+        .header .badge {
+            background: rgba(74, 222, 128, 0.15);
+            color: #4ade80;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 500;
+            border: 1px solid rgba(74, 222, 128, 0.2);
         }
         .header .avatar {
-            width: 44px;
-            height: 44px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             background: linear-gradient(135deg, #3b82f6, #8b5cf6);
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 18px;
+            font-size: 16px;
             color: #fff;
             box-shadow: 0 4px 16px rgba(59,130,246,0.3);
         }
         /* صفحات */
         .page {
             display: none;
-            padding: 16px 20px 20px 20px;
-            animation: fadeIn 0.3s ease;
+            padding: 16px 16px 20px 16px;
+            animation: fadeIn 0.35s ease;
         }
         .page.active {
             display: block;
@@ -67,34 +77,40 @@
             from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        /* کارت‌ها */
+        /* کارت‌ها (سبک والت) */
         .card {
-            background: #161b24;
-            border-radius: 20px;
+            background: rgba(22, 27, 36, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 24px;
             padding: 20px;
-            margin-bottom: 16px;
-            border: 1px solid #1e2630;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+            margin-bottom: 14px;
+            border: 1px solid rgba(255,255,255,0.06);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
             transition: all 0.2s;
         }
         .card:hover {
-            border-color: #2d3748;
+            border-color: rgba(255,255,255,0.1);
         }
         .card h3 {
-            font-size: 14px;
+            font-size: 13px;
             color: #8899aa;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             font-weight: 400;
+            letter-spacing: 0.3px;
         }
         .card .value {
-            font-size: 32px;
+            font-size: 30px;
             font-weight: 700;
             direction: ltr;
             text-align: left;
-            background: linear-gradient(135deg, #f0f4fa, #b0c4db);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+        .card .value .currency-symbol {
+            font-size: 18px;
+            color: #8899aa;
+            margin-right: 4px;
         }
         .input-row {
             display: flex;
@@ -106,93 +122,110 @@
             flex: 2;
             padding: 12px 16px;
             border: none;
-            border-radius: 14px;
-            background: #1e2630;
+            border-radius: 16px;
+            background: rgba(30, 38, 48, 0.6);
             color: #e8edf5;
-            font-size: 16px;
+            font-size: 15px;
             text-align: center;
             outline: none;
             border: 1px solid transparent;
             min-width: 100px;
+            font-family: 'Vazirmatn', sans-serif;
         }
         .input-row input:focus {
             border-color: #3b82f6;
-            background: #232b36;
+            background: rgba(35, 43, 54, 0.8);
         }
         .input-row .btn-group {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             flex: 1;
         }
         .input-row button {
-            padding: 12px 18px;
+            padding: 12px 16px;
             border: none;
-            border-radius: 14px;
+            border-radius: 16px;
             color: #fff;
             font-weight: 600;
             cursor: pointer;
-            transition: 0.2s;
-            font-size: 14px;
+            transition: all 0.2s;
+            font-size: 13px;
             flex: 1;
+            font-family: 'Vazirmatn', sans-serif;
         }
         .input-row button.deposit {
             background: linear-gradient(135deg, #10b981, #059669);
-            box-shadow: 0 4px 12px rgba(16,185,129,0.3);
+            box-shadow: 0 4px 16px rgba(16,185,129,0.25);
         }
+        .input-row button.deposit:active { transform: scale(0.96); }
         .input-row button.withdraw {
             background: linear-gradient(135deg, #ef4444, #dc2626);
-            box-shadow: 0 4px 12px rgba(239,68,68,0.3);
+            box-shadow: 0 4px 16px rgba(239,68,68,0.2);
         }
+        .input-row button.withdraw:active { transform: scale(0.96); }
         .input-row button.remove-btn {
-            background: linear-gradient(135deg, #6b7280, #4b5563);
-            flex: 0.5;
+            background: rgba(107, 114, 128, 0.5);
+            flex: 0.4;
+            backdrop-filter: blur(8px);
         }
+        /* مجموع */
         .total {
-            background: #1a232e;
-            padding: 16px;
-            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(59,130,246,0.05));
+            padding: 18px 20px;
+            border-radius: 24px;
             text-align: center;
-            font-size: 18px;
-            font-weight: 600;
-            margin-top: 12px;
-            border: 1px solid #2d3748;
+            border: 1px solid rgba(255,255,255,0.06);
+            margin-top: 8px;
+            backdrop-filter: blur(8px);
         }
-        .total span {
+        .total .amount {
+            font-size: 28px;
+            font-weight: 700;
             background: linear-gradient(135deg, #4ade80, #3b82f6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        .rate-box {
-            background: #0f151e;
-            padding: 12px 16px;
-            border-radius: 16px;
-            text-align: center;
-            margin-bottom: 16px;
+        .total .label {
             font-size: 14px;
             color: #8899aa;
-            border: 1px solid #1e2630;
+        }
+        .total .sub {
+            font-size: 14px;
+            color: #6a7b8c;
+            margin-top: 4px;
+        }
+        .rate-box {
+            background: rgba(15, 21, 30, 0.6);
+            backdrop-filter: blur(8px);
+            padding: 12px 16px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 16px;
+            font-size: 13px;
+            color: #8899aa;
+            border: 1px solid rgba(255,255,255,0.04);
         }
         .rate-box span {
             color: #4ade80;
-            font-weight: 700;
+            font-weight: 600;
         }
         .chart-container {
-            height: 160px;
-            margin: 8px 0 4px;
+            height: 150px;
+            margin: 4px 0 0 0;
         }
         .history-list {
             max-height: 260px;
             overflow-y: auto;
-            margin-top: 10px;
-            border-top: 1px solid #1e2630;
-            padding-top: 10px;
+            margin-top: 8px;
+            padding-top: 8px;
         }
         .history-item {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             padding: 10px 4px;
-            border-bottom: 1px solid #1a232e;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
             font-size: 14px;
             color: #b0c4db;
         }
@@ -203,19 +236,24 @@
         .history-item .date {
             color: #6a7b8c;
             font-size: 11px;
+            margin-right: 8px;
         }
         .history-item .withdraw-amount {
             color: #ef4444;
         }
+        .history-item .deposit-amount {
+            color: #10b981;
+        }
         .empty-history {
             color: #6a7b8c;
             text-align: center;
-            padding: 16px 0;
+            padding: 24px 0;
             font-size: 14px;
         }
         .btn-danger {
             background: linear-gradient(135deg, #ef4444, #dc2626) !important;
-            box-shadow: 0 4px 12px rgba(239,68,68,0.3) !important;
+            box-shadow: 0 4px 16px rgba(239,68,68,0.2) !important;
+            font-family: 'Vazirmatn', sans-serif;
         }
         .flex-row {
             display: flex;
@@ -224,14 +262,16 @@
         }
         .flex-row button {
             flex: 1;
-            padding: 12px;
+            padding: 14px;
             border: none;
-            border-radius: 14px;
+            border-radius: 18px;
             color: #fff;
             font-weight: 600;
             cursor: pointer;
             transition: 0.2s;
+            font-family: 'Vazirmatn', sans-serif;
         }
+        .flex-row button:active { transform: scale(0.96); }
         .add-currency-section {
             display: flex;
             gap: 10px;
@@ -241,33 +281,34 @@
             flex: 1;
             padding: 12px 16px;
             border: none;
-            border-radius: 14px;
-            background: #1e2630;
+            border-radius: 16px;
+            background: rgba(30, 38, 48, 0.6);
             color: #e8edf5;
-            font-size: 16px;
+            font-size: 15px;
             outline: none;
             border: 1px solid transparent;
+            font-family: 'Vazirmatn', sans-serif;
         }
         .add-currency-section input:focus {
             border-color: #8b5cf6;
+            background: rgba(35, 43, 54, 0.8);
         }
         .add-currency-section button {
             padding: 12px 22px;
             border: none;
-            border-radius: 14px;
+            border-radius: 16px;
             background: linear-gradient(135deg, #8b5cf6, #7c3aed);
             color: #fff;
             font-weight: 600;
             cursor: pointer;
             transition: 0.2s;
             font-size: 14px;
-            box-shadow: 0 4px 12px rgba(139,92,246,0.3);
+            box-shadow: 0 4px 16px rgba(139,92,246,0.25);
+            font-family: 'Vazirmatn', sans-serif;
         }
-        .add-currency-section button:hover {
-            transform: scale(1.02);
-        }
+        .add-currency-section button:active { transform: scale(0.96); }
         .hint {
-            font-size: 12px;
+            font-size: 11px;
             color: #6a7b8c;
             margin-top: 6px;
         }
@@ -275,71 +316,76 @@
             color: #3b82f6;
             text-decoration: none;
         }
-        /* منوی پایین */
+        /* منوی پایین (شیشه‌ای) */
         .bottom-nav {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: #0f1520;
-            border-top: 1px solid #1e2630;
+            bottom: 12px;
+            left: 12px;
+            right: 12px;
+            background: rgba(15, 21, 30, 0.85);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: 28px;
+            border: 1px solid rgba(255,255,255,0.06);
             display: flex;
             justify-content: space-around;
             align-items: center;
-            padding: 8px 0 10px 0;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            padding: 6px 0;
             z-index: 1000;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.6);
         }
         .nav-item {
             display: flex;
             flex-direction: column;
             align-items: center;
             color: #6a7b8c;
-            font-size: 11px;
+            font-size: 10px;
             transition: 0.2s;
             cursor: pointer;
-            padding: 4px 12px;
-            border-radius: 12px;
+            padding: 6px 12px;
+            border-radius: 20px;
             position: relative;
+            min-width: 60px;
         }
         .nav-item i {
-            font-size: 22px;
-            margin-bottom: 2px;
+            font-size: 20px;
+            margin-bottom: 0px;
             transition: 0.2s;
         }
         .nav-item span {
             font-weight: 500;
+            font-size: 10px;
+            margin-top: 1px;
         }
         .nav-item.active {
             color: #4ade80;
+            background: rgba(74, 222, 128, 0.08);
         }
         .nav-item.active i {
             transform: translateY(-2px);
-            text-shadow: 0 0 20px rgba(74,222,128,0.3);
+            filter: drop-shadow(0 0 12px rgba(74,222,128,0.2));
         }
         .nav-item .badge-dot {
             position: absolute;
-            top: 0;
-            right: 4px;
-            width: 8px;
-            height: 8px;
+            top: 2px;
+            right: 6px;
+            width: 7px;
+            height: 7px;
             background: #ef4444;
             border-radius: 50%;
-            border: 2px solid #0f1520;
+            border: 2px solid rgba(15, 21, 30, 0.85);
         }
         /* اسکرول */
         ::-webkit-scrollbar {
-            width: 4px;
+            width: 3px;
         }
         ::-webkit-scrollbar-track {
-            background: #0b0e14;
+            background: transparent;
         }
         ::-webkit-scrollbar-thumb {
             background: #2d3748;
             border-radius: 10px;
         }
-        /* واکنش‌گرایی */
         @media (max-width: 480px) {
             .input-row {
                 flex-direction: column;
@@ -351,6 +397,16 @@
                 width: 100%;
             }
             .header h1 {
+                font-size: 17px;
+            }
+            .bottom-nav {
+                padding: 4px 0;
+            }
+            .nav-item {
+                min-width: 50px;
+                padding: 4px 8px;
+            }
+            .nav-item i {
                 font-size: 18px;
             }
         }
@@ -360,7 +416,10 @@
 
 <!-- هدر -->
 <div class="header">
-    <h1>📊 دارایی‌ها</h1>
+    <div>
+        <h1>💰 کیف پول</h1>
+        <span class="badge">حرفه‌ای</span>
+    </div>
     <div class="avatar">پ</div>
 </div>
 
@@ -370,17 +429,16 @@
         📈 در حال دریافت نرخ ارزها...
     </div>
     
-    <div class="card" style="padding-bottom: 8px;">
+    <div class="card" style="padding-bottom: 6px;">
         <div class="chart-container">
             <canvas id="portfolioChart"></canvas>
         </div>
     </div>
 
-    <div class="total" id="total-display">
-        مجموع (تومان): <span>۰</span> | مجموع (تتر): <span>۰</span>
-    </div>
-    <div style="text-align:center; font-size:12px; color:#6a7b8c; margin-top:4px;">
-        💡 نرخ ریال: ۵۸,۰۰۰ تومان (دستی)
+    <div class="total">
+        <div class="label">مجموع دارایی</div>
+        <div class="amount" id="totalRial">۰</div>
+        <div class="sub" id="totalUsd">≈ ۰ تتر</div>
     </div>
 </div>
 
@@ -419,27 +477,23 @@
     <div class="card">
         <h3>⚙️ تنظیمات</h3>
         <div style="margin-top:12px;">
-            <div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid #1e2630;">
-                <span style="color:#8899aa;">نرخ ریال (تومان)</span>
-                <span style="font-weight:700;" id="settingsRialRate">۵۸,۰۰۰</span>
-            </div>
-            <div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid #1e2630;">
+            <div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.05);">
                 <span style="color:#8899aa;">تعداد ارزها</span>
                 <span style="font-weight:700;" id="settingsCurrencyCount">۰</span>
             </div>
-            <div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid #1e2630;">
+            <div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.05);">
                 <span style="color:#8899aa;">تعداد تراکنش‌ها</span>
                 <span style="font-weight:700;" id="settingsTransactionCount">۰</span>
             </div>
             <div style="display:flex; justify-content:space-between; padding:8px 0;">
                 <span style="color:#8899aa;">نسخه</span>
-                <span style="font-weight:700;">v3.0.0</span>
+                <span style="font-weight:700;">v3.1.0</span>
             </div>
         </div>
     </div>
     <div class="card">
         <h3>🔗 اتصال به والت</h3>
-        <button onclick="alert('اتصال به والت (TON) به زودی...')" style="width:100%; padding:14px; border:none; border-radius:14px; background:linear-gradient(135deg,#3b82f6,#2563eb); color:#fff; font-weight:700; font-size:16px; cursor:pointer; margin-top:10px; box-shadow:0 4px 12px rgba(59,130,246,0.3);">
+        <button onclick="alert('اتصال به والت (TON) به زودی...')" style="width:100%; padding:14px; border:none; border-radius:18px; background:linear-gradient(135deg,#3b82f6,#2563eb); color:#fff; font-weight:700; font-size:15px; cursor:pointer; margin-top:10px; box-shadow:0 4px 16px rgba(59,130,246,0.3); font-family:'Vazirmatn',sans-serif;">
             <i class="fas fa-wallet"></i> اتصال کیف پول
         </button>
     </div>
@@ -475,23 +529,39 @@
         { id: 'ethereum', label: 'اتریوم', symbol: '⟠', amount: 0, isCrypto: true }
     ];
     let prices = {};
-    const rialRate = 58000;
+    let rialRate = 58000;
     let transactions = [];
     let chartInstance = null;
 
-    // ========== دریافت نرخ ==========
+    // ========== دریافت نرخ ارزها (با پروکسی رایگان) ==========
     async function fetchRates() {
         const cryptoIds = currencies.filter(c => c.isCrypto).map(c => c.id).join(',');
         if (!cryptoIds) return;
         try {
-            const res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${cryptoIds}&vs_currencies=usd`);
+            // استفاده از پروکسی رایگان برای دور زدن محدودیت‌ها
+            const proxyUrl = 'https://api.allorigins.win/raw?url=';
+            const targetUrl = `https://api.coingecko.com/api/v3/simple/price?ids=${cryptoIds}&vs_currencies=usd`;
+            const res = await fetch(proxyUrl + encodeURIComponent(targetUrl));
             const data = await res.json();
             for (let id in data) {
                 prices[id] = data[id].usd || 0;
             }
+            
+            // دریافت نرخ ریال از بازار آزاد (با پروکسی)
+            try {
+                const rialRes = await fetch(proxyUrl + encodeURIComponent('https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=usd'));
+                const rialData = await rialRes.json();
+                // نرخ ریال رو از یه منبع دیگه میگیریم (اینجا از همون تتر استفاده میکنیم)
+                // در صورت دسترسی به api.nerkh.io یا منابع دیگه، میتونیم بهبود بدیم
+                // فعلاً همون نرخ ثابت رو نگه میداریم ولی نمایشش نمیدیم
+            } catch (e) {
+                console.log('نرخ ریال دریافت نشد');
+            }
+            
             updateRateDisplay();
-        } catch {
+        } catch (error) {
             document.getElementById('rateDisplay').innerHTML = '⚠️ عدم دریافت نرخ لحظه‌ای';
+            console.log('خطا در دریافت نرخ:', error);
         }
     }
 
@@ -501,6 +571,10 @@
             if (c.isCrypto && prices[c.id]) {
                 html += `${c.symbol} ${c.label}: <span>$${prices[c.id].toLocaleString()}</span> | `;
             }
+        }
+        // نمایش قیمت تتر به عنوان نرخ مبنا
+        if (prices['usdt']) {
+            html += `💵 نرخ تتر: <span>$${prices['usdt']}</span>`;
         }
         document.getElementById('rateDisplay').innerHTML = html || '📈 در حال دریافت نرخ...';
     }
@@ -570,7 +644,6 @@
             date: new Date().toLocaleString('fa-IR')
         });
         renderCurrencies();
-        // آپدیت دات تاریخچه
         document.getElementById('historyBadge').style.display = 'block';
     }
 
@@ -610,13 +683,18 @@
     function updateTotal() {
         let totalUsd = 0;
         for (let c of currencies) {
-            if (c.id === 'rial') totalUsd += c.amount / rialRate;
-            else if (c.isCrypto && prices[c.id]) totalUsd += c.amount * prices[c.id];
-            else if (c.id === 'usdt') totalUsd += c.amount * 1;
+            if (c.id === 'rial') {
+                // ریال رو با نرخ ثابت ۵۸۰۰۰ به دلار تبدیل میکنیم (برای محاسبه)
+                totalUsd += c.amount / 58000;
+            } else if (c.isCrypto && prices[c.id]) {
+                totalUsd += c.amount * prices[c.id];
+            } else if (c.id === 'usdt') {
+                totalUsd += c.amount * 1;
+            }
         }
-        const totalRial = totalUsd * rialRate;
-        document.getElementById('total-display').innerHTML = 
-            `مجموع (تومان): <span>${totalRial.toLocaleString()}</span> | مجموع (تتر): <span>${totalUsd.toFixed(2)}</span>`;
+        const totalRial = totalUsd * 58000;
+        document.getElementById('totalRial').textContent = totalRial.toLocaleString() + ' تومان';
+        document.getElementById('totalUsd').textContent = `≈ ${totalUsd.toFixed(2)} تتر`;
     }
 
     // ========== تاریخچه ==========
@@ -627,9 +705,9 @@
             return;
         }
         let html = '';
-        const reversed = [...transactions].reverse().slice(0, 25);
+        const reversed = [...transactions].reverse().slice(0, 30);
         for (let t of reversed) {
-            const cls = t.type === 'withdraw' ? 'withdraw-amount' : '';
+            const cls = t.type === 'withdraw' ? 'withdraw-amount' : 'deposit-amount';
             html += `
                 <div class="history-item">
                     <span>${t.label}</span>
@@ -641,7 +719,6 @@
             `;
         }
         container.innerHTML = html;
-        // دات تاریخچه
         document.getElementById('historyBadge').style.display = transactions.length > 0 ? 'block' : 'none';
     }
 
@@ -652,7 +729,7 @@
         const colors = ['#f59e0b','#26a17b','#f7931a','#627eea','#8b5cf6','#ec4899','#14b8a6','#f97316'];
         for (let c of currencies) {
             let val = 0;
-            if (c.id === 'rial') val = c.amount / rialRate;
+            if (c.id === 'rial') val = c.amount / 58000;
             else if (c.isCrypto && prices[c.id]) val = c.amount * prices[c.id];
             else if (c.id === 'usdt') val = c.amount * 1;
             if (val > 0) { data.push(val); labels.push(c.label); }
@@ -661,7 +738,7 @@
         if (data.length === 0) {
             chartInstance = new Chart(ctx, {
                 type: 'doughnut',
-                data: { labels: ['بدون داده'], datasets: [{ data: [1], backgroundColor: ['#2d3748'] }] },
+                data: { labels: ['بدون داده'], datasets: [{ data: [1], backgroundColor: ['rgba(45,55,72,0.5)'] }] },
                 options: { cutout: '70%', plugins: { legend: { display: false } } }
             });
             return;
@@ -673,9 +750,9 @@
                 datasets: [{
                     data: data,
                     backgroundColor: colors.slice(0, data.length),
-                    borderColor: '#0b0e14',
-                    borderWidth: 2,
-                    hoverOffset: 8
+                    borderColor: '#0a0c12',
+                    borderWidth: 3,
+                    hoverOffset: 10
                 }]
             },
             options: {
@@ -692,7 +769,7 @@
                         }
                     }
                 },
-                cutout: '70%'
+                cutout: '72%'
             }
         });
     }
@@ -719,7 +796,6 @@
         document.getElementById(`page-${page}`).classList.add('active');
         document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
         document.querySelector(`.nav-item[data-page="${page}"]`).classList.add('active');
-        // آپدیت دیتا
         if (page === 'home') { updateTotal(); updateChart(); }
         if (page === 'history') updateHistory();
         if (page === 'settings') updateSettings();
