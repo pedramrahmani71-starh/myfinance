@@ -10,10 +10,10 @@
         @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap');
         :root {
             --bg: #0a0c12;
-            --card-bg: rgba(22, 27, 36, 0.7);
+            --card: rgba(22, 27, 36, 0.8);
             --border: rgba(255,255,255,0.06);
             --text: #e8edf5;
-            --text-secondary: #8899aa;
+            --secondary: #8899aa;
             --glass: rgba(15, 21, 30, 0.6);
             --green: #4ade80;
             --blue: #3b82f6;
@@ -21,7 +21,7 @@
             --red: #ef4444;
             --radius: 24px;
         }
-        * { margin:0; padding:0; box-sizing:border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Vazirmatn', sans-serif;
             background: var(--bg);
@@ -30,182 +30,186 @@
             padding: 0 0 100px 0;
             direction: rtl;
         }
-        /* هدر شیشه‌ای */
+        /* هدر */
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 16px 20px 10px 20px;
+            padding: 16px 20px 10px;
             background: rgba(10,12,18,0.7);
             backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
             border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
             z-index: 100;
         }
-        .header h1 { font-size: 18px; font-weight:700; color:#fff; }
+        .header h1 { font-size: 20px; font-weight: 700; color: #fff; }
         .header .badge {
             background: rgba(74,222,128,0.12);
             color: var(--green);
-            padding: 2px 12px;
+            padding: 2px 14px;
             border-radius: 30px;
             font-size: 10px;
-            font-weight:500;
-            border:1px solid rgba(74,222,128,0.15);
+            font-weight: 500;
+            border: 1px solid rgba(74,222,128,0.15);
+            margin-right: 8px;
         }
         .header .avatar {
-            width:36px; height:36px; border-radius:50%;
+            width: 38px; height: 38px;
+            border-radius: 50%;
             background: linear-gradient(135deg, var(--blue), var(--purple));
-            display:flex; align-items:center; justify-content:center;
-            font-weight:700; font-size:14px; color:#fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            color: #fff;
             box-shadow: 0 4px 16px rgba(59,130,246,0.25);
         }
-        .header-actions { display:flex; gap:12px; align-items:center; }
-        .header-actions i { font-size:18px; color:var(--text-secondary); cursor:pointer; }
+        .header-actions { display: flex; gap: 12px; align-items: center; }
+        .header-actions i { font-size: 18px; color: var(--secondary); cursor: pointer; }
         /* صفحات */
-        .page { display:none; padding:12px 16px 20px; animation: fadeIn .3s ease; }
-        .page.active { display:block; }
+        .page { display: none; padding: 12px 16px 20px; animation: fadeIn .3s ease; }
+        .page.active { display: block; }
         @keyframes fadeIn { from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
         /* کارت‌ها */
         .card {
-            background: var(--card-bg);
+            background: var(--card);
             backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
             border-radius: var(--radius);
             padding: 16px 18px;
             margin-bottom: 12px;
             border: 1px solid var(--border);
             box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-            transition: all .2s;
         }
-        .card h3 { font-size:13px; color:var(--text-secondary); font-weight:400; margin-bottom:2px; }
-        .card .value { font-size:28px; font-weight:700; color:#fff; direction:ltr; text-align:left; }
-        /* لیست مینیمال ارزها */
-        .currency-list { margin-top:4px; }
+        .card h3 { font-size: 13px; color: var(--secondary); font-weight: 400; margin-bottom: 6px; }
+        .card .value { font-size: 28px; font-weight: 700; color: #fff; direction: ltr; text-align: left; }
+        /* لیست ارزها (مینیمال) */
+        .currency-list { margin-top: 4px; }
         .currency-item {
-            display:flex; justify-content:space-between; align-items:center;
-            padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.04);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
         }
-        .currency-item:last-child { border-bottom:none; }
-        .currency-item .info { display:flex; align-items:center; gap:12px; }
-        .currency-item .icon { font-size:20px; width:36px; text-align:center; }
-        .currency-item .name { font-weight:500; font-size:14px; }
-        .currency-item .balance { font-weight:600; color:#fff; direction:ltr; }
-        .currency-item .balance small { color:var(--text-secondary); font-weight:400; font-size:12px; margin-right:4px; }
-        .currency-item .actions { display:flex; gap:6px; }
+        .currency-item:last-child { border-bottom: none; }
+        .currency-item .info { display: flex; align-items: center; gap: 12px; }
+        .currency-item .icon { font-size: 20px; width: 36px; text-align: center; }
+        .currency-item .name { font-weight: 500; font-size: 14px; }
+        .currency-item .balance { font-weight: 600; color: #fff; direction: ltr; }
+        .currency-item .balance small { color: var(--secondary); font-weight: 400; font-size: 12px; margin-right: 4px; }
+        .currency-item .actions { display: flex; gap: 6px; }
         .currency-item .actions button {
-            background:transparent; border:none; color:var(--text-secondary);
-            cursor:pointer; font-size:14px; padding:4px 6px; border-radius:8px;
-            transition:.2s;
+            background: transparent; border: none; color: var(--secondary);
+            cursor: pointer; font-size: 14px; padding: 4px 8px; border-radius: 8px;
+            transition: .2s;
         }
-        .currency-item .actions button:hover { background:rgba(255,255,255,0.05); }
-        .currency-item .actions .deposit-btn { color:var(--green); }
-        .currency-item .actions .withdraw-btn { color:var(--red); }
+        .currency-item .actions button:hover { background: rgba(255,255,255,0.05); }
+        .currency-item .actions .deposit-btn { color: var(--green); }
+        .currency-item .actions .withdraw-btn { color: var(--red); }
         /* مجموع */
         .total-box {
             background: linear-gradient(135deg, rgba(16,185,129,0.08), rgba(59,130,246,0.04));
-            padding:16px 20px; border-radius:var(--radius);
-            text-align:center; border:1px solid var(--border);
-            backdrop-filter:blur(8px);
+            padding: 16px 20px;
+            border-radius: var(--radius);
+            text-align: center;
+            border: 1px solid var(--border);
+            backdrop-filter: blur(8px);
         }
-        .total-box .amount { font-size:28px; font-weight:700; background:linear-gradient(135deg, var(--green), var(--blue)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-        .total-box .label { font-size:13px; color:var(--text-secondary); }
-        .total-box .sub { font-size:13px; color:var(--text-secondary); margin-top:2px; }
+        .total-box .amount { font-size: 28px; font-weight: 700; background: linear-gradient(135deg, var(--green), var(--blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .total-box .label { font-size: 13px; color: var(--secondary); }
+        .total-box .sub { font-size: 13px; color: var(--secondary); margin-top: 2px; }
         /* نرخ */
         .rate-box {
             background: var(--glass);
-            backdrop-filter:blur(8px);
-            padding:10px 16px;
-            border-radius:18px;
-            text-align:center;
-            margin-bottom:12px;
-            font-size:12px;
-            color:var(--text-secondary);
-            border:1px solid var(--border);
+            backdrop-filter: blur(8px);
+            padding: 10px 16px;
+            border-radius: 18px;
+            text-align: center;
+            margin-bottom: 12px;
+            font-size: 12px;
+            color: var(--secondary);
+            border: 1px solid var(--border);
         }
-        .rate-box span { color:var(--green); font-weight:600; }
+        .rate-box span { color: var(--green); font-weight: 600; }
         /* تاریخچه */
-        .history-list { max-height:280px; overflow-y:auto; margin-top:8px; padding-top:6px; }
+        .history-list { max-height: 280px; overflow-y: auto; margin-top: 8px; padding-top: 6px; }
         .history-item {
-            display:flex; justify-content:space-between; align-items:center;
-            padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.04);
-            font-size:13px; color:var(--text-secondary);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
+            font-size: 13px; color: var(--secondary);
         }
-        .history-item .amount { font-weight:600; color:#fff; }
-        .history-item .date { font-size:11px; color:#6a7b8c; margin-right:8px; }
-        .history-item .withdraw { color:var(--red); }
-        .history-item .deposit { color:var(--green); }
-        .empty-state { color:var(--text-secondary); text-align:center; padding:24px 0; font-size:13px; }
+        .history-item .amount { font-weight: 600; color: #fff; }
+        .history-item .date { font-size: 11px; color: #6a7b8c; margin-right: 8px; }
+        .history-item .withdraw { color: var(--red); }
+        .history-item .deposit { color: var(--green); }
+        .empty-state { color: var(--secondary); text-align: center; padding: 24px 0; font-size: 13px; }
         /* مدیریت ولت */
         .wallet-item {
-            display:flex; justify-content:space-between; align-items:center;
-            padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.04);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
         }
-        .wallet-item:last-child { border-bottom:none; }
-        .wallet-item .info { display:flex; flex-direction:column; }
-        .wallet-item .name { font-weight:500; font-size:14px; }
-        .wallet-item .address { font-size:12px; color:var(--text-secondary); }
+        .wallet-item:last-child { border-bottom: none; }
+        .wallet-item .info { display: flex; flex-direction: column; }
+        .wallet-item .name { font-weight: 500; font-size: 14px; }
+        .wallet-item .address { font-size: 12px; color: var(--secondary); }
         .wallet-item .actions button {
-            background:transparent; border:none; color:var(--text-secondary);
-            cursor:pointer; font-size:14px; padding:4px 8px; border-radius:8px;
-            transition:.2s;
+            background: transparent; border: none; color: var(--secondary);
+            cursor: pointer; font-size: 14px; padding: 4px 8px; border-radius: 8px;
+            transition: .2s;
         }
-        .wallet-item .actions button:hover { background:rgba(255,255,255,0.05); }
-        .wallet-item .actions .edit-btn { color:var(--blue); }
-        .wallet-item .actions .delete-btn { color:var(--red); }
+        .wallet-item .actions button:hover { background: rgba(255,255,255,0.05); }
+        .wallet-item .actions .edit-btn { color: var(--blue); }
+        .wallet-item .actions .delete-btn { color: var(--red); }
         .add-btn {
-            width:100%; margin-top:12px; padding:12px;
-            border:1px dashed var(--blue); border-radius:16px;
-            background:transparent; color:var(--blue);
-            font-weight:600; cursor:pointer; font-family:inherit;
-            transition:.2s;
+            width: 100%; margin-top: 12px; padding: 12px;
+            border: 1px dashed var(--blue); border-radius: 16px;
+            background: transparent; color: var(--blue);
+            font-weight: 600; cursor: pointer; font-family: inherit;
+            transition: .2s;
         }
-        .add-btn:hover { background:rgba(59,130,246,0.05); }
-        .add-btn i { margin-left:8px; }
+        .add-btn:hover { background: rgba(59,130,246,0.05); }
+        .add-btn i { margin-left: 8px; }
         /* تنظیمات زبان */
-        .lang-selector { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
+        .lang-selector { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
         .lang-btn {
-            padding:6px 16px; border-radius:30px; border:1px solid var(--border);
-            background:transparent; color:var(--text-secondary); cursor:pointer;
-            font-size:12px; font-weight:500; transition:.2s; font-family:inherit;
+            padding: 6px 16px; border-radius: 30px; border: 1px solid var(--border);
+            background: transparent; color: var(--secondary); cursor: pointer;
+            font-size: 12px; font-weight: 500; transition: .2s; font-family: inherit;
         }
-        .lang-btn.active { background:var(--blue); color:#fff; border-color:var(--blue); }
-        .lang-btn:hover { background:rgba(255,255,255,0.05); }
+        .lang-btn.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+        .lang-btn:hover { background: rgba(255,255,255,0.05); }
         /* نمودار خطی */
-        .line-chart-container { height:120px; margin:6px 0 0; }
+        .line-chart-container { height: 130px; margin: 6px 0 0; }
         /* منوی پایین */
         .bottom-nav {
-            position:fixed; bottom:12px; left:12px; right:12px;
-            background:rgba(15,21,30,0.85); backdrop-filter:blur(24px);
-            -webkit-backdrop-filter:blur(24px);
-            border-radius:32px; border:1px solid var(--border);
-            display:flex; justify-content:space-around; align-items:center;
-            padding:4px 0; z-index:1000; box-shadow:0 8px 40px rgba(0,0,0,0.5);
+            position: fixed; bottom: 12px; left: 12px; right: 12px;
+            background: rgba(15,21,30,0.85); backdrop-filter: blur(24px);
+            border-radius: 32px; border: 1px solid var(--border);
+            display: flex; justify-content: space-around; align-items: center;
+            padding: 4px 0; z-index: 1000; box-shadow: 0 8px 40px rgba(0,0,0,0.5);
         }
         .nav-item {
-            display:flex; flex-direction:column; align-items:center;
-            color:var(--text-secondary); font-size:10px; transition:.2s;
-            cursor:pointer; padding:4px 10px; border-radius:20px;
-            min-width:50px; position:relative;
+            display: flex; flex-direction: column; align-items: center;
+            color: var(--secondary); font-size: 10px; transition: .2s;
+            cursor: pointer; padding: 4px 10px; border-radius: 20px;
+            min-width: 50px; position: relative;
         }
-        .nav-item i { font-size:18px; margin-bottom:0; transition:.2s; }
-        .nav-item span { font-weight:500; font-size:9px; margin-top:1px; }
-        .nav-item.active { color:var(--green); background:rgba(74,222,128,0.06); }
-        .nav-item.active i { transform:translateY(-2px); filter:drop-shadow(0 0 12px rgba(74,222,128,0.15)); }
+        .nav-item i { font-size: 18px; margin-bottom: 0; transition: .2s; }
+        .nav-item span { font-weight: 500; font-size: 9px; margin-top: 1px; }
+        .nav-item.active { color: var(--green); background: rgba(74,222,128,0.06); }
+        .nav-item.active i { transform: translateY(-2px); filter: drop-shadow(0 0 12px rgba(74,222,128,0.15)); }
         .nav-item .dot {
-            position:absolute; top:2px; right:6px; width:6px; height:6px;
-            background:var(--red); border-radius:50%; border:2px solid rgba(15,21,30,0.85);
+            position: absolute; top: 2px; right: 6px; width: 6px; height: 6px;
+            background: var(--red); border-radius: 50%; border: 2px solid rgba(15,21,30,0.85);
         }
-        .scrollbar-hide::-webkit-scrollbar { width:2px; }
-        .scrollbar-hide::-webkit-scrollbar-track { background:transparent; }
-        .scrollbar-hide::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.1); border-radius:10px; }
+        .scrollbar-hide::-webkit-scrollbar { width: 2px; }
+        .scrollbar-hide::-webkit-scrollbar-track { background: transparent; }
+        .scrollbar-hide::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
         @media(max-width:480px){
-            .header h1 { font-size:16px; }
-            .bottom-nav { padding:2px 0; }
-            .nav-item { min-width:44px; padding:2px 6px; }
-            .nav-item i { font-size:16px; }
-            .card .value { font-size:24px; }
+            .header h1 { font-size: 16px; }
+            .bottom-nav { padding: 2px 0; }
+            .nav-item { min-width: 44px; padding: 2px 6px; }
+            .nav-item i { font-size: 16px; }
+            .card .value { font-size: 24px; }
         }
     </style>
 </head>
@@ -253,7 +257,7 @@
             <input type="text" id="newCurrencyInput" placeholder="شناسه ارز (مثلاً dogecoin)" style="flex:1; padding:10px 14px; border:none; border-radius:16px; background:rgba(30,38,48,0.6); color:#fff; font-size:14px; outline:none; border:1px solid transparent; font-family:inherit;">
             <button onclick="addNewCurrency()" style="padding:10px 20px; border:none; border-radius:16px; background:linear-gradient(135deg,var(--purple),#7c3aed); color:#fff; font-weight:600; cursor:pointer; font-family:inherit;">افزودن</button>
         </div>
-        <div style="font-size:10px; color:var(--text-secondary); margin-top:4px;">🟢 از <a href="https://api.coingecko.com/api/v3/coins/list" target="_blank" style="color:var(--blue);">لیست CoinGecko</a> پیدا کن</div>
+        <div style="font-size:10px; color:var(--secondary); margin-top:4px;">🟢 از <a href="https://api.coingecko.com/api/v3/coins/list" target="_blank" style="color:var(--blue);">لیست CoinGecko</a> پیدا کن</div>
     </div>
     
     <button onclick="clearAllData()" style="width:100%; padding:14px; border:none; border-radius:18px; background:linear-gradient(135deg,var(--red),#dc2626); color:#fff; font-weight:600; cursor:pointer; font-family:inherit;">🗑️ پاک کردن همه</button>
@@ -290,13 +294,13 @@
 
     <div class="card">
         <h3>🏦 صرافی‌های متصل</h3>
-        <div style="padding:10px 0; color:var(--text-secondary); text-align:center; font-size:13px;">هیچ صرافی متصل نیست</div>
+        <div style="padding:10px 0; color:var(--secondary); text-align:center; font-size:13px;">هیچ صرافی متصل نیست</div>
         <button class="add-btn" style="border-color:var(--purple); color:var(--purple);" onclick="connectExchange()"><i class="fas fa-link"></i> اتصال صرافی</button>
     </div>
 
     <div class="card">
         <h3>🏛️ بانک‌های متصل</h3>
-        <div style="padding:10px 0; color:var(--text-secondary); text-align:center; font-size:13px;">هیچ بانکی متصل نیست</div>
+        <div style="padding:10px 0; color:var(--secondary); text-align:center; font-size:13px;">هیچ بانکی متصل نیست</div>
         <button class="add-btn" style="border-color:#f59e0b; color:#f59e0b;" onclick="connectBank()"><i class="fas fa-university"></i> اتصال بانک</button>
     </div>
 </div>
@@ -324,15 +328,15 @@
     <div class="card">
         <h3>📊 آمار</h3>
         <div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--border);">
-            <span style="color:var(--text-secondary);">تعداد ارزها</span>
+            <span style="color:var(--secondary);">تعداد ارزها</span>
             <span style="font-weight:600;" id="statsCurrencies">۰</span>
         </div>
         <div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--border);">
-            <span style="color:var(--text-secondary);">تعداد تراکنش‌ها</span>
+            <span style="color:var(--secondary);">تعداد تراکنش‌ها</span>
             <span style="font-weight:600;" id="statsTransactions">۰</span>
         </div>
         <div style="display:flex; justify-content:space-between; padding:8px 0;">
-            <span style="color:var(--text-secondary);">نسخه</span>
+            <span style="color:var(--secondary);">نسخه</span>
             <span style="font-weight:600;">v3.2.0</span>
         </div>
     </div>
@@ -367,21 +371,9 @@
 <script>
     // ========== ترجمه‌ها ==========
     const i18n = {
-        fa: {
-            home: 'خانه', wallet: 'کیف پول', manage: 'مدیریت',
-            history: 'تاریخچه', settings: 'تنظیمات',
-            total_label: 'مجموع دارایی'
-        },
-        en: {
-            home: 'Home', wallet: 'Wallet', manage: 'Manage',
-            history: 'History', settings: 'Settings',
-            total_label: 'Total Assets'
-        },
-        ar: {
-            home: 'الرئيسية', wallet: 'المحفظة', manage: 'إدارة',
-            history: 'التاريخ', settings: 'الإعدادات',
-            total_label: 'إجمالي الأصول'
-        }
+        fa: { home: 'خانه', wallet: 'کیف پول', manage: 'مدیریت', history: 'تاریخچه', settings: 'تنظیمات', total_label: 'مجموع دارایی' },
+        en: { home: 'Home', wallet: 'Wallet', manage: 'Manage', history: 'History', settings: 'Settings', total_label: 'Total Assets' },
+        ar: { home: 'الرئيسية', wallet: 'المحفظة', manage: 'إدارة', history: 'التاريخ', settings: 'الإعدادات', total_label: 'إجمالي الأصول' }
     };
     let currentLang = 'fa';
 
@@ -564,7 +556,7 @@
 
     // ========== نمودار دونات ==========
     function updateChart() {
-        const ctx = document.getElementById('portfolioChart')?.getContext('2d');
+        const ctx = document.getElementById('portfolioChart');
         if (!ctx) return;
         const data = [], labels = [];
         const colors = ['#f59e0b','#26a17b','#f7931a','#627eea','#8b5cf6','#ec4899','#14b8a6','#f97316'];
@@ -575,52 +567,15 @@
             else if (c.id === 'usdt') val = c.amount * 1;
             if (val > 0) { data.push(val); labels.push(c.label); }
         }
-        if (chartInstance) chartInstance.destroy();
-        if (data.length === 0) {
-            chartInstance = new Chart(ctx, {
-                type: 'doughnut',
-                data: { labels: ['بدون داده'], datasets: [{ data: [1], backgroundColor: ['rgba(45,55,72,0.5)'] }] },
-                options: { cutout: '70%', plugins: { legend: { display: false } } }
-            });
-            return;
-        }
-        chartInstance = new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: labels,
-                datasets: [{
-                    data: data,
-                    backgroundColor: colors.slice(0, data.length),
-                    borderColor: '#0a0c12',
-                    borderWidth: 3,
-                    hoverOffset: 10
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            color: '#b0c4db',
-                            font: { size: 11, family: 'Vazirmatn' },
-                            boxWidth: 12,
-                            padding: 12
-                        }
-                    }
-                },
-                cutout: '72%'
-            }
-        });
+        // این نمودار فعلاً در صفحه نیست، ولی برای استفاده‌های بعدی نگهش می‌داریم
     }
 
     // ========== نمودار خطی ==========
     function updateLineChart() {
-        const ctx = document.getElementById('lineChart')?.getContext('2d');
+        const ctx = document.getElementById('lineChart');
         if (!ctx) return;
         if (lineChartInstance) lineChartInstance.destroy();
-        // داده‌های ساختگی برای ۷ روز
+        // داده‌های ساختگی
         const days = ['شنبه','یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه'];
         const values = [125, 130, 128, 135, 140, 138, 145];
         lineChartInstance = new Chart(ctx, {
@@ -643,9 +598,7 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false }
-                },
+                plugins: { legend: { display: false } },
                 scales: {
                     x: { grid: { color: 'rgba(255,255,255,0.03)' }, ticks: { color: '#6a7b8c', font: { size: 9 } } },
                     y: { grid: { color: 'rgba(255,255,255,0.03)' }, ticks: { color: '#6a7b8c', font: { size: 9 } } }
@@ -693,7 +646,6 @@
         transactions = [];
         localStorage.clear();
         renderCurrencyList();
-        document.querySelectorAll('.input-row input').forEach(inp => inp.value = '');
     }
 
     // ========== تغییر صفحه ==========
@@ -702,7 +654,7 @@
         document.getElementById(`page-${page}`).classList.add('active');
         document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
         document.querySelector(`.nav-item[data-page="${page}"]`).classList.add('active');
-        if (page === 'home') { updateTotal(); updateChart(); updateLineChart(); }
+        if (page === 'home') { updateTotal(); updateLineChart(); }
         if (page === 'history') updateHistory();
         if (page === 'settings') updateStats();
     }
@@ -712,8 +664,7 @@
     renderCurrencyList();
     fetchRates();
     setInterval(fetchRates, 60000);
-    // نمودار خطی رو بعد از لود کامل نشون بده
-    setTimeout(updateLineChart, 300);
+    setTimeout(updateLineChart, 400);
 </script>
 </body>
 </html>
