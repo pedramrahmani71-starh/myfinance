@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -8,18 +8,26 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap');
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --bg: #0a0c12;
+            --card-bg: rgba(22, 27, 36, 0.7);
+            --border: rgba(255,255,255,0.06);
+            --text: #e8edf5;
+            --text-secondary: #8899aa;
+            --glass: rgba(15, 21, 30, 0.6);
+            --green: #4ade80;
+            --blue: #3b82f6;
+            --purple: #8b5cf6;
+            --red: #ef4444;
+            --radius: 24px;
         }
+        * { margin:0; padding:0; box-sizing:border-box; }
         body {
             font-family: 'Vazirmatn', sans-serif;
-            background: #0a0c12;
-            color: #e8edf5;
+            background: var(--bg);
+            color: var(--text);
             min-height: 100vh;
-            padding: 0 0 80px 0;
+            padding: 0 0 100px 0;
             direction: rtl;
         }
         /* هدر شیشه‌ای */
@@ -27,388 +35,177 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 20px 12px 20px;
-            background: rgba(10, 12, 18, 0.8);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 16px 20px 10px 20px;
+            background: rgba(10,12,18,0.7);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
             z-index: 100;
         }
-        .header h1 {
-            font-size: 20px;
-            font-weight: 700;
-            color: #fff;
-            letter-spacing: -0.5px;
-        }
+        .header h1 { font-size: 18px; font-weight:700; color:#fff; }
         .header .badge {
-            background: rgba(74, 222, 128, 0.15);
-            color: #4ade80;
-            padding: 4px 12px;
+            background: rgba(74,222,128,0.12);
+            color: var(--green);
+            padding: 2px 12px;
             border-radius: 30px;
-            font-size: 11px;
-            font-weight: 500;
-            border: 1px solid rgba(74, 222, 128, 0.2);
+            font-size: 10px;
+            font-weight:500;
+            border:1px solid rgba(74,222,128,0.15);
         }
         .header .avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 16px;
-            color: #fff;
-            box-shadow: 0 4px 16px rgba(59,130,246,0.3);
+            width:36px; height:36px; border-radius:50%;
+            background: linear-gradient(135deg, var(--blue), var(--purple));
+            display:flex; align-items:center; justify-content:center;
+            font-weight:700; font-size:14px; color:#fff;
+            box-shadow: 0 4px 16px rgba(59,130,246,0.25);
         }
+        .header-actions { display:flex; gap:12px; align-items:center; }
+        .header-actions i { font-size:18px; color:var(--text-secondary); cursor:pointer; }
         /* صفحات */
-        .page {
-            display: none;
-            padding: 16px 16px 20px 16px;
-            animation: fadeIn 0.35s ease;
-        }
-        .page.active {
-            display: block;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(12px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        /* کارت‌ها (سبک والت) */
+        .page { display:none; padding:12px 16px 20px; animation: fadeIn .3s ease; }
+        .page.active { display:block; }
+        @keyframes fadeIn { from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
+        /* کارت‌ها */
         .card {
-            background: rgba(22, 27, 36, 0.8);
+            background: var(--card-bg);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border-radius: 24px;
-            padding: 20px;
-            margin-bottom: 14px;
-            border: 1px solid rgba(255,255,255,0.06);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-            transition: all 0.2s;
+            border-radius: var(--radius);
+            padding: 16px 18px;
+            margin-bottom: 12px;
+            border: 1px solid var(--border);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            transition: all .2s;
         }
-        .card:hover {
-            border-color: rgba(255,255,255,0.1);
+        .card h3 { font-size:13px; color:var(--text-secondary); font-weight:400; margin-bottom:2px; }
+        .card .value { font-size:28px; font-weight:700; color:#fff; direction:ltr; text-align:left; }
+        /* لیست مینیمال ارزها */
+        .currency-list { margin-top:4px; }
+        .currency-item {
+            display:flex; justify-content:space-between; align-items:center;
+            padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.04);
         }
-        .card h3 {
-            font-size: 13px;
-            color: #8899aa;
-            margin-bottom: 4px;
-            font-weight: 400;
-            letter-spacing: 0.3px;
+        .currency-item:last-child { border-bottom:none; }
+        .currency-item .info { display:flex; align-items:center; gap:12px; }
+        .currency-item .icon { font-size:20px; width:36px; text-align:center; }
+        .currency-item .name { font-weight:500; font-size:14px; }
+        .currency-item .balance { font-weight:600; color:#fff; direction:ltr; }
+        .currency-item .balance small { color:var(--text-secondary); font-weight:400; font-size:12px; margin-right:4px; }
+        .currency-item .actions { display:flex; gap:6px; }
+        .currency-item .actions button {
+            background:transparent; border:none; color:var(--text-secondary);
+            cursor:pointer; font-size:14px; padding:4px 6px; border-radius:8px;
+            transition:.2s;
         }
-        .card .value {
-            font-size: 30px;
-            font-weight: 700;
-            direction: ltr;
-            text-align: left;
-            color: #fff;
-            letter-spacing: -0.5px;
-        }
-        .card .value .currency-symbol {
-            font-size: 18px;
-            color: #8899aa;
-            margin-right: 4px;
-        }
-        .input-row {
-            display: flex;
-            gap: 8px;
-            margin-top: 14px;
-            flex-wrap: wrap;
-        }
-        .input-row input {
-            flex: 2;
-            padding: 12px 16px;
-            border: none;
-            border-radius: 16px;
-            background: rgba(30, 38, 48, 0.6);
-            color: #e8edf5;
-            font-size: 15px;
-            text-align: center;
-            outline: none;
-            border: 1px solid transparent;
-            min-width: 100px;
-            font-family: 'Vazirmatn', sans-serif;
-        }
-        .input-row input:focus {
-            border-color: #3b82f6;
-            background: rgba(35, 43, 54, 0.8);
-        }
-        .input-row .btn-group {
-            display: flex;
-            gap: 6px;
-            flex: 1;
-        }
-        .input-row button {
-            padding: 12px 16px;
-            border: none;
-            border-radius: 16px;
-            color: #fff;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 13px;
-            flex: 1;
-            font-family: 'Vazirmatn', sans-serif;
-        }
-        .input-row button.deposit {
-            background: linear-gradient(135deg, #10b981, #059669);
-            box-shadow: 0 4px 16px rgba(16,185,129,0.25);
-        }
-        .input-row button.deposit:active { transform: scale(0.96); }
-        .input-row button.withdraw {
-            background: linear-gradient(135deg, #ef4444, #dc2626);
-            box-shadow: 0 4px 16px rgba(239,68,68,0.2);
-        }
-        .input-row button.withdraw:active { transform: scale(0.96); }
-        .input-row button.remove-btn {
-            background: rgba(107, 114, 128, 0.5);
-            flex: 0.4;
-            backdrop-filter: blur(8px);
-        }
+        .currency-item .actions button:hover { background:rgba(255,255,255,0.05); }
+        .currency-item .actions .deposit-btn { color:var(--green); }
+        .currency-item .actions .withdraw-btn { color:var(--red); }
         /* مجموع */
-        .total {
-            background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(59,130,246,0.05));
-            padding: 18px 20px;
-            border-radius: 24px;
-            text-align: center;
-            border: 1px solid rgba(255,255,255,0.06);
-            margin-top: 8px;
-            backdrop-filter: blur(8px);
+        .total-box {
+            background: linear-gradient(135deg, rgba(16,185,129,0.08), rgba(59,130,246,0.04));
+            padding:16px 20px; border-radius:var(--radius);
+            text-align:center; border:1px solid var(--border);
+            backdrop-filter:blur(8px);
         }
-        .total .amount {
-            font-size: 28px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #4ade80, #3b82f6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .total .label {
-            font-size: 14px;
-            color: #8899aa;
-        }
-        .total .sub {
-            font-size: 14px;
-            color: #6a7b8c;
-            margin-top: 4px;
-        }
+        .total-box .amount { font-size:28px; font-weight:700; background:linear-gradient(135deg, var(--green), var(--blue)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .total-box .label { font-size:13px; color:var(--text-secondary); }
+        .total-box .sub { font-size:13px; color:var(--text-secondary); margin-top:2px; }
+        /* نرخ */
         .rate-box {
-            background: rgba(15, 21, 30, 0.6);
-            backdrop-filter: blur(8px);
-            padding: 12px 16px;
-            border-radius: 20px;
-            text-align: center;
-            margin-bottom: 16px;
-            font-size: 13px;
-            color: #8899aa;
-            border: 1px solid rgba(255,255,255,0.04);
+            background: var(--glass);
+            backdrop-filter:blur(8px);
+            padding:10px 16px;
+            border-radius:18px;
+            text-align:center;
+            margin-bottom:12px;
+            font-size:12px;
+            color:var(--text-secondary);
+            border:1px solid var(--border);
         }
-        .rate-box span {
-            color: #4ade80;
-            font-weight: 600;
-        }
-        .chart-container {
-            height: 150px;
-            margin: 4px 0 0 0;
-        }
-        .history-list {
-            max-height: 260px;
-            overflow-y: auto;
-            margin-top: 8px;
-            padding-top: 8px;
-        }
+        .rate-box span { color:var(--green); font-weight:600; }
+        /* تاریخچه */
+        .history-list { max-height:280px; overflow-y:auto; margin-top:8px; padding-top:6px; }
         .history-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 4px;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
-            font-size: 14px;
-            color: #b0c4db;
+            display:flex; justify-content:space-between; align-items:center;
+            padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.04);
+            font-size:13px; color:var(--text-secondary);
         }
-        .history-item .amount {
-            font-weight: 600;
-            color: #e8edf5;
+        .history-item .amount { font-weight:600; color:#fff; }
+        .history-item .date { font-size:11px; color:#6a7b8c; margin-right:8px; }
+        .history-item .withdraw { color:var(--red); }
+        .history-item .deposit { color:var(--green); }
+        .empty-state { color:var(--text-secondary); text-align:center; padding:24px 0; font-size:13px; }
+        /* مدیریت ولت */
+        .wallet-item {
+            display:flex; justify-content:space-between; align-items:center;
+            padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.04);
         }
-        .history-item .date {
-            color: #6a7b8c;
-            font-size: 11px;
-            margin-right: 8px;
+        .wallet-item:last-child { border-bottom:none; }
+        .wallet-item .info { display:flex; flex-direction:column; }
+        .wallet-item .name { font-weight:500; font-size:14px; }
+        .wallet-item .address { font-size:12px; color:var(--text-secondary); }
+        .wallet-item .actions button {
+            background:transparent; border:none; color:var(--text-secondary);
+            cursor:pointer; font-size:14px; padding:4px 8px; border-radius:8px;
+            transition:.2s;
         }
-        .history-item .withdraw-amount {
-            color: #ef4444;
+        .wallet-item .actions button:hover { background:rgba(255,255,255,0.05); }
+        .wallet-item .actions .edit-btn { color:var(--blue); }
+        .wallet-item .actions .delete-btn { color:var(--red); }
+        .add-btn {
+            width:100%; margin-top:12px; padding:12px;
+            border:1px dashed var(--blue); border-radius:16px;
+            background:transparent; color:var(--blue);
+            font-weight:600; cursor:pointer; font-family:inherit;
+            transition:.2s;
         }
-        .history-item .deposit-amount {
-            color: #10b981;
+        .add-btn:hover { background:rgba(59,130,246,0.05); }
+        .add-btn i { margin-left:8px; }
+        /* تنظیمات زبان */
+        .lang-selector { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
+        .lang-btn {
+            padding:6px 16px; border-radius:30px; border:1px solid var(--border);
+            background:transparent; color:var(--text-secondary); cursor:pointer;
+            font-size:12px; font-weight:500; transition:.2s; font-family:inherit;
         }
-        .empty-history {
-            color: #6a7b8c;
-            text-align: center;
-            padding: 24px 0;
-            font-size: 14px;
-        }
-        .btn-danger {
-            background: linear-gradient(135deg, #ef4444, #dc2626) !important;
-            box-shadow: 0 4px 16px rgba(239,68,68,0.2) !important;
-            font-family: 'Vazirmatn', sans-serif;
-        }
-        .flex-row {
-            display: flex;
-            gap: 10px;
-            margin-top: 12px;
-        }
-        .flex-row button {
-            flex: 1;
-            padding: 14px;
-            border: none;
-            border-radius: 18px;
-            color: #fff;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-            font-family: 'Vazirmatn', sans-serif;
-        }
-        .flex-row button:active { transform: scale(0.96); }
-        .add-currency-section {
-            display: flex;
-            gap: 10px;
-            margin-top: 12px;
-        }
-        .add-currency-section input {
-            flex: 1;
-            padding: 12px 16px;
-            border: none;
-            border-radius: 16px;
-            background: rgba(30, 38, 48, 0.6);
-            color: #e8edf5;
-            font-size: 15px;
-            outline: none;
-            border: 1px solid transparent;
-            font-family: 'Vazirmatn', sans-serif;
-        }
-        .add-currency-section input:focus {
-            border-color: #8b5cf6;
-            background: rgba(35, 43, 54, 0.8);
-        }
-        .add-currency-section button {
-            padding: 12px 22px;
-            border: none;
-            border-radius: 16px;
-            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
-            color: #fff;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-            font-size: 14px;
-            box-shadow: 0 4px 16px rgba(139,92,246,0.25);
-            font-family: 'Vazirmatn', sans-serif;
-        }
-        .add-currency-section button:active { transform: scale(0.96); }
-        .hint {
-            font-size: 11px;
-            color: #6a7b8c;
-            margin-top: 6px;
-        }
-        .hint a {
-            color: #3b82f6;
-            text-decoration: none;
-        }
-        /* منوی پایین (شیشه‌ای) */
+        .lang-btn.active { background:var(--blue); color:#fff; border-color:var(--blue); }
+        .lang-btn:hover { background:rgba(255,255,255,0.05); }
+        /* نمودار خطی */
+        .line-chart-container { height:120px; margin:6px 0 0; }
+        /* منوی پایین */
         .bottom-nav {
-            position: fixed;
-            bottom: 12px;
-            left: 12px;
-            right: 12px;
-            background: rgba(15, 21, 30, 0.85);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border-radius: 28px;
-            border: 1px solid rgba(255,255,255,0.06);
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding: 6px 0;
-            z-index: 1000;
-            box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+            position:fixed; bottom:12px; left:12px; right:12px;
+            background:rgba(15,21,30,0.85); backdrop-filter:blur(24px);
+            -webkit-backdrop-filter:blur(24px);
+            border-radius:32px; border:1px solid var(--border);
+            display:flex; justify-content:space-around; align-items:center;
+            padding:4px 0; z-index:1000; box-shadow:0 8px 40px rgba(0,0,0,0.5);
         }
         .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: #6a7b8c;
-            font-size: 10px;
-            transition: 0.2s;
-            cursor: pointer;
-            padding: 6px 12px;
-            border-radius: 20px;
-            position: relative;
-            min-width: 60px;
+            display:flex; flex-direction:column; align-items:center;
+            color:var(--text-secondary); font-size:10px; transition:.2s;
+            cursor:pointer; padding:4px 10px; border-radius:20px;
+            min-width:50px; position:relative;
         }
-        .nav-item i {
-            font-size: 20px;
-            margin-bottom: 0px;
-            transition: 0.2s;
+        .nav-item i { font-size:18px; margin-bottom:0; transition:.2s; }
+        .nav-item span { font-weight:500; font-size:9px; margin-top:1px; }
+        .nav-item.active { color:var(--green); background:rgba(74,222,128,0.06); }
+        .nav-item.active i { transform:translateY(-2px); filter:drop-shadow(0 0 12px rgba(74,222,128,0.15)); }
+        .nav-item .dot {
+            position:absolute; top:2px; right:6px; width:6px; height:6px;
+            background:var(--red); border-radius:50%; border:2px solid rgba(15,21,30,0.85);
         }
-        .nav-item span {
-            font-weight: 500;
-            font-size: 10px;
-            margin-top: 1px;
-        }
-        .nav-item.active {
-            color: #4ade80;
-            background: rgba(74, 222, 128, 0.08);
-        }
-        .nav-item.active i {
-            transform: translateY(-2px);
-            filter: drop-shadow(0 0 12px rgba(74,222,128,0.2));
-        }
-        .nav-item .badge-dot {
-            position: absolute;
-            top: 2px;
-            right: 6px;
-            width: 7px;
-            height: 7px;
-            background: #ef4444;
-            border-radius: 50%;
-            border: 2px solid rgba(15, 21, 30, 0.85);
-        }
-        /* اسکرول */
-        ::-webkit-scrollbar {
-            width: 3px;
-        }
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #2d3748;
-            border-radius: 10px;
-        }
-        @media (max-width: 480px) {
-            .input-row {
-                flex-direction: column;
-            }
-            .input-row input {
-                width: 100%;
-            }
-            .input-row .btn-group {
-                width: 100%;
-            }
-            .header h1 {
-                font-size: 17px;
-            }
-            .bottom-nav {
-                padding: 4px 0;
-            }
-            .nav-item {
-                min-width: 50px;
-                padding: 4px 8px;
-            }
-            .nav-item i {
-                font-size: 18px;
-            }
+        .scrollbar-hide::-webkit-scrollbar { width:2px; }
+        .scrollbar-hide::-webkit-scrollbar-track { background:transparent; }
+        .scrollbar-hide::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.1); border-radius:10px; }
+        @media(max-width:480px){
+            .header h1 { font-size:16px; }
+            .bottom-nav { padding:2px 0; }
+            .nav-item { min-width:44px; padding:2px 6px; }
+            .nav-item i { font-size:16px; }
+            .card .value { font-size:24px; }
         }
     </style>
 </head>
@@ -417,83 +214,131 @@
 <!-- هدر -->
 <div class="header">
     <div>
-        <h1>💰 کیف پول</h1>
-        <span class="badge">حرفه‌ای</span>
+        <h1 id="appTitle">💰 کیف پول</h1>
+        <span class="badge" id="appBadge">حرفه‌ای</span>
     </div>
-    <div class="avatar">پ</div>
+    <div class="header-actions">
+        <i class="fas fa-search" onclick="alert('جستجو...')"></i>
+        <div class="avatar">پ</div>
+    </div>
 </div>
 
 <!-- ========== صفحه ۱: خانه ========== -->
 <div id="page-home" class="page active">
-    <div class="rate-box" id="rateDisplay">
-        📈 در حال دریافت نرخ ارزها...
-    </div>
+    <div class="rate-box" id="rateDisplay">📈 در حال دریافت نرخ...</div>
     
-    <div class="card" style="padding-bottom: 6px;">
-        <div class="chart-container">
-            <canvas id="portfolioChart"></canvas>
+    <div class="card" style="padding-bottom:6px;">
+        <div class="line-chart-container">
+            <canvas id="lineChart"></canvas>
         </div>
     </div>
-
-    <div class="total">
-        <div class="label">مجموع دارایی</div>
+    
+    <div class="total-box">
+        <div class="label" data-i18n="total_label">مجموع دارایی</div>
         <div class="amount" id="totalRial">۰</div>
         <div class="sub" id="totalUsd">≈ ۰ تتر</div>
     </div>
 </div>
 
-<!-- ========== صفحه ۲: کیف پول ========== -->
+<!-- ========== صفحه ۲: کیف پول (لیست مینیمال ارزها) ========== -->
 <div id="page-wallet" class="page">
-    <div id="currenciesContainer"></div>
-    
-    <div class="card" style="margin-top: 8px;">
-        <h3>➕ افزودن ارز جدید</h3>
-        <div class="add-currency-section">
-            <input type="text" id="newCurrencyInput" placeholder="مثال: dogecoin, cardano">
-            <button onclick="addNewCurrency()">افزودن</button>
-        </div>
-        <div class="hint">
-            🟢 شناسه ارز رو از <a href="https://api.coingecko.com/api/v3/coins/list" target="_blank">لیست CoinGecko</a> پیدا کن.
-        </div>
+    <div class="card">
+        <h3>💎 دارایی‌های شما</h3>
+        <div class="currency-list" id="currencyList"></div>
     </div>
     
-    <div class="flex-row">
-        <button onclick="clearAllData()" class="btn-danger">🗑️ پاک کردن همه</button>
+    <div class="card">
+        <h3>➕ افزودن ارز جدید</h3>
+        <div style="display:flex; gap:8px; margin-top:8px;">
+            <input type="text" id="newCurrencyInput" placeholder="شناسه ارز (مثلاً dogecoin)" style="flex:1; padding:10px 14px; border:none; border-radius:16px; background:rgba(30,38,48,0.6); color:#fff; font-size:14px; outline:none; border:1px solid transparent; font-family:inherit;">
+            <button onclick="addNewCurrency()" style="padding:10px 20px; border:none; border-radius:16px; background:linear-gradient(135deg,var(--purple),#7c3aed); color:#fff; font-weight:600; cursor:pointer; font-family:inherit;">افزودن</button>
+        </div>
+        <div style="font-size:10px; color:var(--text-secondary); margin-top:4px;">🟢 از <a href="https://api.coingecko.com/api/v3/coins/list" target="_blank" style="color:var(--blue);">لیست CoinGecko</a> پیدا کن</div>
+    </div>
+    
+    <button onclick="clearAllData()" style="width:100%; padding:14px; border:none; border-radius:18px; background:linear-gradient(135deg,var(--red),#dc2626); color:#fff; font-weight:600; cursor:pointer; font-family:inherit;">🗑️ پاک کردن همه</button>
+</div>
+
+<!-- ========== صفحه ۳: مدیریت ========== -->
+<div id="page-manage" class="page">
+    <div class="card">
+        <h3>🔐 کیف پول‌های متصل</h3>
+        <div id="walletsList">
+            <div class="wallet-item">
+                <div class="info">
+                    <span class="name">TON Wallet</span>
+                    <span class="address">۰x1234...5678</span>
+                </div>
+                <div class="actions">
+                    <button class="edit-btn" onclick="editWallet('ton')"><i class="fas fa-edit"></i></button>
+                    <button class="delete-btn" onclick="removeWallet('ton')"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+            <div class="wallet-item">
+                <div class="info">
+                    <span class="name">Bitget Wallet</span>
+                    <span class="address">۰x9876...5432</span>
+                </div>
+                <div class="actions">
+                    <button class="edit-btn" onclick="editWallet('bitget')"><i class="fas fa-edit"></i></button>
+                    <button class="delete-btn" onclick="removeWallet('bitget')"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+        </div>
+        <button class="add-btn" onclick="addWallet()"><i class="fas fa-plus"></i> افزودن کیف پول جدید</button>
+    </div>
+
+    <div class="card">
+        <h3>🏦 صرافی‌های متصل</h3>
+        <div style="padding:10px 0; color:var(--text-secondary); text-align:center; font-size:13px;">هیچ صرافی متصل نیست</div>
+        <button class="add-btn" style="border-color:var(--purple); color:var(--purple);" onclick="connectExchange()"><i class="fas fa-link"></i> اتصال صرافی</button>
+    </div>
+
+    <div class="card">
+        <h3>🏛️ بانک‌های متصل</h3>
+        <div style="padding:10px 0; color:var(--text-secondary); text-align:center; font-size:13px;">هیچ بانکی متصل نیست</div>
+        <button class="add-btn" style="border-color:#f59e0b; color:#f59e0b;" onclick="connectBank()"><i class="fas fa-university"></i> اتصال بانک</button>
     </div>
 </div>
 
-<!-- ========== صفحه ۳: تاریخچه ========== -->
+<!-- ========== صفحه ۴: تاریخچه ========== -->
 <div id="page-history" class="page">
     <div class="card">
         <h3>📜 تمام تراکنش‌ها</h3>
-        <div id="historyContainer" class="history-list">
-            <div class="empty-history">هیچ تراکنشی ثبت نشده</div>
+        <div class="history-list" id="historyList">
+            <div class="empty-state">هیچ تراکنشی ثبت نشده</div>
         </div>
     </div>
 </div>
 
-<!-- ========== صفحه ۴: تنظیمات ========== -->
+<!-- ========== صفحه ۵: تنظیمات ========== -->
 <div id="page-settings" class="page">
     <div class="card">
-        <h3>⚙️ تنظیمات</h3>
-        <div style="margin-top:12px;">
-            <div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.05);">
-                <span style="color:#8899aa;">تعداد ارزها</span>
-                <span style="font-weight:700;" id="settingsCurrencyCount">۰</span>
-            </div>
-            <div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.05);">
-                <span style="color:#8899aa;">تعداد تراکنش‌ها</span>
-                <span style="font-weight:700;" id="settingsTransactionCount">۰</span>
-            </div>
-            <div style="display:flex; justify-content:space-between; padding:8px 0;">
-                <span style="color:#8899aa;">نسخه</span>
-                <span style="font-weight:700;">v3.1.0</span>
-            </div>
+        <h3>🌐 زبان</h3>
+        <div class="lang-selector">
+            <button class="lang-btn active" data-lang="fa" onclick="changeLang('fa')">فارسی</button>
+            <button class="lang-btn" data-lang="en" onclick="changeLang('en')">English</button>
+            <button class="lang-btn" data-lang="ar" onclick="changeLang('ar')">العربية</button>
+        </div>
+    </div>
+    <div class="card">
+        <h3>📊 آمار</h3>
+        <div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--border);">
+            <span style="color:var(--text-secondary);">تعداد ارزها</span>
+            <span style="font-weight:600;" id="statsCurrencies">۰</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--border);">
+            <span style="color:var(--text-secondary);">تعداد تراکنش‌ها</span>
+            <span style="font-weight:600;" id="statsTransactions">۰</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; padding:8px 0;">
+            <span style="color:var(--text-secondary);">نسخه</span>
+            <span style="font-weight:600;">v3.2.0</span>
         </div>
     </div>
     <div class="card">
         <h3>🔗 اتصال به والت</h3>
-        <button onclick="alert('اتصال به والت (TON) به زودی...')" style="width:100%; padding:14px; border:none; border-radius:18px; background:linear-gradient(135deg,#3b82f6,#2563eb); color:#fff; font-weight:700; font-size:15px; cursor:pointer; margin-top:10px; box-shadow:0 4px 16px rgba(59,130,246,0.3); font-family:'Vazirmatn',sans-serif;">
+        <button onclick="alert('اتصال به والت (TON) به زودی...')" style="width:100%; padding:14px; border:none; border-radius:18px; background:linear-gradient(135deg,var(--blue),#2563eb); color:#fff; font-weight:700; font-size:15px; cursor:pointer; margin-top:6px; box-shadow:0 4px 16px rgba(59,130,246,0.25); font-family:inherit;">
             <i class="fas fa-wallet"></i> اتصال کیف پول
         </button>
     </div>
@@ -502,66 +347,83 @@
 <!-- ========== منوی پایین ========== -->
 <div class="bottom-nav">
     <div class="nav-item active" data-page="home" onclick="switchPage('home')">
-        <i class="fas fa-home"></i>
-        <span>خانه</span>
+        <i class="fas fa-home"></i><span data-i18n="home">خانه</span>
     </div>
     <div class="nav-item" data-page="wallet" onclick="switchPage('wallet')">
-        <i class="fas fa-wallet"></i>
-        <span>کیف پول</span>
+        <i class="fas fa-wallet"></i><span data-i18n="wallet">کیف پول</span>
+    </div>
+    <div class="nav-item" data-page="manage" onclick="switchPage('manage')">
+        <i class="fas fa-layer-group"></i><span data-i18n="manage">مدیریت</span>
     </div>
     <div class="nav-item" data-page="history" onclick="switchPage('history')">
-        <i class="fas fa-clock"></i>
-        <span>تاریخچه</span>
-        <span class="badge-dot" id="historyBadge" style="display:none;"></span>
+        <i class="fas fa-clock"></i><span data-i18n="history">تاریخچه</span>
+        <span class="dot" id="historyDot" style="display:none;"></span>
     </div>
     <div class="nav-item" data-page="settings" onclick="switchPage('settings')">
-        <i class="fas fa-sliders-h"></i>
-        <span>تنظیمات</span>
+        <i class="fas fa-sliders-h"></i><span data-i18n="settings">تنظیمات</span>
     </div>
 </div>
 
 <script>
+    // ========== ترجمه‌ها ==========
+    const i18n = {
+        fa: {
+            home: 'خانه', wallet: 'کیف پول', manage: 'مدیریت',
+            history: 'تاریخچه', settings: 'تنظیمات',
+            total_label: 'مجموع دارایی'
+        },
+        en: {
+            home: 'Home', wallet: 'Wallet', manage: 'Manage',
+            history: 'History', settings: 'Settings',
+            total_label: 'Total Assets'
+        },
+        ar: {
+            home: 'الرئيسية', wallet: 'المحفظة', manage: 'إدارة',
+            history: 'التاريخ', settings: 'الإعدادات',
+            total_label: 'إجمالي الأصول'
+        }
+    };
+    let currentLang = 'fa';
+
+    function changeLang(lang) {
+        currentLang = lang;
+        document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.dataset.i18n;
+            if (i18n[lang] && i18n[lang][key]) el.textContent = i18n[lang][key];
+        });
+        document.getElementById('appTitle').textContent = lang === 'fa' ? '💰 کیف پول' : lang === 'en' ? '💰 Wallet' : '💰 المحفظة';
+        document.getElementById('appBadge').textContent = lang === 'fa' ? 'حرفه‌ای' : lang === 'en' ? 'Pro' : 'احترافي';
+    }
+
     // ========== وضعیت ==========
     let currencies = [
-        { id: 'rial', label: 'ریال', symbol: '🇮🇷', amount: 0, isCrypto: false },
-        { id: 'usdt', label: 'تتر', symbol: '₿', amount: 0, isCrypto: true },
-        { id: 'bitcoin', label: 'بیت‌کوین', symbol: '₿', amount: 0, isCrypto: true },
-        { id: 'ethereum', label: 'اتریوم', symbol: '⟠', amount: 0, isCrypto: true }
+        { id: 'rial', label: 'ریال', symbol: '🇮🇷', amount: 12000000, isCrypto: false },
+        { id: 'usdt', label: 'تتر', symbol: '₿', amount: 25, isCrypto: true },
+        { id: 'bitcoin', label: 'بیت‌کوین', symbol: '₿', amount: 0.002, isCrypto: true },
+        { id: 'ethereum', label: 'اتریوم', symbol: '⟠', amount: 0.05, isCrypto: true }
     ];
     let prices = {};
-    let rialRate = 58000;
-    let transactions = [];
+    let transactions = [
+        { label: '➕ واریز ۱۰۰ تتر', amount: 100, type: 'deposit', date: '۱۴۰۲/۱۰/۱۲' },
+        { label: '➖ برداشت ۲۰ دلار', amount: 20, type: 'withdraw', date: '۱۴۰۲/۱۰/۱۱' }
+    ];
     let chartInstance = null;
+    let lineChartInstance = null;
 
-    // ========== دریافت نرخ ارزها (با پروکسی رایگان) ==========
+    // ========== دریافت نرخ ==========
     async function fetchRates() {
         const cryptoIds = currencies.filter(c => c.isCrypto).map(c => c.id).join(',');
         if (!cryptoIds) return;
         try {
-            // استفاده از پروکسی رایگان برای دور زدن محدودیت‌ها
-            const proxyUrl = 'https://api.allorigins.win/raw?url=';
-            const targetUrl = `https://api.coingecko.com/api/v3/simple/price?ids=${cryptoIds}&vs_currencies=usd`;
-            const res = await fetch(proxyUrl + encodeURIComponent(targetUrl));
+            const proxy = 'https://api.allorigins.win/raw?url=';
+            const url = `https://api.coingecko.com/api/v3/simple/price?ids=${cryptoIds}&vs_currencies=usd`;
+            const res = await fetch(proxy + encodeURIComponent(url));
             const data = await res.json();
-            for (let id in data) {
-                prices[id] = data[id].usd || 0;
-            }
-            
-            // دریافت نرخ ریال از بازار آزاد (با پروکسی)
-            try {
-                const rialRes = await fetch(proxyUrl + encodeURIComponent('https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=usd'));
-                const rialData = await rialRes.json();
-                // نرخ ریال رو از یه منبع دیگه میگیریم (اینجا از همون تتر استفاده میکنیم)
-                // در صورت دسترسی به api.nerkh.io یا منابع دیگه، میتونیم بهبود بدیم
-                // فعلاً همون نرخ ثابت رو نگه میداریم ولی نمایشش نمیدیم
-            } catch (e) {
-                console.log('نرخ ریال دریافت نشد');
-            }
-            
+            for (let id in data) prices[id] = data[id].usd || 0;
             updateRateDisplay();
-        } catch (error) {
+        } catch {
             document.getElementById('rateDisplay').innerHTML = '⚠️ عدم دریافت نرخ لحظه‌ای';
-            console.log('خطا در دریافت نرخ:', error);
         }
     }
 
@@ -572,10 +434,7 @@
                 html += `${c.symbol} ${c.label}: <span>$${prices[c.id].toLocaleString()}</span> | `;
             }
         }
-        // نمایش قیمت تتر به عنوان نرخ مبنا
-        if (prices['usdt']) {
-            html += `💵 نرخ تتر: <span>$${prices['usdt']}</span>`;
-        }
+        if (prices['usdt']) html += `💵 تتر: <span>$${prices['usdt']}</span>`;
         document.getElementById('rateDisplay').innerHTML = html || '📈 در حال دریافت نرخ...';
     }
 
@@ -595,56 +454,54 @@
         }
     }
 
-    // ========== رندر ارزها ==========
-    function renderCurrencies() {
-        const container = document.getElementById('currenciesContainer');
+    // ========== رندر لیست مینیمال ارزها ==========
+    function renderCurrencyList() {
+        const container = document.getElementById('currencyList');
         container.innerHTML = '';
-        for (let i = 0; i < currencies.length; i++) {
-            const c = currencies[i];
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.innerHTML = `
-                <h3>${c.symbol} ${c.label}</h3>
-                <div class="value" id="value-${c.id}">${c.amount.toLocaleString()}</div>
-                <div class="input-row">
-                    <input type="number" id="input-${c.id}" placeholder="مقدار ${c.label}">
-                    <div class="btn-group">
-                        <button class="deposit" onclick="updateAmount('${c.id}','deposit')">➕ واریز</button>
-                        <button class="withdraw" onclick="updateAmount('${c.id}','withdraw')">➖ برداشت</button>
-                        ${currencies.length > 1 ? `<button class="remove-btn" onclick="removeCurrency('${c.id}')">🗑️</button>` : ''}
+        for (let c of currencies) {
+            const div = document.createElement('div');
+            div.className = 'currency-item';
+            const val = c.amount.toLocaleString();
+            div.innerHTML = `
+                <div class="info">
+                    <span class="icon">${c.symbol}</span>
+                    <span class="name">${c.label}</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:12px;">
+                    <span class="balance">${val} <small>${c.id === 'rial' ? 'تومان' : ''}</small></span>
+                    <div class="actions">
+                        <button class="deposit-btn" onclick="quickAction('${c.id}','deposit')"><i class="fas fa-plus"></i></button>
+                        <button class="withdraw-btn" onclick="quickAction('${c.id}','withdraw')"><i class="fas fa-minus"></i></button>
                     </div>
                 </div>
             `;
-            container.appendChild(card);
+            container.appendChild(div);
         }
         updateTotal();
         updateHistory();
         updateChart();
-        updateSettings();
+        updateStats();
         saveData();
     }
 
-    // ========== واریز/برداشت ==========
-    function updateAmount(id, type) {
-        const currency = currencies.find(c => c.id === id);
-        if (!currency) return;
-        const input = document.getElementById(`input-${id}`);
-        const amount = parseFloat(input.value);
-        if (!amount || amount <= 0) return alert('مقدار معتبر وارد کن');
-        if (type === 'withdraw' && amount > currency.amount) {
-            alert(`موجودی کافی نیست! موجودی: ${currency.amount.toLocaleString()}`);
+    // ========== اقدام سریع (واریز/برداشت) ==========
+    function quickAction(id, type) {
+        const c = currencies.find(x => x.id === id);
+        if (!c) return;
+        const amount = type === 'deposit' ? 1000 : (c.id === 'rial' ? 100000 : 1);
+        if (type === 'withdraw' && amount > c.amount) {
+            alert(`موجودی کافی نیست! موجودی: ${c.amount.toLocaleString()}`);
             return;
         }
-        currency.amount = type === 'deposit' ? currency.amount + amount : currency.amount - amount;
-        input.value = '';
+        c.amount = type === 'deposit' ? c.amount + amount : c.amount - amount;
         transactions.push({
-            label: `${type === 'deposit' ? '➕' : '➖'} ${currency.symbol} ${currency.label} ${type === 'deposit' ? '+' : '-'}${amount.toLocaleString()}`,
+            label: `${type === 'deposit' ? '➕' : '➖'} ${c.symbol} ${c.label} ${type === 'deposit' ? '+' : '-'}${amount.toLocaleString()}`,
             amount: amount,
             type: type,
             date: new Date().toLocaleString('fa-IR')
         });
-        renderCurrencies();
-        document.getElementById('historyBadge').style.display = 'block';
+        renderCurrencyList();
+        document.getElementById('historyDot').style.display = 'block';
     }
 
     // ========== افزودن/حذف ارز ==========
@@ -658,39 +515,22 @@
             .then(data => {
                 const symbol = data.symbol ? data.symbol.toUpperCase() : id.slice(0,3).toUpperCase();
                 currencies.push({
-                    id: id,
-                    label: data.name || id,
-                    symbol: symbol,
-                    amount: 0,
-                    isCrypto: true
+                    id, label: data.name || id, symbol, amount: 0, isCrypto: true
                 });
                 input.value = '';
-                renderCurrencies();
+                renderCurrencyList();
                 fetchRates();
             })
             .catch(() => alert('ارز پیدا نشد! شناسه رو چک کن.'));
-    }
-
-    function removeCurrency(id) {
-        if (currencies.length <= 1) return alert('حداقل یک ارز باید باقی بمونه');
-        if (!confirm(`ارز ${id} حذف بشه؟`)) return;
-        currencies = currencies.filter(c => c.id !== id);
-        renderCurrencies();
-        fetchRates();
     }
 
     // ========== مجموع ==========
     function updateTotal() {
         let totalUsd = 0;
         for (let c of currencies) {
-            if (c.id === 'rial') {
-                // ریال رو با نرخ ثابت ۵۸۰۰۰ به دلار تبدیل میکنیم (برای محاسبه)
-                totalUsd += c.amount / 58000;
-            } else if (c.isCrypto && prices[c.id]) {
-                totalUsd += c.amount * prices[c.id];
-            } else if (c.id === 'usdt') {
-                totalUsd += c.amount * 1;
-            }
+            if (c.id === 'rial') totalUsd += c.amount / 58000;
+            else if (c.isCrypto && prices[c.id]) totalUsd += c.amount * prices[c.id];
+            else if (c.id === 'usdt') totalUsd += c.amount * 1;
         }
         const totalRial = totalUsd * 58000;
         document.getElementById('totalRial').textContent = totalRial.toLocaleString() + ' تومان';
@@ -699,15 +539,15 @@
 
     // ========== تاریخچه ==========
     function updateHistory() {
-        const container = document.getElementById('historyContainer');
+        const container = document.getElementById('historyList');
         if (transactions.length === 0) {
-            container.innerHTML = '<div class="empty-history">هیچ تراکنشی ثبت نشده</div>';
+            container.innerHTML = '<div class="empty-state">هیچ تراکنشی ثبت نشده</div>';
             return;
         }
         let html = '';
         const reversed = [...transactions].reverse().slice(0, 30);
         for (let t of reversed) {
-            const cls = t.type === 'withdraw' ? 'withdraw-amount' : 'deposit-amount';
+            const cls = t.type === 'withdraw' ? 'withdraw' : 'deposit';
             html += `
                 <div class="history-item">
                     <span>${t.label}</span>
@@ -719,12 +559,13 @@
             `;
         }
         container.innerHTML = html;
-        document.getElementById('historyBadge').style.display = transactions.length > 0 ? 'block' : 'none';
+        document.getElementById('historyDot').style.display = transactions.length > 0 ? 'block' : 'none';
     }
 
-    // ========== نمودار ==========
+    // ========== نمودار دونات ==========
     function updateChart() {
-        const ctx = document.getElementById('portfolioChart').getContext('2d');
+        const ctx = document.getElementById('portfolioChart')?.getContext('2d');
+        if (!ctx) return;
         const data = [], labels = [];
         const colors = ['#f59e0b','#26a17b','#f7931a','#627eea','#8b5cf6','#ec4899','#14b8a6','#f97316'];
         for (let c of currencies) {
@@ -774,10 +615,75 @@
         });
     }
 
-    // ========== تنظیمات ==========
-    function updateSettings() {
-        document.getElementById('settingsCurrencyCount').textContent = currencies.length;
-        document.getElementById('settingsTransactionCount').textContent = transactions.length;
+    // ========== نمودار خطی ==========
+    function updateLineChart() {
+        const ctx = document.getElementById('lineChart')?.getContext('2d');
+        if (!ctx) return;
+        if (lineChartInstance) lineChartInstance.destroy();
+        // داده‌های ساختگی برای ۷ روز
+        const days = ['شنبه','یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه'];
+        const values = [125, 130, 128, 135, 140, 138, 145];
+        lineChartInstance = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: days,
+                datasets: [{
+                    label: 'تغییرات دارایی (تتر)',
+                    data: values,
+                    borderColor: '#4ade80',
+                    backgroundColor: 'rgba(74,222,128,0.08)',
+                    fill: true,
+                    tension: 0.3,
+                    pointBackgroundColor: '#4ade80',
+                    pointBorderColor: '#0a0c12',
+                    pointBorderWidth: 2,
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    x: { grid: { color: 'rgba(255,255,255,0.03)' }, ticks: { color: '#6a7b8c', font: { size: 9 } } },
+                    y: { grid: { color: 'rgba(255,255,255,0.03)' }, ticks: { color: '#6a7b8c', font: { size: 9 } } }
+                }
+            }
+        });
+    }
+
+    // ========== مدیریت ولت‌ها ==========
+    function addWallet() {
+        const name = prompt('نام کیف پول:');
+        if (!name) return;
+        const address = prompt('آدرس کیف پول:');
+        if (!address) return;
+        alert(`کیف پول ${name} با آدرس ${address} اضافه شد!`);
+    }
+
+    function editWallet(id) {
+        const newName = prompt('نام جدید:');
+        if (newName) alert(`کیف پول ${id} به ${newName} تغییر یافت.`);
+    }
+
+    function removeWallet(id) {
+        if (confirm(`کیف پول ${id} حذف شود؟`)) alert(`کیف پول ${id} حذف شد.`);
+    }
+
+    function connectExchange() {
+        alert('اتصال به صرافی (OKX/Binance) به زودی...');
+    }
+
+    function connectBank() {
+        alert('اتصال به بانک (تجارت/ملی) به زودی...');
+    }
+
+    // ========== آمار ==========
+    function updateStats() {
+        document.getElementById('statsCurrencies').textContent = currencies.length;
+        document.getElementById('statsTransactions').textContent = transactions.length;
     }
 
     // ========== پاک کردن ==========
@@ -786,7 +692,7 @@
         for (let c of currencies) c.amount = 0;
         transactions = [];
         localStorage.clear();
-        renderCurrencies();
+        renderCurrencyList();
         document.querySelectorAll('.input-row input').forEach(inp => inp.value = '');
     }
 
@@ -796,16 +702,18 @@
         document.getElementById(`page-${page}`).classList.add('active');
         document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
         document.querySelector(`.nav-item[data-page="${page}"]`).classList.add('active');
-        if (page === 'home') { updateTotal(); updateChart(); }
+        if (page === 'home') { updateTotal(); updateChart(); updateLineChart(); }
         if (page === 'history') updateHistory();
-        if (page === 'settings') updateSettings();
+        if (page === 'settings') updateStats();
     }
 
     // ========== شروع ==========
     loadData();
-    renderCurrencies();
+    renderCurrencyList();
     fetchRates();
     setInterval(fetchRates, 60000);
+    // نمودار خطی رو بعد از لود کامل نشون بده
+    setTimeout(updateLineChart, 300);
 </script>
 </body>
 </html>
