@@ -56,7 +56,6 @@
             box-shadow: 0 8px 32px rgba(0,0,0,0.25);
         }
         .card h3 { font-size: 13px; color: #8899aa; font-weight: 400; margin-bottom: 6px; }
-        /* قیمت‌ها */
         .price-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -75,16 +74,6 @@
         .price-item .symbol { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 2px; }
         .price-item .price { font-size: 14px; font-weight: 600; color: #4ade80; direction: ltr; }
         .price-item .price.usd { font-size: 11px; color: #8899aa; font-weight: 400; margin-top: 2px; }
-        .price-item .change {
-            font-size: 11px;
-            margin-top: 2px;
-        }
-        .price-item .change.up { color: #4ade80; }
-        .price-item .change.down { color: #ef4444; }
-        .price-item .loading {
-            color: #8899aa;
-            font-size: 12px;
-        }
         .currency-item {
             display: flex; justify-content: space-between; align-items: center;
             padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
@@ -263,7 +252,6 @@
 
     <!-- صفحه خانه -->
     <div id="page-home" class="page active">
-        <!-- قیمت‌ها -->
         <div class="card">
             <h3 data-i18n="prices_title">📊 قیمت لحظه‌ای ارزها</h3>
             <div class="price-grid" id="priceGrid">
@@ -422,12 +410,12 @@
                 </div>
                 <span class="value" data-i18n="backup_value">دستی</span>
             </div>
-            <div class="settings-item" onclick="alert('ℹ️ نسخه v7.1.0')">
+            <div class="settings-item" onclick="alert('ℹ️ نسخه v8.0.0')">
                 <div class="left">
                     <span class="icon"><i class="fas fa-info-circle"></i></span>
                     <span class="label" data-i18n="about_label">درباره</span>
                 </div>
-                <span class="value">v7.1.0</span>
+                <span class="value">v8.0.0</span>
             </div>
         </div>
         <div class="card" style="border:1px solid rgba(239,68,68,0.1);">
@@ -582,67 +570,55 @@
             { label: '➖ برداشت ۲۰ دلار', amount: 20, type: 'withdraw', date: '۱۴۰۲/۱۰/۱۱' }
         ];
 
-        // ========== دریافت قیمت‌ها از API عمومی ==========
+        // ========== دریافت قیمت از Binance ==========
         async function fetchPrices() {
             const rateDisplay = document.getElementById('rateDisplay');
             rateDisplay.innerHTML = '⏳ <span data-i18n="loading_rate">در حال دریافت قیمت‌ها...</span>';
 
             try {
-                // API 1: از وب‌سایت ایرانی mihanblockchain (معمولاً در دسترس)
-                const urls = [
-                    'https://mihanblockchain.com/api/price?symbols=BTC,ETH,TON,TRX',
-                    'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,toncoin,tron&vs_currencies=usd')
-                ];
+                // لیست نمادهای مورد نظر در Binance
+                const symbols = ['BTCUSDT', 'ETHUSDT', 'TONUSDT', 'TRXUSDT'];
+                let results = {};
 
-                let data = null;
-                for (let url of urls) {
+                // دریافت قیمت برای هر نماد به صورت جداگانه (برای جلوگیری از خطای CORS)
+                for (let sym of symbols) {
                     try {
-                        const res = await fetch(url);
-                        if (res.ok) {
-                            data = await res.json();
-                            break;
+                        const url = `https://api.binance.com/api/v3/ticker/price?symbol=${sym}`;
+                        const response = await fetch(url);
+                        if (response.ok) {
+                            const data = await response.json();
+                            const price = parseFloat(data.price);
+                            if (price > 0) {
+                                const key = sym.replace('USDT', '').toLowerCase();
+                                results[key] = price;
+                            }
                         }
-                    } catch (e) { console.warn('API failed:', e); }
+                    } catch (e) {
+                        console.warn(`خطا در دریافت ${sym}:`, e);
+                    }
                 }
 
-                if (data) {
-                    // بروزرسانی قیمت‌ها
-                    let btcPrice = 0, ethPrice = 0, tonPrice = 0, trxPrice = 0;
-
-                    // اگر از mihanblockchain باشه
-                    if (data.BTC) {
-                        btcPrice = data.BTC;
-                        ethPrice = data.ETH;
-                        tonPrice = data.TON;
-                        trxPrice = data.TRX;
-                    }
-                    // اگر از coingecko باشه
-                    else if (data.bitcoin) {
-                        btcPrice = data.bitcoin.usd || 0;
-                        ethPrice = data.ethereum.usd || 0;
-                        tonPrice = data.toncoin?.usd || 0;
-                        trxPrice = data.tron?.usd || 0;
-                    }
-
+                // اگر داده‌ای دریافت شد
+                if (Object.keys(results).length > 0) {
                     // ذخیره در prices
-                    prices.bitcoin = btcPrice;
-                    prices.ethereum = ethPrice;
-                    prices.toncoin = tonPrice;
-                    prices.tron = trxPrice;
+                    if (results.btc) prices.bitcoin = results.btc;
+                    if (results.eth) prices.ethereum = results.eth;
+                    if (results.ton) prices.toncoin = results.ton;
+                    if (results.trx) prices.tron = results.trx;
                     prices.usdt = 1;
 
                     // بروزرسانی UI
-                    updatePriceUI('btc', btcPrice);
-                    updatePriceUI('eth', ethPrice);
-                    updatePriceUI('ton', tonPrice);
-                    updatePriceUI('trx', trxPrice);
+                    updatePriceUI('btc', results.btc || 0);
+                    updatePriceUI('eth', results.eth || 0);
+                    updatePriceUI('ton', results.ton || 0);
+                    updatePriceUI('trx', results.trx || 0);
 
                     // بروزرسانی rateDisplay
                     let html = '';
-                    if (btcPrice) html += `BTC: <span>$${btcPrice.toFixed(2)}</span> | `;
-                    if (ethPrice) html += `ETH: <span>$${ethPrice.toFixed(2)}</span> | `;
-                    if (tonPrice) html += `TON: <span>$${tonPrice.toFixed(2)}</span> | `;
-                    if (trxPrice) html += `TRX: <span>$${trxPrice.toFixed(4)}</span>`;
+                    if (results.btc) html += `BTC: <span>$${results.btc.toFixed(2)}</span> | `;
+                    if (results.eth) html += `ETH: <span>$${results.eth.toFixed(2)}</span> | `;
+                    if (results.ton) html += `TON: <span>$${results.ton.toFixed(4)}</span> | `;
+                    if (results.trx) html += `TRX: <span>$${results.trx.toFixed(6)}</span>`;
                     if (html) {
                         rateDisplay.innerHTML = html + ` <button class="refresh-btn" onclick="fetchPrices()"><i class="fas fa-sync-alt"></i></button>`;
                     } else {
@@ -663,10 +639,16 @@
             const priceEl = document.getElementById(`price-${symbol}`);
             const usdEl = document.getElementById(`price-${symbol}-usd`);
             if (priceEl && price > 0) {
-                priceEl.textContent = `$${price.toFixed(2)}`;
+                // نمایش قیمت با دقت مناسب
+                let displayPrice = price;
+                if (symbol === 'trx') displayPrice = price.toFixed(6);
+                else if (symbol === 'ton') displayPrice = price.toFixed(4);
+                else displayPrice = price.toFixed(2);
+                
+                priceEl.textContent = `$${displayPrice}`;
                 priceEl.style.color = '#4ade80';
                 if (usdEl) {
-                    usdEl.textContent = `$${price.toFixed(2)}`;
+                    usdEl.textContent = `$${displayPrice}`;
                     usdEl.style.color = '#8899aa';
                 }
             } else if (priceEl) {
