@@ -167,7 +167,7 @@
         .manage-item .label { font-size: 14px; font-weight: 600; color: #fff; }
         .manage-item .desc { font-size: 11px; color: #8899aa; margin-top: 4px; }
         
-        /* ===== کارت‌های بانکی (نسخه نهایی) ===== */
+        /* ===== کارت‌های بانکی (نسخه نهایی با تغییرات) ===== */
         .bank-card {
             border-radius: 20px;
             padding: 20px;
@@ -190,11 +190,6 @@
             display: flex; align-items: center; justify-content: center;
             font-size: 28px;
             flex-shrink: 0;
-        }
-        .bank-card .bank-icon img {
-            width: 32px; height: 32px;
-            border-radius: 8px;
-            object-fit: contain;
         }
         .bank-card .bank-name { font-weight: 700; font-size: 18px; color: #fff; }
         .bank-card .card-number { font-size: 13px; color: rgba(255,255,255,0.6); direction: ltr; letter-spacing: 2px; }
@@ -500,7 +495,7 @@
         </div>
     </div>
 
-    <!-- ===== صفحه بانک‌ها (نسخه نهایی با قابلیت‌های کامل) ===== -->
+    <!-- ===== صفحه بانک‌ها (با تغییرات نهایی) ===== -->
     <div id="page-banks" class="page">
         <div class="card">
             <button class="back-btn" onclick="switchPage('manage')"><i class="fas fa-arrow-right"></i> <span data-i18n="back_to_manage">بازگشت به مدیریت</span></button>
@@ -832,7 +827,7 @@
         }
 
         // ============================================================
-        //  مدیریت بانک‌ها (داده و توابع)
+        //  مدیریت بانک‌ها (با تغییرات نهایی)
         // ============================================================
         let banks = [];
         let bankIdCounter = 0;
@@ -874,10 +869,10 @@
                     banks = data.banks || [];
                     bankIdCounter = data.counter || 0;
                 } else {
-                    // داده‌های نمونه
+                    // داده‌های نمونه با آیکون اختصاصی بانک تجارت
                     banks = [
-                        { id: ++bankIdCounter, name: 'بانک تجارت', cardNumber: '**** **** **** 1234', balance: 12450000, active: true, icon: '🏦' },
-                        { id: ++bankIdCounter, name: 'بانک ملی', cardNumber: '**** **** **** 5678', balance: 8200000, active: false, icon: '🏛️' }
+                        { id: ++bankIdCounter, name: 'بانک تجارت', cardNumber: '**** **** **** 1234', balance: 12450000, active: true },
+                        { id: ++bankIdCounter, name: 'بانک ملی', cardNumber: '**** **** **** 5678', balance: 8200000, active: false }
                     ];
                     saveBanks();
                 }
@@ -911,7 +906,8 @@
 
             for (let bank of banks) {
                 const colorClass = bankColors[bank.name] || 'color-blue';
-                const icon = bank.icon || bankIcons[bank.name] || '🏦';
+                // گرفتن آیکون از لیست آیکون‌ها
+                const icon = bankIcons[bank.name] || '🏦';
                 const statusText = bank.active ? t.active_status : t.inactive_status;
                 const statusClass = bank.active ? 'active' : 'inactive';
                 const menuId = `bank-menu-${bank.id}`;
@@ -985,14 +981,12 @@
             if (balanceInput === null) return;
             const balance = parseFloat(balanceInput.replace(/,/g, '')) || 0;
             
-            const icon = bankIcons[name] || '🏦';
             banks.push({
                 id: ++bankIdCounter,
                 name: name,
                 cardNumber: cardNumber,
                 balance: balance,
-                active: true,
-                icon: icon
+                active: true
             });
             saveBanks();
             renderBanks();
@@ -1013,8 +1007,6 @@
             bank.name = newName.trim() || bank.name;
             bank.cardNumber = newCard.trim() || bank.cardNumber;
             bank.balance = parseFloat(newBalance.replace(/,/g, '')) || bank.balance;
-            // بروزرسانی آیکون
-            bank.icon = bankIcons[bank.name] || '🏦';
             saveBanks();
             renderBanks();
         }
