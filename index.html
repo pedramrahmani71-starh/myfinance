@@ -56,6 +56,35 @@
             box-shadow: 0 8px 32px rgba(0,0,0,0.25);
         }
         .card h3 { font-size: 13px; color: #8899aa; font-weight: 400; margin-bottom: 6px; }
+        /* قیمت‌ها */
+        .price-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-top: 4px;
+        }
+        .price-item {
+            background: rgba(30,38,48,0.5);
+            border-radius: 16px;
+            padding: 12px 6px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.04);
+            transition: all .2s;
+        }
+        .price-item:hover { border-color: rgba(0,136,204,0.2); background: rgba(30,38,48,0.7); }
+        .price-item .symbol { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 2px; }
+        .price-item .price { font-size: 14px; font-weight: 600; color: #4ade80; direction: ltr; }
+        .price-item .price.usd { font-size: 11px; color: #8899aa; font-weight: 400; margin-top: 2px; }
+        .price-item .change {
+            font-size: 11px;
+            margin-top: 2px;
+        }
+        .price-item .change.up { color: #4ade80; }
+        .price-item .change.down { color: #ef4444; }
+        .price-item .loading {
+            color: #8899aa;
+            font-size: 12px;
+        }
         .currency-item {
             display: flex; justify-content: space-between; align-items: center;
             padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
@@ -97,6 +126,10 @@
             border: 1px solid rgba(255,255,255,0.04);
         }
         .rate-box span { color: #4ade80; font-weight: 600; }
+        .rate-box .refresh-btn {
+            background: transparent; border: none; color: #0088cc;
+            cursor: pointer; font-size: 14px; margin-right: 8px;
+        }
         .history-list { max-height: 300px; overflow-y: auto; margin-top: 8px; padding-top: 6px; }
         .history-item {
             display: flex; justify-content: space-between; align-items: center;
@@ -204,34 +237,8 @@
             background: linear-gradient(135deg, #ef4444, #dc2626);
             color: #fff; font-weight: 600; cursor: pointer; font-family: inherit;
         }
-        /* TradingView Widget Container */
-        .tv-widget-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 6px;
-        }
-        .tv-widget-container .tv-item {
-            background: rgba(30,38,48,0.4);
-            border-radius: 16px;
-            padding: 6px 4px;
-            border: 1px solid rgba(255,255,255,0.04);
-            min-height: 60px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-        .tv-widget-container .tv-item iframe {
-            width: 100%;
-            height: 100%;
-            min-height: 60px;
-            border: none;
-            border-radius: 12px;
-        }
         @media(max-width:480px){
-            .tv-widget-container { grid-template-columns: 1fr 1fr; gap: 6px; }
+            .price-grid { grid-template-columns: repeat(2, 1fr); }
             .header h1 { font-size: 16px; }
             .bottom-nav { padding: 2px 0; }
             .nav-item { min-width: 44px; padding: 2px 6px; }
@@ -256,27 +263,36 @@
 
     <!-- صفحه خانه -->
     <div id="page-home" class="page active">
-        <!-- قیمت‌های لحظه‌ای با TradingView Widget -->
+        <!-- قیمت‌ها -->
         <div class="card">
             <h3 data-i18n="prices_title">📊 قیمت لحظه‌ای ارزها</h3>
-            <div class="tv-widget-container" id="tvWidgetContainer">
-                <div class="tv-item" id="tv-btc">
-                    <iframe src="https://s.tradingview.com/widgetembed/?frameElementId=tv-btc&symbol=BTCUSDT&interval=1&hidesidetoolbar=1&symboledit=1&saveimage=1&toolbarbg=f1f3f6&studies=[]&hideideas=1&theme=dark&style=1&timezone=Etc/UTC&studies_overrides={}&overrides={}&enabled_features=[]&disabled_features=[]&locale=fa&withdateranges=1" style="width:100%; height:70px; border:none; border-radius:12px;"></iframe>
+            <div class="price-grid" id="priceGrid">
+                <div class="price-item">
+                    <div class="symbol">BTC</div>
+                    <div class="price" id="price-btc">⏳</div>
+                    <div class="price usd" id="price-btc-usd">$0</div>
                 </div>
-                <div class="tv-item" id="tv-eth">
-                    <iframe src="https://s.tradingview.com/widgetembed/?frameElementId=tv-eth&symbol=ETHUSDT&interval=1&hidesidetoolbar=1&symboledit=1&saveimage=1&toolbarbg=f1f3f6&studies=[]&hideideas=1&theme=dark&style=1&timezone=Etc/UTC&studies_overrides={}&overrides={}&enabled_features=[]&disabled_features=[]&locale=fa&withdateranges=1" style="width:100%; height:70px; border:none; border-radius:12px;"></iframe>
+                <div class="price-item">
+                    <div class="symbol">ETH</div>
+                    <div class="price" id="price-eth">⏳</div>
+                    <div class="price usd" id="price-eth-usd">$0</div>
                 </div>
-                <div class="tv-item" id="tv-ton">
-                    <iframe src="https://s.tradingview.com/widgetembed/?frameElementId=tv-ton&symbol=TONUSDT&interval=1&hidesidetoolbar=1&symboledit=1&saveimage=1&toolbarbg=f1f3f6&studies=[]&hideideas=1&theme=dark&style=1&timezone=Etc/UTC&studies_overrides={}&overrides={}&enabled_features=[]&disabled_features=[]&locale=fa&withdateranges=1" style="width:100%; height:70px; border:none; border-radius:12px;"></iframe>
+                <div class="price-item">
+                    <div class="symbol">TON</div>
+                    <div class="price" id="price-ton">⏳</div>
+                    <div class="price usd" id="price-ton-usd">$0</div>
                 </div>
-                <div class="tv-item" id="tv-trx">
-                    <iframe src="https://s.tradingview.com/widgetembed/?frameElementId=tv-trx&symbol=TRXUSDT&interval=1&hidesidetoolbar=1&symboledit=1&saveimage=1&toolbarbg=f1f3f6&studies=[]&hideideas=1&theme=dark&style=1&timezone=Etc/UTC&studies_overrides={}&overrides={}&enabled_features=[]&disabled_features=[]&locale=fa&withdateranges=1" style="width:100%; height:70px; border:none; border-radius:12px;"></iframe>
+                <div class="price-item">
+                    <div class="symbol">TRX</div>
+                    <div class="price" id="price-trx">⏳</div>
+                    <div class="price usd" id="price-trx-usd">$0</div>
                 </div>
             </div>
         </div>
 
         <div class="rate-box" id="rateDisplay">
-            📈 <span data-i18n="loading_rate">قیمت‌ها از TradingView دریافت میشوند</span>
+            📈 <span data-i18n="loading_rate">در حال دریافت قیمت‌ها...</span>
+            <button class="refresh-btn" onclick="fetchPrices()"><i class="fas fa-sync-alt"></i></button>
         </div>
         <div class="total-box">
             <div class="label" data-i18n="total_label">مجموع دارایی</div>
@@ -406,12 +422,12 @@
                 </div>
                 <span class="value" data-i18n="backup_value">دستی</span>
             </div>
-            <div class="settings-item" onclick="alert('ℹ️ نسخه v7.0.0')">
+            <div class="settings-item" onclick="alert('ℹ️ نسخه v7.1.0')">
                 <div class="left">
                     <span class="icon"><i class="fas fa-info-circle"></i></span>
                     <span class="label" data-i18n="about_label">درباره</span>
                 </div>
-                <span class="value">v7.0.0</span>
+                <span class="value">v7.1.0</span>
             </div>
         </div>
         <div class="card" style="border:1px solid rgba(239,68,68,0.1);">
@@ -451,7 +467,7 @@
             fa: {
                 appTitle: '💰 کیف پول', appBadge: 'حرفه‌ای',
                 prices_title: '📊 قیمت لحظه‌ای ارزها',
-                loading_rate: 'قیمت‌ها از TradingView دریافت میشوند',
+                loading_rate: 'در حال دریافت قیمت‌ها...',
                 total_label: 'مجموع دارایی',
                 assets_title: '💎 دارایی‌های شما',
                 add_currency_title: '➕ افزودن ارز جدید',
@@ -478,7 +494,7 @@
             en: {
                 appTitle: '💰 Wallet', appBadge: 'Pro',
                 prices_title: '📊 Live Crypto Prices',
-                loading_rate: 'Prices from TradingView',
+                loading_rate: 'Fetching prices...',
                 total_label: 'Total Assets',
                 assets_title: '💎 Your Assets',
                 add_currency_title: '➕ Add New Currency',
@@ -505,7 +521,7 @@
             ar: {
                 appTitle: '💰 المحفظة', appBadge: 'احترافي',
                 prices_title: '📊 أسعار العملات لحظياً',
-                loading_rate: 'الأسعار من TradingView',
+                loading_rate: 'جاري تحميل الأسعار...',
                 total_label: 'إجمالي الأصول',
                 assets_title: '💎 أصولك',
                 add_currency_title: '➕ إضافة عملة جديدة',
@@ -566,30 +582,99 @@
             { label: '➖ برداشت ۲۰ دلار', amount: 20, type: 'withdraw', date: '۱۴۰۲/۱۰/۱۱' }
         ];
 
-        // ========== دریافت قیمت‌ها از طریق WebSocket TradingView (برای محاسبه مجموع) ==========
-        // برای محاسبه مجموع، از یک API پشتیبان استفاده میکنیم (CryptoCompare با پروکسی)
-        async function fetchPricesForTotal() {
+        // ========== دریافت قیمت‌ها از API عمومی ==========
+        async function fetchPrices() {
+            const rateDisplay = document.getElementById('rateDisplay');
+            rateDisplay.innerHTML = '⏳ <span data-i18n="loading_rate">در حال دریافت قیمت‌ها...</span>';
+
             try {
-                const symbols = ['BTC', 'ETH', 'TON', 'TRX'];
-                for (let sym of symbols) {
+                // API 1: از وب‌سایت ایرانی mihanblockchain (معمولاً در دسترس)
+                const urls = [
+                    'https://mihanblockchain.com/api/price?symbols=BTC,ETH,TON,TRX',
+                    'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,toncoin,tron&vs_currencies=usd')
+                ];
+
+                let data = null;
+                for (let url of urls) {
                     try {
-                        const url = `https://min-api.cryptocompare.com/data/price?fsym=${sym}&tsyms=USD`;
-                        const response = await fetch(url);
-                        if (response.ok) {
-                            const data = await response.json();
-                            if (data.USD) {
-                                if (sym === 'BTC') prices.bitcoin = data.USD;
-                                else if (sym === 'ETH') prices.ethereum = data.USD;
-                                else if (sym === 'TON') prices.toncoin = data.USD;
-                                else if (sym === 'TRX') prices.tron = data.USD;
-                            }
+                        const res = await fetch(url);
+                        if (res.ok) {
+                            data = await res.json();
+                            break;
                         }
-                    } catch (e) { console.warn(`خطا در دریافت ${sym}:`, e); }
+                    } catch (e) { console.warn('API failed:', e); }
                 }
-                prices.usdt = 1;
-                updateTotal();
+
+                if (data) {
+                    // بروزرسانی قیمت‌ها
+                    let btcPrice = 0, ethPrice = 0, tonPrice = 0, trxPrice = 0;
+
+                    // اگر از mihanblockchain باشه
+                    if (data.BTC) {
+                        btcPrice = data.BTC;
+                        ethPrice = data.ETH;
+                        tonPrice = data.TON;
+                        trxPrice = data.TRX;
+                    }
+                    // اگر از coingecko باشه
+                    else if (data.bitcoin) {
+                        btcPrice = data.bitcoin.usd || 0;
+                        ethPrice = data.ethereum.usd || 0;
+                        tonPrice = data.toncoin?.usd || 0;
+                        trxPrice = data.tron?.usd || 0;
+                    }
+
+                    // ذخیره در prices
+                    prices.bitcoin = btcPrice;
+                    prices.ethereum = ethPrice;
+                    prices.toncoin = tonPrice;
+                    prices.tron = trxPrice;
+                    prices.usdt = 1;
+
+                    // بروزرسانی UI
+                    updatePriceUI('btc', btcPrice);
+                    updatePriceUI('eth', ethPrice);
+                    updatePriceUI('ton', tonPrice);
+                    updatePriceUI('trx', trxPrice);
+
+                    // بروزرسانی rateDisplay
+                    let html = '';
+                    if (btcPrice) html += `BTC: <span>$${btcPrice.toFixed(2)}</span> | `;
+                    if (ethPrice) html += `ETH: <span>$${ethPrice.toFixed(2)}</span> | `;
+                    if (tonPrice) html += `TON: <span>$${tonPrice.toFixed(2)}</span> | `;
+                    if (trxPrice) html += `TRX: <span>$${trxPrice.toFixed(4)}</span>`;
+                    if (html) {
+                        rateDisplay.innerHTML = html + ` <button class="refresh-btn" onclick="fetchPrices()"><i class="fas fa-sync-alt"></i></button>`;
+                    } else {
+                        rateDisplay.innerHTML = '⚠️ داده‌ای دریافت نشد';
+                    }
+
+                    updateTotal();
+                } else {
+                    rateDisplay.innerHTML = '⚠️ خطا در دریافت قیمت‌ها. دوباره تلاش کنید. <button class="refresh-btn" onclick="fetchPrices()"><i class="fas fa-sync-alt"></i></button>';
+                }
             } catch (e) {
-                console.warn('خطا در دریافت قیمت برای مجموع:', e);
+                console.error('خطا در fetchPrices:', e);
+                rateDisplay.innerHTML = '⚠️ خطا در دریافت قیمت‌ها. دوباره تلاش کنید. <button class="refresh-btn" onclick="fetchPrices()"><i class="fas fa-sync-alt"></i></button>';
+            }
+        }
+
+        function updatePriceUI(symbol, price) {
+            const priceEl = document.getElementById(`price-${symbol}`);
+            const usdEl = document.getElementById(`price-${symbol}-usd`);
+            if (priceEl && price > 0) {
+                priceEl.textContent = `$${price.toFixed(2)}`;
+                priceEl.style.color = '#4ade80';
+                if (usdEl) {
+                    usdEl.textContent = `$${price.toFixed(2)}`;
+                    usdEl.style.color = '#8899aa';
+                }
+            } else if (priceEl) {
+                priceEl.textContent = '⏳';
+                priceEl.style.color = '#8899aa';
+                if (usdEl) {
+                    usdEl.textContent = '$0';
+                }
             }
         }
 
@@ -675,7 +760,7 @@
                     currencies.push({ id, label: data.name || id, symbol, amount: 0, isCrypto: true });
                     input.value = '';
                     renderAll();
-                    fetchPricesForTotal();
+                    fetchPrices();
                 })
                 .catch(() => alert('ارز پیدا نشد! شناسه رو چک کن.'));
         }
@@ -772,8 +857,8 @@
         // ========== شروع ==========
         loadData();
         renderAll();
-        fetchPricesForTotal();
-        setInterval(fetchPricesForTotal, 60000);
+        fetchPrices();
+        setInterval(fetchPrices, 30000);
     </script>
 </body>
 </html>
