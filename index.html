@@ -22,15 +22,15 @@
             align-items: center;
             padding: 16px 20px 10px;
             background: rgba(10,12,18,0.8);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            backdrop-filter: blur(24px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
             position: sticky;
             top: 0;
             z-index: 100;
         }
         .header h1 { font-size: 20px; font-weight: 700; color: #fff; }
         .header .badge {
-            background: rgba(74,222,128,0.12);
+            background: rgba(0, 136, 204, 0.15);
             color: #4ade80;
             padding: 2px 14px;
             border-radius: 30px;
@@ -40,7 +40,7 @@
         .header .avatar {
             width: 38px; height: 38px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            background: linear-gradient(135deg, #0088cc, #4ade80);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -55,11 +55,11 @@
         /* کارت‌ها */
         .card {
             background: rgba(22, 27, 36, 0.7);
-            backdrop-filter: blur(12px);
-            border-radius: 24px;
+            backdrop-filter: blur(16px);
+            border-radius: 28px;
             padding: 16px 18px;
             margin-bottom: 12px;
-            border: 1px solid rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.05);
             box-shadow: 0 8px 32px rgba(0,0,0,0.3);
         }
         .card h3 { font-size: 13px; color: #8899aa; font-weight: 400; margin-bottom: 6px; }
@@ -87,13 +87,13 @@
         .currency-item .actions .withdraw-btn { color: #ef4444; }
         /* مجموع */
         .total-box {
-            background: linear-gradient(135deg, rgba(16,185,129,0.08), rgba(59,130,246,0.04));
+            background: linear-gradient(135deg, rgba(0, 136, 204, 0.08), rgba(74,222,128,0.04));
             padding: 16px 20px;
-            border-radius: 24px;
+            border-radius: 28px;
             text-align: center;
-            border: 1px solid rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.05);
         }
-        .total-box .amount { font-size: 28px; font-weight: 700; background: linear-gradient(135deg, #4ade80, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .total-box .amount { font-size: 28px; font-weight: 700; background: linear-gradient(135deg, #4ade80, #0088cc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .total-box .label { font-size: 13px; color: #8899aa; }
         .total-box .sub { font-size: 13px; color: #8899aa; margin-top: 2px; }
         /* نرخ */
@@ -101,7 +101,7 @@
             background: rgba(15, 21, 30, 0.6);
             backdrop-filter: blur(8px);
             padding: 10px 16px;
-            border-radius: 18px;
+            border-radius: 20px;
             text-align: center;
             margin-bottom: 12px;
             font-size: 12px;
@@ -134,12 +134,12 @@
             background: transparent; border: none; color: #8899aa;
             cursor: pointer; font-size: 14px; padding: 4px 8px; border-radius: 8px;
         }
-        .wallet-item .actions .edit-btn { color: #3b82f6; }
+        .wallet-item .actions .edit-btn { color: #0088cc; }
         .wallet-item .actions .delete-btn { color: #ef4444; }
         .add-btn {
             width: 100%; margin-top: 12px; padding: 12px;
-            border: 1px dashed #3b82f6; border-radius: 16px;
-            background: transparent; color: #3b82f6;
+            border: 1px dashed #0088cc; border-radius: 16px;
+            background: transparent; color: #0088cc;
             font-weight: 600; cursor: pointer; font-family: inherit;
         }
         .add-btn i { margin-left: 8px; }
@@ -150,7 +150,16 @@
             background: transparent; color: #8899aa; cursor: pointer;
             font-size: 12px; font-weight: 500; font-family: inherit;
         }
-        .lang-btn.active { background: #3b82f6; color: #fff; border-color: #3b82f6; }
+        .lang-btn.active { background: #0088cc; color: #fff; border-color: #0088cc; }
+        /* تنظیمات جدید */
+        .settings-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        .settings-item:last-child { border-bottom: none; }
+        .settings-item .label { color: #8899aa; font-size: 14px; }
+        .settings-item .value { color: #fff; font-size: 14px; font-weight: 500; }
+        .settings-item .icon { color: #0088cc; font-size: 18px; width: 30px; }
         /* نمودار خطی */
         .line-chart-container { height: 130px; margin: 6px 0 0; }
         /* منوی پایین */
@@ -225,9 +234,9 @@
         <h3>➕ افزودن ارز جدید</h3>
         <div style="display:flex; gap:8px; margin-top:8px;">
             <input type="text" id="newCurrencyInput" placeholder="شناسه ارز (مثلاً dogecoin)" style="flex:1; padding:10px 14px; border:none; border-radius:16px; background:rgba(30,38,48,0.6); color:#fff; font-size:14px; outline:none; font-family:inherit;">
-            <button onclick="addNewCurrency()" style="padding:10px 20px; border:none; border-radius:16px; background:linear-gradient(135deg,#8b5cf6,#7c3aed); color:#fff; font-weight:600; cursor:pointer; font-family:inherit;">افزودن</button>
+            <button onclick="addNewCurrency()" style="padding:10px 20px; border:none; border-radius:16px; background:linear-gradient(135deg,#0088cc,#4ade80); color:#fff; font-weight:600; cursor:pointer; font-family:inherit;">افزودن</button>
         </div>
-        <div style="font-size:10px; color:#8899aa; margin-top:4px;">🟢 از <a href="https://api.coingecko.com/api/v3/coins/list" target="_blank" style="color:#3b82f6;">لیست CoinGecko</a> پیدا کن</div>
+        <div style="font-size:10px; color:#8899aa; margin-top:4px;">🟢 از <a href="https://api.coingecko.com/api/v3/coins/list" target="_blank" style="color:#0088cc;">لیست CoinGecko</a> پیدا کن</div>
     </div>
     
     <button onclick="clearAllData()" style="width:100%; padding:14px; border:none; border-radius:18px; background:linear-gradient(135deg,#ef4444,#dc2626); color:#fff; font-weight:600; cursor:pointer; font-family:inherit;">🗑️ پاک کردن همه</button>
@@ -285,7 +294,7 @@
     </div>
 </div>
 
-<!-- ========== صفحه ۵: تنظیمات ========== -->
+<!-- ========== صفحه ۵: تنظیمات (جدید) ========== -->
 <div id="page-settings" class="page">
     <div class="card">
         <h3>🌐 زبان</h3>
@@ -295,67 +304,133 @@
             <button class="lang-btn" data-lang="ar" onclick="changeLang('ar')">العربية</button>
         </div>
     </div>
+
     <div class="card">
-        <h3>📊 آمار</h3>
-        <div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.04);">
-            <span style="color:#8899aa;">تعداد ارزها</span>
-            <span style="font-weight:600;" id="statsCurrencies">۰</span>
+        <h3>🎨 ظاهر</h3>
+        <div class="settings-item">
+            <span class="icon"><i class="fas fa-moon"></i></span>
+            <span class="label">حالت شب</span>
+            <span class="value" onclick="alert('تغییر تم (به زودی...)')">فعال</span>
         </div>
-        <div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.04);">
-            <span style="color:#8899aa;">تعداد تراکنش‌ها</span>
-            <span style="font-weight:600;" id="statsTransactions">۰</span>
-        </div>
-        <div style="display:flex; justify-content:space-between; padding:8px 0;">
-            <span style="color:#8899aa;">نسخه</span>
-            <span style="font-weight:600;">v3.2.0</span>
+        <div class="settings-item">
+            <span class="icon"><i class="fas fa-palette"></i></span>
+            <span class="label">رنگ اصلی</span>
+            <span class="value" onclick="alert('انتخاب رنگ (به زودی...)')">آبی-سبز</span>
         </div>
     </div>
+
     <div class="card">
-        <h3>🔗 اتصال به والت</h3>
-        <button onclick="alert('اتصال به والت (TON) به زودی...')" style="width:100%; padding:14px; border:none; border-radius:18px; background:linear-gradient(135deg,#3b82f6,#2563eb); color:#fff; font-weight:700; font-size:15px; cursor:pointer; font-family:inherit; box-shadow:0 4px 16px rgba(59,130,246,0.25);">
-            <i class="fas fa-wallet"></i> اتصال کیف پول
-        </button>
+        <h3>🔔 اعلان‌ها</h3>
+        <div class="settings-item">
+            <span class="icon"><i class="fas fa-bell"></i></span>
+            <span class="label">اعلان‌های تراکنش</span>
+            <span class="value" onclick="alert('تنظیمات اعلان (به زودی...)')">فعال</span>
+        </div>
+        <div class="settings-item">
+            <span class="icon"><i class="fas fa-soundcloud"></i></span>
+            <span class="label">صدای اعلان</span>
+            <span class="value" onclick="alert('تنظیمات صدا (به زودی...)')">روشن</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>🔐 امنیت</h3>
+        <div class="settings-item">
+            <span class="icon"><i class="fas fa-fingerprint"></i></span>
+            <span class="label">اثر انگشت</span>
+            <span class="value" onclick="alert('تنظیمات اثر انگشت (به زودی...)')">فعال</span>
+        </div>
+        <div class="settings-item">
+            <span class="icon"><i class="fas fa-shield-alt"></i></span>
+            <span class="label">قفل برنامه</span>
+            <span class="value" onclick="alert('تنظیمات قفل (به زودی...)')">غیرفعال</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>💾 پشتیبان‌گیری</h3>
+        <div class="settings-item">
+            <span class="icon"><i class="fas fa-cloud-upload-alt"></i></span>
+            <span class="label">پشتیبان‌گیری از داده‌ها</span>
+            <span class="value" onclick="alert('پشتیبان‌گیری (به زودی...)')">شروع</span>
+        </div>
+        <div class="settings-item">
+            <span class="icon"><i class="fas fa-cloud-download-alt"></i></span>
+            <span class="label">بازیابی داده‌ها</span>
+            <span class="value" onclick="alert('بازیابی (به زودی...)')">بازیابی</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>ℹ️ درباره</h3>
+        <div class="settings-item">
+            <span class="icon"><i class="fas fa-info-circle"></i></span>
+            <span class="label">نسخه</span>
+            <span class="value">v3.3.0</span>
+        </div>
+        <div class="settings-item">
+            <span class="icon"><i class="fas fa-code"></i></span>
+            <span class="label">توسعه‌دهنده</span>
+            <span class="value" onclick="alert('توسعه‌یافته توسط تیم حرفه‌ای')">مشاهده</span>
+        </div>
+        <div class="settings-item">
+            <span class="icon"><i class="fas fa-heart" style="color:#ef4444;"></i></span>
+            <span class="label">حمایت از ما</span>
+            <span class="value" onclick="alert('با اهدای دلار از ما حمایت کنید ❤️')">حمایت</span>
+        </div>
     </div>
 </div>
 
 <!-- ========== منوی پایین ========== -->
 <div class="bottom-nav">
     <div class="nav-item active" data-page="home" onclick="switchPage('home')">
-        <i class="fas fa-home"></i><span id="navHome">خانه</span>
+        <i class="fas fa-home"></i><span data-i18n="home">خانه</span>
     </div>
     <div class="nav-item" data-page="wallet" onclick="switchPage('wallet')">
-        <i class="fas fa-wallet"></i><span id="navWallet">کیف پول</span>
+        <i class="fas fa-wallet"></i><span data-i18n="wallet">کیف پول</span>
     </div>
     <div class="nav-item" data-page="manage" onclick="switchPage('manage')">
-        <i class="fas fa-layer-group"></i><span id="navManage">مدیریت</span>
+        <i class="fas fa-layer-group"></i><span data-i18n="manage">مدیریت</span>
     </div>
     <div class="nav-item" data-page="history" onclick="switchPage('history')">
-        <i class="fas fa-clock"></i><span id="navHistory">تاریخچه</span>
+        <i class="fas fa-clock"></i><span data-i18n="history">تاریخچه</span>
         <span class="dot" id="historyDot" style="display:none;"></span>
     </div>
     <div class="nav-item" data-page="settings" onclick="switchPage('settings')">
-        <i class="fas fa-sliders-h"></i><span id="navSettings">تنظیمات</span>
+        <i class="fas fa-sliders-h"></i><span data-i18n="settings">تنظیمات</span>
     </div>
 </div>
 
 <script>
     // ========== ترجمه‌ها ==========
     const i18n = {
-        fa: { home: 'خانه', wallet: 'کیف پول', manage: 'مدیریت', history: 'تاریخچه', settings: 'تنظیمات', total: 'مجموع دارایی' },
-        en: { home: 'Home', wallet: 'Wallet', manage: 'Manage', history: 'History', settings: 'Settings', total: 'Total Assets' },
-        ar: { home: 'الرئيسية', wallet: 'المحفظة', manage: 'إدارة', history: 'التاريخ', settings: 'الإعدادات', total: 'إجمالي الأصول' }
+        fa: {
+            home: 'خانه', wallet: 'کیف پول', manage: 'مدیریت',
+            history: 'تاریخچه', settings: 'تنظیمات', total: 'مجموع دارایی'
+        },
+        en: {
+            home: 'Home', wallet: 'Wallet', manage: 'Manage',
+            history: 'History', settings: 'Settings', total: 'Total Assets'
+        },
+        ar: {
+            home: 'الرئيسية', wallet: 'المحفظة', manage: 'إدارة',
+            history: 'التاريخ', settings: 'الإعدادات', total: 'إجمالي الأصول'
+        }
     };
     let currentLang = 'fa';
 
     function changeLang(lang) {
         currentLang = lang;
-        document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+        // تغییر وضعیت دکمه‌ها
+        document.querySelectorAll('.lang-btn').forEach(b => {
+            b.classList.toggle('active', b.dataset.lang === lang);
+        });
+        // تغییر متن‌ها
         const t = i18n[lang];
-        document.getElementById('navHome').textContent = t.home;
-        document.getElementById('navWallet').textContent = t.wallet;
-        document.getElementById('navManage').textContent = t.manage;
-        document.getElementById('navHistory').textContent = t.history;
-        document.getElementById('navSettings').textContent = t.settings;
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.dataset.i18n;
+            if (t[key]) el.textContent = t[key];
+        });
         document.getElementById('totalLabel').textContent = t.total;
         document.getElementById('appTitle').textContent = lang === 'fa' ? '💰 کیف پول' : lang === 'en' ? '💰 Wallet' : '💰 المحفظة';
         document.getElementById('appBadge').textContent = lang === 'fa' ? 'حرفه‌ای' : lang === 'en' ? 'Pro' : 'احترافي';
@@ -375,18 +450,24 @@
     ];
     let lineChartInstance = null;
 
-    // ========== دریافت نرخ ==========
+    // ========== دریافت نرخ ارز (با API جدید و پروکسی) ==========
     async function fetchRates() {
         const cryptoIds = currencies.filter(c => c.isCrypto).map(c => c.id).join(',');
         if (!cryptoIds) return;
         try {
-            const proxy = 'https://api.allorigins.win/raw?url=';
+            // استفاده از پروکسی جدید با CORS فعال
+            const proxy = 'https://corsproxy.io/?';
             const url = `https://api.coingecko.com/api/v3/simple/price?ids=${cryptoIds}&vs_currencies=usd`;
             const res = await fetch(proxy + encodeURIComponent(url));
             const data = await res.json();
-            for (let id in data) prices[id] = data[id].usd || 0;
+            for (let id in data) {
+                if (data[id] && data[id].usd) {
+                    prices[id] = data[id].usd;
+                }
+            }
             updateRateDisplay();
-        } catch {
+        } catch (error) {
+            console.error('خطا در دریافت نرخ:', error);
             document.getElementById('rateDisplay').innerHTML = '⚠️ عدم دریافت نرخ لحظه‌ای';
         }
     }
