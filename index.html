@@ -130,7 +130,7 @@
         .history-item .withdraw { color: #ef4444; }
         .history-item .deposit { color: #4ade80; }
         .empty-state { color: #8899aa; text-align: center; padding: 24px 0; font-size: 13px; }
-        /* مدیریت جدید */
+        /* مدیریت */
         .manage-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
@@ -154,7 +154,109 @@
         .manage-item .icon { font-size: 32px; color: #0088cc; margin-bottom: 8px; }
         .manage-item .label { font-size: 14px; font-weight: 600; color: #fff; }
         .manage-item .desc { font-size: 11px; color: #8899aa; margin-top: 4px; }
-        /* لیست مدیریت (بانک، ولت، صرافی) */
+        /* کارت‌های بانکی */
+        .bank-card {
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            transition: all .2s;
+            position: relative;
+        }
+        .bank-card:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.12); }
+        .bank-card .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .bank-card .bank-icon {
+            width: 48px; height: 48px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+        .bank-card .bank-name { font-weight: 700; font-size: 18px; color: #fff; }
+        .bank-card .card-number { font-size: 13px; color: rgba(255,255,255,0.6); direction: ltr; letter-spacing: 2px; }
+        .bank-card .menu-btn {
+            background: transparent; border: none; color: rgba(255,255,255,0.6);
+            font-size: 20px; cursor: pointer; padding: 4px 8px;
+        }
+        .bank-card .menu-btn:hover { color: #fff; }
+        .bank-card .bank-menu {
+            display: none;
+            position: absolute;
+            top: 50px;
+            left: 10px;
+            background: #1e2630;
+            border-radius: 16px;
+            padding: 8px 0;
+            min-width: 160px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.05);
+            z-index: 10;
+        }
+        .bank-card .bank-menu.show { display: block; }
+        .bank-card .bank-menu .menu-item {
+            padding: 10px 16px;
+            color: #e8edf5;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            transition: .2s;
+        }
+        .bank-card .bank-menu .menu-item:hover { background: rgba(255,255,255,0.04); }
+        .bank-card .bank-menu .menu-item .icon-edit { color: #0088cc; width: 20px; }
+        .bank-card .bank-menu .menu-item .icon-pause { color: #f59e0b; width: 20px; }
+        .bank-card .bank-menu .menu-item .icon-play { color: #4ade80; width: 20px; }
+        .bank-card .bank-menu .menu-item .icon-delete { color: #ef4444; width: 20px; }
+        .bank-card .bank-menu .menu-divider {
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin: 4px 0;
+        }
+        .bank-card .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        .bank-card .card-footer .balance-label {
+            font-size: 12px;
+            color: rgba(255,255,255,0.5);
+        }
+        .bank-card .card-footer .balance-amount {
+            font-size: 20px;
+            font-weight: 700;
+            color: #4ade80;
+        }
+        .bank-card .card-footer .status-badge {
+            padding: 2px 12px;
+            border-radius: 30px;
+            font-size: 11px;
+            border: 1px solid transparent;
+        }
+        .bank-card .card-footer .status-badge.active {
+            background: rgba(74,222,128,0.12);
+            color: #4ade80;
+            border-color: rgba(74,222,128,0.1);
+        }
+        .bank-card .card-footer .status-badge.inactive {
+            background: rgba(239,68,68,0.12);
+            color: #ef4444;
+            border-color: rgba(239,68,68,0.1);
+        }
+        .bank-card.color-blue { background: linear-gradient(145deg, #1a3a6b, #0f2440); }
+        .bank-card.color-green { background: linear-gradient(145deg, #1a5a3a, #0f3a22); }
+        .bank-card.color-purple { background: linear-gradient(145deg, #3a1a5a, #220f3a); }
+        .bank-card.color-red { background: linear-gradient(145deg, #5a1a1a, #3a0f0f); }
+        .bank-card.color-teal { background: linear-gradient(145deg, #1a4a4a, #0f2a2a); }
+        /* لیست ولت/صرافی */
         .list-item {
             display: flex; justify-content: space-between; align-items: center;
             padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
@@ -185,10 +287,10 @@
             border-radius: 16px;
             background: transparent; color: #0088cc;
             font-weight: 600; cursor: pointer; font-family: inherit;
+            transition: .2s;
         }
         .add-btn:hover { background: rgba(0,136,204,0.05); }
         .add-btn i { margin-left: 8px; }
-        /* بازگشت */
         .back-btn {
             background: transparent; border: none; color: #0088cc;
             font-size: 14px; cursor: pointer; font-family: inherit;
@@ -197,33 +299,6 @@
             padding: 4px 0;
         }
         .back-btn:hover { color: #4ade80; }
-        .wallet-card {
-            background: rgba(30,38,48,0.4);
-            border-radius: 18px;
-            padding: 14px 16px;
-            display: flex; justify-content: space-between; align-items: center;
-            border: 1px solid rgba(255,255,255,0.04);
-            margin-bottom: 10px;
-        }
-        .wallet-card .info { display: flex; flex-direction: column; gap: 2px; }
-        .wallet-card .name { font-weight: 600; font-size: 15px; color: #fff; }
-        .wallet-card .address { font-size: 12px; color: #8899aa; font-family: monospace; }
-        .wallet-card .badge {
-            background: rgba(74,222,128,0.08);
-            color: #4ade80;
-            padding: 2px 10px;
-            border-radius: 30px;
-            font-size: 10px;
-            border: 1px solid rgba(74,222,128,0.08);
-        }
-        .wallet-card .actions button {
-            background: transparent; border: none; color: #8899aa;
-            cursor: pointer; font-size: 16px; padding: 4px 8px;
-            border-radius: 8px;
-        }
-        .wallet-card .actions button:hover { background: rgba(255,255,255,0.05); }
-        .wallet-card .actions .edit-btn { color: #0088cc; }
-        .wallet-card .actions .delete-btn { color: #ef4444; }
         .lang-selector { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
         .lang-btn {
             padding: 4px 14px; border-radius: 30px;
@@ -291,6 +366,7 @@
             .bottom-nav { padding: 2px 0; }
             .nav-item { min-width: 44px; padding: 2px 6px; }
             .nav-item i { font-size: 16px; }
+            .bank-card .bank-menu { left: 0; right: 0; min-width: unset; }
         }
     </style>
 </head>
@@ -335,7 +411,6 @@
                 </div>
             </div>
         </div>
-
         <div class="rate-box" id="rateDisplay">
             📈 <span data-i18n="loading_rate">در حال دریافت قیمت‌ها...</span>
             <button class="refresh-btn" onclick="fetchPrices()"><i class="fas fa-sync-alt"></i></button>
@@ -366,7 +441,7 @@
         <button class="btn-danger" onclick="clearAllData()" data-i18n="clear_all">🗑️ پاک کردن همه</button>
     </div>
 
-    <!-- ========== صفحه مدیریت (میانی) ========== -->
+    <!-- ========== صفحه مدیریت ========== -->
     <div id="page-manage" class="page">
         <div class="card">
             <h3 data-i18n="manage_title">📋 مدیریت</h3>
@@ -390,39 +465,84 @@
         </div>
     </div>
 
-    <!-- ========== صفحه بانک‌ها ========== -->
+    <!-- ========== صفحه بانک‌ها (طراحی جدید با کارت‌های حرفه‌ای) ========== -->
     <div id="page-banks" class="page">
         <div class="card">
             <button class="back-btn" onclick="switchPage('manage')"><i class="fas fa-arrow-right"></i> <span data-i18n="back_to_manage">بازگشت به مدیریت</span></button>
-            <h3 data-i18n="banks_title">🏛️ بانک‌های متصل</h3>
-            <div id="banksList">
-                <div class="list-item">
-                    <div class="info">
-                        <span class="name">بانک تجارت</span>
-                        <span class="address">شماره حساب: ۱۲۳۴۵۶۷۸۹۰</span>
-                    </div>
-                    <div style="display:flex; align-items:center; gap:8px;">
-                        <span class="badge" data-i18n="active_badge">فعال</span>
-                        <div class="actions">
-                            <button class="edit-btn" onclick="alert('ویرایش بانک')"><i class="fas fa-edit"></i></button>
-                            <button class="delete-btn" onclick="alert('حذف بانک')"><i class="fas fa-trash"></i></button>
+            <h3 data-i18n="banks_title">🏛️ بانک‌های من</h3>
+            
+            <div id="banksContainer" style="margin-top:12px;">
+                <!-- کارت نمونه ۱: بانک تجارت -->
+                <div class="bank-card color-blue" id="bank-card-1">
+                    <div class="card-header">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div class="bank-icon">🏦</div>
+                            <div>
+                                <div class="bank-name">بانک تجارت</div>
+                                <div class="card-number">**** **** **** 1234</div>
+                            </div>
                         </div>
+                        <div style="position: relative;">
+                            <button class="menu-btn" onclick="toggleBankMenu('bank1')"><i class="fas fa-ellipsis-v"></i></button>
+                            <div class="bank-menu" id="bank-menu-bank1">
+                                <div class="menu-item" onclick="alert('ویرایش بانک تجارت')">
+                                    <i class="fas fa-edit icon-edit"></i> ویرایش
+                                </div>
+                                <div class="menu-item" onclick="alert('غیرفعال کردن بانک تجارت')">
+                                    <i class="fas fa-pause icon-pause"></i> غیرفعال
+                                </div>
+                                <div class="menu-divider"></div>
+                                <div class="menu-item" onclick="if(confirm('کارت بانک تجارت حذف شود؟')) alert('حذف شد')">
+                                    <i class="fas fa-trash icon-delete"></i> حذف
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div>
+                            <div class="balance-label">موجودی</div>
+                            <div class="balance-amount">۱۲,۴۵۰,۰۰۰ تومان</div>
+                        </div>
+                        <span class="status-badge active">فعال</span>
                     </div>
                 </div>
-                <div class="list-item">
-                    <div class="info">
-                        <span class="name">بانک ملی</span>
-                        <span class="address">شماره حساب: ۰۹۸۷۶۵۴۳۲۱</span>
-                    </div>
-                    <div style="display:flex; align-items:center; gap:8px;">
-                        <span class="badge" data-i18n="active_badge">فعال</span>
-                        <div class="actions">
-                            <button class="edit-btn" onclick="alert('ویرایش بانک')"><i class="fas fa-edit"></i></button>
-                            <button class="delete-btn" onclick="alert('حذف بانک')"><i class="fas fa-trash"></i></button>
+
+                <!-- کارت نمونه ۲: بانک ملی -->
+                <div class="bank-card color-green" id="bank-card-2">
+                    <div class="card-header">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div class="bank-icon">🏛️</div>
+                            <div>
+                                <div class="bank-name">بانک ملی</div>
+                                <div class="card-number">**** **** **** 5678</div>
+                            </div>
                         </div>
+                        <div style="position: relative;">
+                            <button class="menu-btn" onclick="toggleBankMenu('bank2')"><i class="fas fa-ellipsis-v"></i></button>
+                            <div class="bank-menu" id="bank-menu-bank2">
+                                <div class="menu-item" onclick="alert('ویرایش بانک ملی')">
+                                    <i class="fas fa-edit icon-edit"></i> ویرایش
+                                </div>
+                                <div class="menu-item" onclick="alert('فعال کردن بانک ملی')">
+                                    <i class="fas fa-play icon-play"></i> فعال
+                                </div>
+                                <div class="menu-divider"></div>
+                                <div class="menu-item" onclick="if(confirm('کارت بانک ملی حذف شود؟')) alert('حذف شد')">
+                                    <i class="fas fa-trash icon-delete"></i> حذف
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div>
+                            <div class="balance-label">موجودی</div>
+                            <div class="balance-amount">۸,۲۰۰,۰۰۰ تومان</div>
+                        </div>
+                        <span class="status-badge inactive">غیرفعال</span>
                     </div>
                 </div>
             </div>
+
             <button class="add-btn" onclick="addBank()"><i class="fas fa-plus"></i> <span data-i18n="add_bank_btn">افزودن بانک جدید</span></button>
         </div>
     </div>
@@ -557,12 +677,12 @@
                 </div>
                 <span class="value" data-i18n="backup_value">دستی</span>
             </div>
-            <div class="settings-item" onclick="alert('ℹ️ نسخه v9.0.0')">
+            <div class="settings-item" onclick="alert('ℹ️ نسخه v9.1.0')">
                 <div class="left">
                     <span class="icon"><i class="fas fa-info-circle"></i></span>
                     <span class="label" data-i18n="about_label">درباره</span>
                 </div>
-                <span class="value">v9.0.0</span>
+                <span class="value">v9.1.0</span>
             </div>
         </div>
         <div class="card" style="border:1px solid rgba(239,68,68,0.1);">
@@ -613,7 +733,7 @@
                 banks_label: 'بانک‌ها', banks_desc: 'مدیریت بانک‌های متصل',
                 wallets_label: 'ولت‌ها', wallets_desc: 'مدیریت کیف پول‌های متصل',
                 exchanges_label: 'صرافی‌ها', exchanges_desc: 'مدیریت صرافی‌های متصل',
-                banks_title: '🏛️ بانک‌های متصل',
+                banks_title: '🏛️ بانک‌های من',
                 wallets_title: '🔐 کیف پول‌های متصل',
                 exchanges_title: '🏦 صرافی‌های متصل',
                 active_badge: 'فعال',
@@ -646,7 +766,7 @@
                 banks_label: 'Banks', banks_desc: 'Manage connected banks',
                 wallets_label: 'Wallets', wallets_desc: 'Manage connected wallets',
                 exchanges_label: 'Exchanges', exchanges_desc: 'Manage connected exchanges',
-                banks_title: '🏛️ Connected Banks',
+                banks_title: '🏛️ My Banks',
                 wallets_title: '🔐 Connected Wallets',
                 exchanges_title: '🏦 Connected Exchanges',
                 active_badge: 'Active',
@@ -679,7 +799,7 @@
                 banks_label: 'البنوك', banks_desc: 'إدارة البنوك المتصلة',
                 wallets_label: 'المحافظ', wallets_desc: 'إدارة المحافظ المتصلة',
                 exchanges_label: 'البورصات', exchanges_desc: 'إدارة البورصات المتصلة',
-                banks_title: '🏛️ البنوك المتصلة',
+                banks_title: '🏛️ بنوكي',
                 wallets_title: '🔐 المحافظ المتصلة',
                 exchanges_title: '🏦 البورصات المتصلة',
                 active_badge: 'نشط',
@@ -721,6 +841,23 @@
             document.querySelector('.header h1').textContent = t.appTitle;
             document.querySelector('.header .badge').textContent = t.appBadge;
         }
+
+        // ========== مدیریت منوی همبرگری بانک‌ها ==========
+        function toggleBankMenu(menuId) {
+            const menu = document.getElementById(`bank-menu-${menuId}`);
+            if (!menu) return;
+            document.querySelectorAll('.bank-menu').forEach(m => {
+                if (m.id !== `bank-menu-${menuId}`) m.classList.remove('show');
+            });
+            menu.classList.toggle('show');
+        }
+
+        // بستن منو با کلیک بیرون
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.bank-card')) {
+                document.querySelectorAll('.bank-menu').forEach(m => m.classList.remove('show'));
+            }
+        });
 
         // ========== داده‌ها ==========
         let currencies = [
@@ -951,9 +1088,11 @@
         function addBank() {
             const name = prompt('نام بانک:');
             if (!name) return;
-            const account = prompt('شماره حساب:');
-            if (!account) return;
-            alert(`✅ بانک ${name} با شماره حساب ${account} اضافه شد!`);
+            const cardNumber = prompt('شماره کارت (۱۶ رقمی):');
+            if (!cardNumber) return;
+            const balance = prompt('موجودی (تومان):');
+            if (!balance) return;
+            alert(`✅ بانک ${name} با شماره کارت ${cardNumber} و موجودی ${balance} تومان اضافه شد!`);
         }
 
         // ========== مدیریت ولت ==========
@@ -997,7 +1136,6 @@
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(`page-${page}`).classList.add('active');
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            // اگر صفحه مدیریت یا زیرمجموعه‌هایش باشه، منوی مدیریت رو فعال نگه دار
             if (page === 'manage' || page === 'banks' || page === 'wallets' || page === 'exchanges') {
                 document.querySelector(`.nav-item[data-page="manage"]`).classList.add('active');
             } else {
