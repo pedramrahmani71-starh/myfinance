@@ -57,7 +57,6 @@
         }
         .card h3 { font-size: 13px; color: #8899aa; font-weight: 400; margin-bottom: 6px; }
         
-        /* ===== قیمت‌ها ===== */
         .price-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -873,7 +872,7 @@
             } catch(e){}
         }
 
-        function renderAll() { renderCurrencies(); updateTotal(); updateHistory(); updateStats(); saveData(); }
+        function renderAll() { renderCurrencies(); updateTotal(); updateHistory(); saveData(); }
         function renderCurrencies() {
             const container = document.getElementById('currencyList');
             if (!container) return;
@@ -890,7 +889,9 @@
             if (type === 'withdraw' && amount > c.amount) { alert(`موجودی کافی نیست! موجودی: ${c.amount.toLocaleString()}`); return; }
             c.amount = type === 'deposit' ? c.amount + amount : c.amount - amount;
             transactions.push({ label: `${type === 'deposit' ? '➕' : '➖'} ${c.symbol} ${c.label} ${type === 'deposit' ? '+' : '-'}${amount.toLocaleString()}`, amount, type, date: new Date().toLocaleString('fa-IR') });
-            renderAll(); document.getElementById('historyDot').style.display = 'block';
+            renderAll(); 
+            const dot = document.getElementById('historyDot');
+            if (dot) dot.style.display = 'block';
         }
 
         function addNewCurrency() {
@@ -932,14 +933,8 @@
                 html += `<div class="history-item"><span>${t.label}</span><span><span class="amount ${cls}">${t.type === 'withdraw' ? '-' : '+'}${t.amount.toLocaleString()}</span><span class="date">${t.date}</span></span></div>`;
             }
             container.innerHTML = html;
-            document.getElementById('historyDot').style.display = transactions.length > 0 ? 'block' : 'none';
-        }
-
-        function updateStats() {
-            const cEl = document.getElementById('statsCurrencies');
-            const tEl = document.getElementById('statsTransactions');
-            if (cEl) cEl.textContent = currencies.length;
-            if (tEl) tEl.textContent = transactions.length;
+            const dot = document.getElementById('historyDot');
+            if (dot) dot.style.display = transactions.length > 0 ? 'block' : 'none';
         }
 
         function addWallet() {
@@ -981,7 +976,6 @@
             if (page === 'sms') renderSms();
             if (page === 'home') updateTotal();
             if (page === 'history') updateHistory();
-            if (page === 'settings') updateStats();
         }
 
         // ============================================================
