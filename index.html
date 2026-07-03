@@ -6,6 +6,7 @@
     <title>کیف پول من</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
+        /* ===== استایل‌های عمومی (همانند قبل) ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -56,6 +57,8 @@
             box-shadow: 0 8px 32px rgba(0,0,0,0.25);
         }
         .card h3 { font-size: 13px; color: #8899aa; font-weight: 400; margin-bottom: 6px; }
+        
+        /* ===== قیمت‌ها ===== */
         .price-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -74,6 +77,8 @@
         .price-item .symbol { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 2px; }
         .price-item .price { font-size: 14px; font-weight: 600; color: #4ade80; direction: ltr; }
         .price-item .price.usd { font-size: 11px; color: #8899aa; font-weight: 400; margin-top: 2px; }
+        
+        /* ===== لیست ارزها ===== */
         .currency-item {
             display: flex; justify-content: space-between; align-items: center;
             padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
@@ -93,6 +98,8 @@
         .currency-item .actions button:hover { background: rgba(255,255,255,0.05); }
         .currency-item .actions .deposit-btn { color: #4ade80; }
         .currency-item .actions .withdraw-btn { color: #ef4444; }
+        
+        /* ===== مجموع ===== */
         .total-box {
             background: linear-gradient(135deg, rgba(0,136,204,0.08), rgba(74,222,128,0.04));
             padding: 16px 20px;
@@ -103,6 +110,8 @@
         .total-box .amount { font-size: 28px; font-weight: 700; background: linear-gradient(135deg, #4ade80, #0088cc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .total-box .label { font-size: 13px; color: #8899aa; }
         .total-box .sub { font-size: 13px; color: #8899aa; margin-top: 2px; }
+        
+        /* ===== نرخ ===== */
         .rate-box {
             background: rgba(15,21,30,0.5);
             backdrop-filter: blur(8px);
@@ -119,6 +128,8 @@
             background: transparent; border: none; color: #0088cc;
             cursor: pointer; font-size: 14px; margin-right: 8px;
         }
+        
+        /* ===== تاریخچه ===== */
         .history-list { max-height: 300px; overflow-y: auto; margin-top: 8px; padding-top: 6px; }
         .history-item {
             display: flex; justify-content: space-between; align-items: center;
@@ -130,7 +141,8 @@
         .history-item .withdraw { color: #ef4444; }
         .history-item .deposit { color: #4ade80; }
         .empty-state { color: #8899aa; text-align: center; padding: 24px 0; font-size: 13px; }
-        /* مدیریت */
+        
+        /* ===== مدیریت ===== */
         .manage-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
@@ -154,7 +166,8 @@
         .manage-item .icon { font-size: 32px; color: #0088cc; margin-bottom: 8px; }
         .manage-item .label { font-size: 14px; font-weight: 600; color: #fff; }
         .manage-item .desc { font-size: 11px; color: #8899aa; margin-top: 4px; }
-        /* کارت‌های بانکی */
+        
+        /* ===== کارت‌های بانکی (نسخه نهایی) ===== */
         .bank-card {
             border-radius: 20px;
             padding: 20px;
@@ -177,6 +190,11 @@
             display: flex; align-items: center; justify-content: center;
             font-size: 28px;
             flex-shrink: 0;
+        }
+        .bank-card .bank-icon img {
+            width: 32px; height: 32px;
+            border-radius: 8px;
+            object-fit: contain;
         }
         .bank-card .bank-name { font-weight: 700; font-size: 18px; color: #fff; }
         .bank-card .card-number { font-size: 13px; color: rgba(255,255,255,0.6); direction: ltr; letter-spacing: 2px; }
@@ -256,7 +274,10 @@
         .bank-card.color-purple { background: linear-gradient(145deg, #3a1a5a, #220f3a); }
         .bank-card.color-red { background: linear-gradient(145deg, #5a1a1a, #3a0f0f); }
         .bank-card.color-teal { background: linear-gradient(145deg, #1a4a4a, #0f2a2a); }
-        /* لیست ولت/صرافی */
+        .bank-card.color-orange { background: linear-gradient(145deg, #5a3a1a, #3a220f); }
+        .bank-card.color-pink { background: linear-gradient(145deg, #5a1a3a, #3a0f22); }
+        
+        /* ===== لیست ولت/صرافی ===== */
         .list-item {
             display: flex; justify-content: space-between; align-items: center;
             padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
@@ -281,6 +302,8 @@
         .list-item .actions button:hover { background: rgba(255,255,255,0.05); }
         .list-item .actions .edit-btn { color: #0088cc; }
         .list-item .actions .delete-btn { color: #ef4444; }
+        
+        /* ===== دکمه افزودن ===== */
         .add-btn {
             width: 100%; margin-top: 12px; padding: 12px;
             border: 1px dashed rgba(0,136,204,0.3);
@@ -291,6 +314,8 @@
         }
         .add-btn:hover { background: rgba(0,136,204,0.05); }
         .add-btn i { margin-left: 8px; }
+        
+        /* ===== بازگشت ===== */
         .back-btn {
             background: transparent; border: none; color: #0088cc;
             font-size: 14px; cursor: pointer; font-family: inherit;
@@ -299,6 +324,8 @@
             padding: 4px 0;
         }
         .back-btn:hover { color: #4ade80; }
+        
+        /* ===== زبان ===== */
         .lang-selector { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
         .lang-btn {
             padding: 4px 14px; border-radius: 30px;
@@ -309,6 +336,8 @@
         }
         .lang-btn.active { background: rgba(0,136,204,0.15); color: #4ade80; border-color: rgba(0,136,204,0.2); }
         .lang-btn:hover { background: rgba(255,255,255,0.03); }
+        
+        /* ===== تنظیمات ===== */
         .settings-item {
             display: flex; justify-content: space-between; align-items: center;
             padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.03);
@@ -321,6 +350,8 @@
         .settings-item .value { color: #8899aa; font-size: 13px; }
         .settings-item.danger .label { color: #ef4444; }
         .settings-item.danger .icon { color: #ef4444; }
+        
+        /* ===== منوی پایین ===== */
         .bottom-nav {
             position: fixed; bottom: 12px; left: 12px; right: 12px;
             background: rgba(15,21,30,0.85); backdrop-filter: blur(24px);
@@ -342,6 +373,8 @@
             position: absolute; top: 2px; right: 6px; width: 6px; height: 6px;
             background: #ef4444; border-radius: 50%; border: 2px solid rgba(15,21,30,0.85);
         }
+        
+        /* ===== ورودی‌ها ===== */
         .input-group { display: flex; gap: 8px; margin-top: 8px; }
         .input-group input {
             flex: 1; padding: 10px 14px; border: none; border-radius: 16px;
@@ -359,6 +392,8 @@
             background: linear-gradient(135deg, #ef4444, #dc2626);
             color: #fff; font-weight: 600; cursor: pointer; font-family: inherit;
         }
+        
+        /* ===== ریسپانسیو ===== */
         @media(max-width:480px){
             .price-grid { grid-template-columns: repeat(2, 1fr); }
             .manage-grid { grid-template-columns: 1fr; gap: 8px; }
@@ -372,7 +407,7 @@
 </head>
 <body>
 
-    <!-- هدر -->
+    <!-- ===== هدر ===== -->
     <div class="header">
         <div>
             <h1 data-i18n="appTitle">💰 کیف پول</h1>
@@ -384,7 +419,7 @@
         </div>
     </div>
 
-    <!-- ========== صفحه خانه ========== -->
+    <!-- ===== صفحه خانه ===== -->
     <div id="page-home" class="page active">
         <div class="card">
             <h3 data-i18n="prices_title">📊 قیمت لحظه‌ای ارزها</h3>
@@ -422,7 +457,7 @@
         </div>
     </div>
 
-    <!-- ========== صفحه کیف پول ========== -->
+    <!-- ===== صفحه کیف پول ===== -->
     <div id="page-wallet" class="page">
         <div class="card">
             <h3 data-i18n="assets_title">💎 دارایی‌های شما</h3>
@@ -441,7 +476,7 @@
         <button class="btn-danger" onclick="clearAllData()" data-i18n="clear_all">🗑️ پاک کردن همه</button>
     </div>
 
-    <!-- ========== صفحه مدیریت ========== -->
+    <!-- ===== صفحه مدیریت ===== -->
     <div id="page-manage" class="page">
         <div class="card">
             <h3 data-i18n="manage_title">📋 مدیریت</h3>
@@ -465,89 +500,21 @@
         </div>
     </div>
 
-    <!-- ========== صفحه بانک‌ها (طراحی جدید با کارت‌های حرفه‌ای) ========== -->
+    <!-- ===== صفحه بانک‌ها (نسخه نهایی با قابلیت‌های کامل) ===== -->
     <div id="page-banks" class="page">
         <div class="card">
             <button class="back-btn" onclick="switchPage('manage')"><i class="fas fa-arrow-right"></i> <span data-i18n="back_to_manage">بازگشت به مدیریت</span></button>
             <h3 data-i18n="banks_title">🏛️ بانک‌های من</h3>
             
             <div id="banksContainer" style="margin-top:12px;">
-                <!-- کارت نمونه ۱: بانک تجارت -->
-                <div class="bank-card color-blue" id="bank-card-1">
-                    <div class="card-header">
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <div class="bank-icon">🏦</div>
-                            <div>
-                                <div class="bank-name">بانک تجارت</div>
-                                <div class="card-number">**** **** **** 1234</div>
-                            </div>
-                        </div>
-                        <div style="position: relative;">
-                            <button class="menu-btn" onclick="toggleBankMenu('bank1')"><i class="fas fa-ellipsis-v"></i></button>
-                            <div class="bank-menu" id="bank-menu-bank1">
-                                <div class="menu-item" onclick="alert('ویرایش بانک تجارت')">
-                                    <i class="fas fa-edit icon-edit"></i> ویرایش
-                                </div>
-                                <div class="menu-item" onclick="alert('غیرفعال کردن بانک تجارت')">
-                                    <i class="fas fa-pause icon-pause"></i> غیرفعال
-                                </div>
-                                <div class="menu-divider"></div>
-                                <div class="menu-item" onclick="if(confirm('کارت بانک تجارت حذف شود؟')) alert('حذف شد')">
-                                    <i class="fas fa-trash icon-delete"></i> حذف
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <div>
-                            <div class="balance-label">موجودی</div>
-                            <div class="balance-amount">۱۲,۴۵۰,۰۰۰ تومان</div>
-                        </div>
-                        <span class="status-badge active">فعال</span>
-                    </div>
-                </div>
-
-                <!-- کارت نمونه ۲: بانک ملی -->
-                <div class="bank-card color-green" id="bank-card-2">
-                    <div class="card-header">
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <div class="bank-icon">🏛️</div>
-                            <div>
-                                <div class="bank-name">بانک ملی</div>
-                                <div class="card-number">**** **** **** 5678</div>
-                            </div>
-                        </div>
-                        <div style="position: relative;">
-                            <button class="menu-btn" onclick="toggleBankMenu('bank2')"><i class="fas fa-ellipsis-v"></i></button>
-                            <div class="bank-menu" id="bank-menu-bank2">
-                                <div class="menu-item" onclick="alert('ویرایش بانک ملی')">
-                                    <i class="fas fa-edit icon-edit"></i> ویرایش
-                                </div>
-                                <div class="menu-item" onclick="alert('فعال کردن بانک ملی')">
-                                    <i class="fas fa-play icon-play"></i> فعال
-                                </div>
-                                <div class="menu-divider"></div>
-                                <div class="menu-item" onclick="if(confirm('کارت بانک ملی حذف شود؟')) alert('حذف شد')">
-                                    <i class="fas fa-trash icon-delete"></i> حذف
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <div>
-                            <div class="balance-label">موجودی</div>
-                            <div class="balance-amount">۸,۲۰۰,۰۰۰ تومان</div>
-                        </div>
-                        <span class="status-badge inactive">غیرفعال</span>
-                    </div>
-                </div>
+                <!-- کارت‌ها توسط جاوااسکریپت رندر میشن -->
             </div>
 
-            <button class="add-btn" onclick="addBank()"><i class="fas fa-plus"></i> <span data-i18n="add_bank_btn">افزودن بانک جدید</span></button>
+            <button class="add-btn" onclick="showAddBankForm()"><i class="fas fa-plus"></i> <span data-i18n="add_bank_btn">افزودن بانک جدید</span></button>
         </div>
     </div>
 
-    <!-- ========== صفحه ولت‌ها ========== -->
+    <!-- ===== صفحه ولت‌ها ===== -->
     <div id="page-wallets" class="page">
         <div class="card">
             <button class="back-btn" onclick="switchPage('manage')"><i class="fas fa-arrow-right"></i> <span data-i18n="back_to_manage">بازگشت به مدیریت</span></button>
@@ -584,7 +551,7 @@
         </div>
     </div>
 
-    <!-- ========== صفحه صرافی‌ها ========== -->
+    <!-- ===== صفحه صرافی‌ها ===== -->
     <div id="page-exchanges" class="page">
         <div class="card">
             <button class="back-btn" onclick="switchPage('manage')"><i class="fas fa-arrow-right"></i> <span data-i18n="back_to_manage">بازگشت به مدیریت</span></button>
@@ -621,7 +588,7 @@
         </div>
     </div>
 
-    <!-- ========== صفحه تاریخچه ========== -->
+    <!-- ===== صفحه تاریخچه ===== -->
     <div id="page-history" class="page">
         <div class="card">
             <h3 data-i18n="history_title">📜 تمام تراکنش‌ها</h3>
@@ -631,7 +598,7 @@
         </div>
     </div>
 
-    <!-- ========== صفحه تنظیمات ========== -->
+    <!-- ===== صفحه تنظیمات ===== -->
     <div id="page-settings" class="page">
         <div class="card">
             <h3 data-i18n="language_title">🌐 زبان</h3>
@@ -677,12 +644,12 @@
                 </div>
                 <span class="value" data-i18n="backup_value">دستی</span>
             </div>
-            <div class="settings-item" onclick="alert('ℹ️ نسخه v9.1.0')">
+            <div class="settings-item" onclick="alert('ℹ️ نسخه v9.2.0')">
                 <div class="left">
                     <span class="icon"><i class="fas fa-info-circle"></i></span>
                     <span class="label" data-i18n="about_label">درباره</span>
                 </div>
-                <span class="value">v9.1.0</span>
+                <span class="value">v9.2.0</span>
             </div>
         </div>
         <div class="card" style="border:1px solid rgba(239,68,68,0.1);">
@@ -696,7 +663,7 @@
         </div>
     </div>
 
-    <!-- ========== منوی پایین ========== -->
+    <!-- ===== منوی پایین ===== -->
     <div class="bottom-nav">
         <div class="nav-item active" data-page="home" onclick="switchPage('home')">
             <i class="fas fa-home"></i><span data-i18n="nav_home">خانه</span>
@@ -717,7 +684,9 @@
     </div>
 
     <script>
-        // ========== ترجمه‌ها ==========
+        // ============================================================
+        //  ترجمه‌ها
+        // ============================================================
         const translations = {
             fa: {
                 appTitle: '💰 کیف پول', appBadge: 'حرفه‌ای',
@@ -750,7 +719,13 @@
                 backup_label: 'پشتیبان‌گیری', backup_value: 'دستی',
                 about_label: 'درباره', logout_label: 'خروج از حساب',
                 nav_home: 'خانه', nav_wallet: 'کیف پول', nav_manage: 'مدیریت',
-                nav_history: 'تاریخچه', nav_settings: 'تنظیمات'
+                nav_history: 'تاریخچه', nav_settings: 'تنظیمات',
+                edit_bank: 'ویرایش بانک',
+                deactivate_bank: 'غیرفعال کردن',
+                activate_bank: 'فعال کردن',
+                delete_bank: 'حذف بانک',
+                active_status: 'فعال',
+                inactive_status: 'غیرفعال'
             },
             en: {
                 appTitle: '💰 Wallet', appBadge: 'Pro',
@@ -783,7 +758,13 @@
                 backup_label: 'Backup', backup_value: 'Manual',
                 about_label: 'About', logout_label: 'Logout',
                 nav_home: 'Home', nav_wallet: 'Wallet', nav_manage: 'Manage',
-                nav_history: 'History', nav_settings: 'Settings'
+                nav_history: 'History', nav_settings: 'Settings',
+                edit_bank: 'Edit Bank',
+                deactivate_bank: 'Deactivate',
+                activate_bank: 'Activate',
+                delete_bank: 'Delete Bank',
+                active_status: 'Active',
+                inactive_status: 'Inactive'
             },
             ar: {
                 appTitle: '💰 المحفظة', appBadge: 'احترافي',
@@ -816,7 +797,13 @@
                 backup_label: 'النسخ الاحتياطي', backup_value: 'يدوي',
                 about_label: 'حول', logout_label: 'تسجيل الخروج',
                 nav_home: 'الرئيسية', nav_wallet: 'المحفظة', nav_manage: 'إدارة',
-                nav_history: 'التاريخ', nav_settings: 'الإعدادات'
+                nav_history: 'التاريخ', nav_settings: 'الإعدادات',
+                edit_bank: 'تعديل البنك',
+                deactivate_bank: 'إلغاء التنشيط',
+                activate_bank: 'تنشيط',
+                delete_bank: 'حذف البنك',
+                active_status: 'نشط',
+                inactive_status: 'غير نشط'
             }
         };
 
@@ -840,14 +827,142 @@
             });
             document.querySelector('.header h1').textContent = t.appTitle;
             document.querySelector('.header .badge').textContent = t.appBadge;
+            // رندر مجدد بانک‌ها برای ترجمه
+            renderBanks();
         }
 
-        // ========== مدیریت منوی همبرگری بانک‌ها ==========
-        function toggleBankMenu(menuId) {
-            const menu = document.getElementById(`bank-menu-${menuId}`);
+        // ============================================================
+        //  مدیریت بانک‌ها (داده و توابع)
+        // ============================================================
+        let banks = [];
+        let bankIdCounter = 0;
+
+        // آیکون‌های بانک‌ها (برای نمایش در کارت)
+        const bankIcons = {
+            'بانک تجارت': '🏦',
+            'بانک ملی': '🏛️',
+            'بانک صادرات': '🏧',
+            'بانک ملت': '🏢',
+            'بانک کشاورزی': '🌾',
+            'بانک مسکن': '🏠',
+            'بانک سپه': '⚔️',
+            'بانک پاسارگاد': '🏛️',
+            'بانک سامان': '💠',
+            'بانک پارسیان': '🪷'
+        };
+
+        // رنگ‌های کارت بر اساس نام بانک
+        const bankColors = {
+            'بانک تجارت': 'color-blue',
+            'بانک ملی': 'color-green',
+            'بانک صادرات': 'color-teal',
+            'بانک ملت': 'color-purple',
+            'بانک کشاورزی': 'color-green',
+            'بانک مسکن': 'color-orange',
+            'بانک سپه': 'color-red',
+            'بانک پاسارگاد': 'color-purple',
+            'بانک سامان': 'color-teal',
+            'بانک پارسیان': 'color-pink'
+        };
+
+        // ===== بارگذاری بانک‌ها از localStorage =====
+        function loadBanks() {
+            try {
+                const saved = localStorage.getItem('banks_data');
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    banks = data.banks || [];
+                    bankIdCounter = data.counter || 0;
+                } else {
+                    // داده‌های نمونه
+                    banks = [
+                        { id: ++bankIdCounter, name: 'بانک تجارت', cardNumber: '**** **** **** 1234', balance: 12450000, active: true, icon: '🏦' },
+                        { id: ++bankIdCounter, name: 'بانک ملی', cardNumber: '**** **** **** 5678', balance: 8200000, active: false, icon: '🏛️' }
+                    ];
+                    saveBanks();
+                }
+            } catch (e) {
+                console.warn('خطا در بارگذاری بانک‌ها:', e);
+                banks = [];
+                bankIdCounter = 0;
+            }
+        }
+
+        function saveBanks() {
+            try {
+                localStorage.setItem('banks_data', JSON.stringify({ banks, counter: bankIdCounter }));
+            } catch (e) {
+                console.warn('خطا در ذخیره بانک‌ها:', e);
+            }
+        }
+
+        // ===== رندر کردن کارت‌های بانکی =====
+        function renderBanks() {
+            const container = document.getElementById('banksContainer');
+            if (!container) return;
+
+            if (banks.length === 0) {
+                container.innerHTML = `<div class="empty-state" style="padding:20px 0;">هیچ بانکی ثبت نشده است</div>`;
+                return;
+            }
+
+            let html = '';
+            const t = translations[currentLang];
+
+            for (let bank of banks) {
+                const colorClass = bankColors[bank.name] || 'color-blue';
+                const icon = bank.icon || bankIcons[bank.name] || '🏦';
+                const statusText = bank.active ? t.active_status : t.inactive_status;
+                const statusClass = bank.active ? 'active' : 'inactive';
+                const menuId = `bank-menu-${bank.id}`;
+
+                html += `
+                    <div class="bank-card ${colorClass}" id="bank-card-${bank.id}">
+                        <div class="card-header">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <div class="bank-icon">${icon}</div>
+                                <div>
+                                    <div class="bank-name">${bank.name}</div>
+                                    <div class="card-number">${bank.cardNumber}</div>
+                                </div>
+                            </div>
+                            <div style="position: relative;">
+                                <button class="menu-btn" onclick="toggleBankMenu('${bank.id}')"><i class="fas fa-ellipsis-v"></i></button>
+                                <div class="bank-menu" id="${menuId}">
+                                    <div class="menu-item" onclick="editBank(${bank.id})">
+                                        <i class="fas fa-edit icon-edit"></i> ${t.edit_bank}
+                                    </div>
+                                    <div class="menu-item" onclick="toggleBankStatus(${bank.id})">
+                                        <i class="${bank.active ? 'fas fa-pause icon-pause' : 'fas fa-play icon-play'}"></i> 
+                                        ${bank.active ? t.deactivate_bank : t.activate_bank}
+                                    </div>
+                                    <div class="menu-divider"></div>
+                                    <div class="menu-item" onclick="deleteBank(${bank.id})">
+                                        <i class="fas fa-trash icon-delete"></i> ${t.delete_bank}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div>
+                                <div class="balance-label">موجودی</div>
+                                <div class="balance-amount">${bank.balance.toLocaleString()} تومان</div>
+                            </div>
+                            <span class="status-badge ${statusClass}">${statusText}</span>
+                        </div>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = html;
+        }
+
+        // ===== منوی همبرگری =====
+        function toggleBankMenu(bankId) {
+            const menu = document.getElementById(`bank-menu-${bankId}`);
             if (!menu) return;
             document.querySelectorAll('.bank-menu').forEach(m => {
-                if (m.id !== `bank-menu-${menuId}`) m.classList.remove('show');
+                if (m.id !== `bank-menu-${bankId}`) m.classList.remove('show');
             });
             menu.classList.toggle('show');
         }
@@ -859,7 +974,74 @@
             }
         });
 
-        // ========== داده‌ها ==========
+        // ===== افزودن بانک جدید =====
+        function showAddBankForm() {
+            const t = translations[currentLang];
+            const name = prompt('نام بانک:');
+            if (!name) return;
+            const cardNumber = prompt('شماره کارت (۱۶ رقمی):');
+            if (!cardNumber) return;
+            const balanceInput = prompt('موجودی (تومان):');
+            if (balanceInput === null) return;
+            const balance = parseFloat(balanceInput.replace(/,/g, '')) || 0;
+            
+            const icon = bankIcons[name] || '🏦';
+            banks.push({
+                id: ++bankIdCounter,
+                name: name,
+                cardNumber: cardNumber,
+                balance: balance,
+                active: true,
+                icon: icon
+            });
+            saveBanks();
+            renderBanks();
+        }
+
+        // ===== ویرایش بانک =====
+        function editBank(id) {
+            const bank = banks.find(b => b.id === id);
+            if (!bank) return;
+            const t = translations[currentLang];
+            const newName = prompt('نام جدید:', bank.name);
+            if (newName === null) return;
+            const newCard = prompt('شماره کارت جدید:', bank.cardNumber);
+            if (newCard === null) return;
+            const newBalance = prompt('موجودی جدید (تومان):', bank.balance.toLocaleString());
+            if (newBalance === null) return;
+            
+            bank.name = newName.trim() || bank.name;
+            bank.cardNumber = newCard.trim() || bank.cardNumber;
+            bank.balance = parseFloat(newBalance.replace(/,/g, '')) || bank.balance;
+            // بروزرسانی آیکون
+            bank.icon = bankIcons[bank.name] || '🏦';
+            saveBanks();
+            renderBanks();
+        }
+
+        // ===== تغییر وضعیت فعال/غیرفعال =====
+        function toggleBankStatus(id) {
+            const bank = banks.find(b => b.id === id);
+            if (!bank) return;
+            bank.active = !bank.active;
+            saveBanks();
+            renderBanks();
+        }
+
+        // ===== حذف بانک =====
+        function deleteBank(id) {
+            const bank = banks.find(b => b.id === id);
+            if (!bank) return;
+            const t = translations[currentLang];
+            if (!confirm(`آیا ${bank.name} حذف شود؟`)) return;
+            banks = banks.filter(b => b.id !== id);
+            saveBanks();
+            renderBanks();
+        }
+
+        // ============================================================
+        //  سایر داده‌ها و توابع (ارزها، قیمت‌ها، تاریخچه و ...)
+        // ============================================================
         let currencies = [
             { id: 'rial', label: 'ریال', symbol: '🇮🇷', amount: 12000000, isCrypto: false },
             { id: 'usdt', label: 'تتر', symbol: '₿', amount: 25, isCrypto: true },
@@ -872,7 +1054,7 @@
             { label: '➖ برداشت ۲۰ دلار', amount: 20, type: 'withdraw', date: '۱۴۰۲/۱۰/۱۱' }
         ];
 
-        // ========== دریافت قیمت از Binance ==========
+        // ===== دریافت قیمت از Binance =====
         async function fetchPrices() {
             const rateDisplay = document.getElementById('rateDisplay');
             rateDisplay.innerHTML = '⏳ <span data-i18n="loading_rate">در حال دریافت قیمت‌ها...</span>';
@@ -950,7 +1132,7 @@
             }
         }
 
-        // ========== ذخیره/بازیابی ==========
+        // ===== ذخیره/بازیابی =====
         function saveData() {
             localStorage.setItem('wallet_data', JSON.stringify({ currencies, transactions }));
         }
@@ -966,7 +1148,7 @@
             } catch (e) {}
         }
 
-        // ========== رندر ==========
+        // ===== رندر =====
         function renderAll() {
             renderCurrencies();
             updateTotal();
@@ -999,7 +1181,7 @@
             }
         }
 
-        // ========== اقدام سریع ==========
+        // ===== اقدام سریع =====
         function quickAction(id, type) {
             const c = currencies.find(x => x.id === id);
             if (!c) return;
@@ -1019,7 +1201,7 @@
             document.getElementById('historyDot').style.display = 'block';
         }
 
-        // ========== افزودن ارز ==========
+        // ===== افزودن ارز =====
         function addNewCurrency() {
             const input = document.getElementById('newCurrencyInput');
             const id = input.value.trim().toLowerCase();
@@ -1037,7 +1219,7 @@
                 .catch(() => alert('ارز پیدا نشد! شناسه رو چک کن.'));
         }
 
-        // ========== مجموع ==========
+        // ===== مجموع =====
         function updateTotal() {
             let totalUsd = 0;
             for (let c of currencies) {
@@ -1050,7 +1232,7 @@
             document.getElementById('totalUsd').textContent = `≈ ${totalUsd.toFixed(2)} تتر`;
         }
 
-        // ========== تاریخچه ==========
+        // ===== تاریخچه =====
         function updateHistory() {
             const container = document.getElementById('historyList');
             if (!container) return;
@@ -1076,7 +1258,7 @@
             document.getElementById('historyDot').style.display = transactions.length > 0 ? 'block' : 'none';
         }
 
-        // ========== آمار ==========
+        // ===== آمار =====
         function updateStats() {
             const cEl = document.getElementById('statsCurrencies');
             const tEl = document.getElementById('statsTransactions');
@@ -1084,18 +1266,7 @@
             if (tEl) tEl.textContent = transactions.length;
         }
 
-        // ========== مدیریت بانک ==========
-        function addBank() {
-            const name = prompt('نام بانک:');
-            if (!name) return;
-            const cardNumber = prompt('شماره کارت (۱۶ رقمی):');
-            if (!cardNumber) return;
-            const balance = prompt('موجودی (تومان):');
-            if (!balance) return;
-            alert(`✅ بانک ${name} با شماره کارت ${cardNumber} و موجودی ${balance} تومان اضافه شد!`);
-        }
-
-        // ========== مدیریت ولت ==========
+        // ===== مدیریت ولت =====
         function addWallet() {
             const name = prompt('نام کیف پول:');
             if (!name) return;
@@ -1113,7 +1284,7 @@
             if (confirm(`کیف پول ${id} حذف شود؟`)) alert(`کیف پول ${id} حذف شد.`);
         }
 
-        // ========== مدیریت صرافی ==========
+        // ===== مدیریت صرافی =====
         function addExchange() {
             const name = prompt('نام صرافی:');
             if (!name) return;
@@ -1122,7 +1293,7 @@
             alert(`✅ صرافی ${name} با API Key ${apiKey} اضافه شد!`);
         }
 
-        // ========== پاک کردن ==========
+        // ===== پاک کردن =====
         function clearAllData() {
             if (!confirm('همه داده‌ها پاک میشن؟')) return;
             for (let c of currencies) c.amount = 0;
@@ -1131,24 +1302,34 @@
             renderAll();
         }
 
-        // ========== تغییر صفحه ==========
+        // ===== تغییر صفحه =====
         function switchPage(page) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(`page-${page}`).classList.add('active');
+            const target = document.getElementById(`page-${page}`);
+            if (target) target.classList.add('active');
+            
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             if (page === 'manage' || page === 'banks' || page === 'wallets' || page === 'exchanges') {
-                document.querySelector(`.nav-item[data-page="manage"]`).classList.add('active');
+                const manageNav = document.querySelector(`.nav-item[data-page="manage"]`);
+                if (manageNav) manageNav.classList.add('active');
             } else {
-                document.querySelector(`.nav-item[data-page="${page}"]`).classList.add('active');
+                const nav = document.querySelector(`.nav-item[data-page="${page}"]`);
+                if (nav) nav.classList.add('active');
             }
+            
+            if (page === 'banks') renderBanks();
             if (page === 'home') { updateTotal(); }
             if (page === 'history') updateHistory();
             if (page === 'settings') updateStats();
         }
 
-        // ========== شروع ==========
+        // ============================================================
+        //  شروع برنامه
+        // ============================================================
+        loadBanks();
         loadData();
         renderAll();
+        renderBanks();
         fetchPrices();
         setInterval(fetchPrices, 30000);
     </script>
