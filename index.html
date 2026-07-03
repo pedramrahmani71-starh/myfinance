@@ -6,7 +6,6 @@
     <title>کیف پول من</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        /* ===== استایل‌های عمومی ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -46,7 +45,7 @@
         }
         .page { display: none; padding: 12px 16px 20px; animation: fadeIn .35s ease; }
         .page.active { display: block; }
-        @keyframes fadeIn { from{opacity:0; transform:translateY(12px);} to{opacity:1; transform:translateY(0);} }
+        @keyframes fadeIn { from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
         .card {
             background: rgba(22,27,36,0.7);
             backdrop-filter: blur(16px);
@@ -58,7 +57,7 @@
         }
         .card h3 { font-size: 13px; color: #8899aa; font-weight: 400; margin-bottom: 6px; }
         
-        /* ===== قیمت‌ها ===== */
+        /* قیمت‌ها */
         .price-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -78,7 +77,6 @@
         .price-item .price { font-size: 14px; font-weight: 600; color: #4ade80; direction: ltr; }
         .price-item .price.usd { font-size: 11px; color: #8899aa; font-weight: 400; margin-top: 2px; }
         
-        /* ===== لیست ارزها ===== */
         .currency-item {
             display: flex; justify-content: space-between; align-items: center;
             padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
@@ -99,7 +97,6 @@
         .currency-item .actions .deposit-btn { color: #4ade80; }
         .currency-item .actions .withdraw-btn { color: #ef4444; }
         
-        /* ===== مجموع ===== */
         .total-box {
             background: linear-gradient(135deg, rgba(0,136,204,0.08), rgba(74,222,128,0.04));
             padding: 16px 20px;
@@ -111,7 +108,6 @@
         .total-box .label { font-size: 13px; color: #8899aa; }
         .total-box .sub { font-size: 13px; color: #8899aa; margin-top: 2px; }
         
-        /* ===== نرخ ===== */
         .rate-box {
             background: rgba(15,21,30,0.5);
             backdrop-filter: blur(8px);
@@ -129,7 +125,6 @@
             cursor: pointer; font-size: 14px; margin-right: 8px;
         }
         
-        /* ===== تاریخچه ===== */
         .history-list { max-height: 300px; overflow-y: auto; margin-top: 8px; padding-top: 6px; }
         .history-item {
             display: flex; justify-content: space-between; align-items: center;
@@ -142,7 +137,6 @@
         .history-item .deposit { color: #4ade80; }
         .empty-state { color: #8899aa; text-align: center; padding: 24px 0; font-size: 13px; }
         
-        /* ===== مدیریت ===== */
         .manage-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
@@ -272,7 +266,6 @@
         .bank-card.color-orange { background: linear-gradient(145deg, #5a3a1a, #3a220f); }
         .bank-card.color-pink { background: linear-gradient(145deg, #5a1a3a, #3a0f22); }
         
-        /* ===== لیست ولت/صرافی ===== */
         .list-item {
             display: flex; justify-content: space-between; align-items: center;
             padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
@@ -298,7 +291,6 @@
         .list-item .actions .edit-btn { color: #0088cc; }
         .list-item .actions .delete-btn { color: #ef4444; }
         
-        /* ===== دکمه افزودن ===== */
         .add-btn {
             width: 100%; margin-top: 12px; padding: 12px;
             border: 1px dashed rgba(0,136,204,0.3);
@@ -310,7 +302,6 @@
         .add-btn:hover { background: rgba(0,136,204,0.05); }
         .add-btn i { margin-left: 8px; }
         
-        /* ===== بازگشت ===== */
         .back-btn {
             background: transparent; border: none; color: #0088cc;
             font-size: 14px; cursor: pointer; font-family: inherit;
@@ -320,7 +311,6 @@
         }
         .back-btn:hover { color: #4ade80; }
         
-        /* ===== زبان ===== */
         .lang-selector { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
         .lang-btn {
             padding: 4px 14px; border-radius: 30px;
@@ -332,7 +322,6 @@
         .lang-btn.active { background: rgba(0,136,204,0.15); color: #4ade80; border-color: rgba(0,136,204,0.2); }
         .lang-btn:hover { background: rgba(255,255,255,0.03); }
         
-        /* ===== تنظیمات ===== */
         .settings-item {
             display: flex; justify-content: space-between; align-items: center;
             padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.03);
@@ -346,7 +335,6 @@
         .settings-item.danger .label { color: #ef4444; }
         .settings-item.danger .icon { color: #ef4444; }
         
-        /* ===== منوی پایین ===== */
         .bottom-nav {
             position: fixed; bottom: 12px; left: 12px; right: 12px;
             background: rgba(15,21,30,0.85); backdrop-filter: blur(24px);
@@ -369,7 +357,6 @@
             background: #ef4444; border-radius: 50%; border: 2px solid rgba(15,21,30,0.85);
         }
         
-        /* ===== ورودی‌ها ===== */
         .input-group { display: flex; gap: 8px; margin-top: 8px; }
         .input-group input {
             flex: 1; padding: 10px 14px; border: none; border-radius: 16px;
@@ -388,7 +375,6 @@
             color: #fff; font-weight: 600; cursor: pointer; font-family: inherit;
         }
         
-        /* ===== ریسپانسیو ===== */
         @media(max-width:480px){
             .price-grid { grid-template-columns: repeat(2, 1fr); }
             .manage-grid { grid-template-columns: 1fr; gap: 8px; }
@@ -405,8 +391,8 @@
     <!-- ===== هدر ===== -->
     <div class="header">
         <div>
-            <h1 data-i18n="appTitle">💰 کیف پول</h1>
-            <span class="badge" data-i18n="appBadge">حرفه‌ای</span>
+            <h1 id="appTitle">💰 کیف پول</h1>
+            <span class="badge" id="appBadge">حرفه‌ای</span>
         </div>
         <div style="display:flex; gap:12px; align-items:center;">
             <i class="fas fa-search" style="color:#8899aa; font-size:18px; cursor:pointer;" onclick="alert('🔍 جستجو')"></i>
@@ -417,7 +403,7 @@
     <!-- ===== صفحه خانه ===== -->
     <div id="page-home" class="page active">
         <div class="card">
-            <h3 data-i18n="prices_title">📊 قیمت لحظه‌ای ارزها</h3>
+            <h3 id="pricesTitle">📊 قیمت لحظه‌ای ارزها</h3>
             <div class="price-grid" id="priceGrid">
                 <div class="price-item">
                     <div class="symbol">BTC</div>
@@ -442,11 +428,11 @@
             </div>
         </div>
         <div class="rate-box" id="rateDisplay">
-            📈 <span data-i18n="loading_rate">در حال دریافت قیمت‌ها...</span>
+            📈 <span id="loadingRate">در حال دریافت قیمت‌ها...</span>
             <button class="refresh-btn" onclick="fetchPrices()"><i class="fas fa-sync-alt"></i></button>
         </div>
         <div class="total-box">
-            <div class="label" data-i18n="total_label">مجموع دارایی</div>
+            <div class="label" id="totalLabel">مجموع دارایی</div>
             <div class="amount" id="totalRial">۰</div>
             <div class="sub" id="totalUsd">≈ ۰ تتر</div>
         </div>
@@ -455,63 +441,61 @@
     <!-- ===== صفحه کیف پول ===== -->
     <div id="page-wallet" class="page">
         <div class="card">
-            <h3 data-i18n="assets_title">💎 دارایی‌های شما</h3>
+            <h3 id="assetsTitle">💎 دارایی‌های شما</h3>
             <div id="currencyList"></div>
         </div>
         <div class="card">
-            <h3 data-i18n="add_currency_title">➕ افزودن ارز جدید</h3>
+            <h3 id="addCurrencyTitle">➕ افزودن ارز جدید</h3>
             <div class="input-group">
                 <input type="text" id="newCurrencyInput" placeholder="شناسه ارز (مثلاً dogecoin)">
-                <button onclick="addNewCurrency()" data-i18n="add_btn">افزودن</button>
+                <button onclick="addNewCurrency()" id="addBtn">افزودن</button>
             </div>
             <div style="font-size:10px; color:#8899aa; margin-top:4px;">
-                🟢 <span data-i18n="find_on">از</span> <a href="https://api.coingecko.com/api/v3/coins/list" target="_blank" style="color:#0088cc;" data-i18n="coingecko_list">لیست CoinGecko</a> <span data-i18n="find">پیدا کن</span>
+                🟢 <span id="findOn">از</span> <a href="https://api.coingecko.com/api/v3/coins/list" target="_blank" style="color:#0088cc;" id="coingeckoList">لیست CoinGecko</a> <span id="find">پیدا کن</span>
             </div>
         </div>
-        <button class="btn-danger" onclick="clearAllData()" data-i18n="clear_all">🗑️ پاک کردن همه</button>
+        <button class="btn-danger" onclick="clearAllData()" id="clearAll">🗑️ پاک کردن همه</button>
     </div>
 
     <!-- ===== صفحه مدیریت ===== -->
     <div id="page-manage" class="page">
         <div class="card">
-            <h3 data-i18n="manage_title">📋 مدیریت</h3>
+            <h3 id="manageTitle">📋 مدیریت</h3>
             <div class="manage-grid">
                 <div class="manage-item" onclick="switchPage('banks')">
                     <div class="icon"><i class="fas fa-university"></i></div>
-                    <div class="label" data-i18n="banks_label">بانک‌ها</div>
-                    <div class="desc" data-i18n="banks_desc">مدیریت بانک‌های متصل</div>
+                    <div class="label" id="banksLabel">بانک‌ها</div>
+                    <div class="desc" id="banksDesc">مدیریت بانک‌های متصل</div>
                 </div>
                 <div class="manage-item" onclick="switchPage('wallets')">
                     <div class="icon"><i class="fas fa-wallet"></i></div>
-                    <div class="label" data-i18n="wallets_label">ولت‌ها</div>
-                    <div class="desc" data-i18n="wallets_desc">مدیریت کیف پول‌های متصل</div>
+                    <div class="label" id="walletsLabel">ولت‌ها</div>
+                    <div class="desc" id="walletsDesc">مدیریت کیف پول‌های متصل</div>
                 </div>
                 <div class="manage-item" onclick="switchPage('exchanges')">
                     <div class="icon"><i class="fas fa-exchange-alt"></i></div>
-                    <div class="label" data-i18n="exchanges_label">صرافی‌ها</div>
-                    <div class="desc" data-i18n="exchanges_desc">مدیریت صرافی‌های متصل</div>
+                    <div class="label" id="exchangesLabel">صرافی‌ها</div>
+                    <div class="desc" id="exchangesDesc">مدیریت صرافی‌های متصل</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- ===== صفحه بانک‌ها (نسخه نهایی) ===== -->
+    <!-- ===== صفحه بانک‌ها ===== -->
     <div id="page-banks" class="page">
         <div class="card">
-            <button class="back-btn" onclick="switchPage('manage')"><i class="fas fa-arrow-right"></i> <span data-i18n="back_to_manage">بازگشت به مدیریت</span></button>
-            <h3 data-i18n="banks_title">🏛️ بانک‌های من</h3>
-            
+            <button class="back-btn" onclick="switchPage('manage')"><i class="fas fa-arrow-right"></i> <span id="backToManage">بازگشت به مدیریت</span></button>
+            <h3 id="banksTitle">🏛️ بانک‌های من</h3>
             <div id="banksContainer" style="margin-top:12px;"></div>
-
-            <button class="add-btn" onclick="showAddBankForm()"><i class="fas fa-plus"></i> <span data-i18n="add_bank_btn">افزودن بانک جدید</span></button>
+            <button class="add-btn" onclick="showAddBankForm()"><i class="fas fa-plus"></i> <span id="addBankBtn">افزودن بانک جدید</span></button>
         </div>
     </div>
 
     <!-- ===== صفحه ولت‌ها ===== -->
     <div id="page-wallets" class="page">
         <div class="card">
-            <button class="back-btn" onclick="switchPage('manage')"><i class="fas fa-arrow-right"></i> <span data-i18n="back_to_manage">بازگشت به مدیریت</span></button>
-            <h3 data-i18n="wallets_title">🔐 کیف پول‌های متصل</h3>
+            <button class="back-btn" onclick="switchPage('manage')"><i class="fas fa-arrow-right"></i> <span id="backToManage2">بازگشت به مدیریت</span></button>
+            <h3 id="walletsTitle">🔐 کیف پول‌های متصل</h3>
             <div id="walletsList">
                 <div class="list-item">
                     <div class="info">
@@ -519,7 +503,7 @@
                         <span class="address">۰x1234...5678</span>
                     </div>
                     <div style="display:flex; align-items:center; gap:8px;">
-                        <span class="badge" data-i18n="active_badge">فعال</span>
+                        <span class="badge" id="activeBadge">فعال</span>
                         <div class="actions">
                             <button class="edit-btn" onclick="editWallet('ton')"><i class="fas fa-edit"></i></button>
                             <button class="delete-btn" onclick="removeWallet('ton')"><i class="fas fa-trash"></i></button>
@@ -532,7 +516,7 @@
                         <span class="address">۰x9876...5432</span>
                     </div>
                     <div style="display:flex; align-items:center; gap:8px;">
-                        <span class="badge" data-i18n="active_badge">فعال</span>
+                        <span class="badge" id="activeBadge2">فعال</span>
                         <div class="actions">
                             <button class="edit-btn" onclick="editWallet('bitget')"><i class="fas fa-edit"></i></button>
                             <button class="delete-btn" onclick="removeWallet('bitget')"><i class="fas fa-trash"></i></button>
@@ -540,15 +524,15 @@
                     </div>
                 </div>
             </div>
-            <button class="add-btn" onclick="addWallet()"><i class="fas fa-plus"></i> <span data-i18n="add_wallet_btn">افزودن کیف پول جدید</span></button>
+            <button class="add-btn" onclick="addWallet()"><i class="fas fa-plus"></i> <span id="addWalletBtn">افزودن کیف پول جدید</span></button>
         </div>
     </div>
 
     <!-- ===== صفحه صرافی‌ها ===== -->
     <div id="page-exchanges" class="page">
         <div class="card">
-            <button class="back-btn" onclick="switchPage('manage')"><i class="fas fa-arrow-right"></i> <span data-i18n="back_to_manage">بازگشت به مدیریت</span></button>
-            <h3 data-i18n="exchanges_title">🏦 صرافی‌های متصل</h3>
+            <button class="back-btn" onclick="switchPage('manage')"><i class="fas fa-arrow-right"></i> <span id="backToManage3">بازگشت به مدیریت</span></button>
+            <h3 id="exchangesTitle">🏦 صرافی‌های متصل</h3>
             <div id="exchangesList">
                 <div class="list-item">
                     <div class="info">
@@ -556,7 +540,7 @@
                         <span class="address">API Key: *****1234</span>
                     </div>
                     <div style="display:flex; align-items:center; gap:8px;">
-                        <span class="badge" data-i18n="active_badge">فعال</span>
+                        <span class="badge" id="activeBadge3">فعال</span>
                         <div class="actions">
                             <button class="edit-btn" onclick="alert('ویرایش صرافی')"><i class="fas fa-edit"></i></button>
                             <button class="delete-btn" onclick="alert('حذف صرافی')"><i class="fas fa-trash"></i></button>
@@ -569,7 +553,7 @@
                         <span class="address">API Key: *****5678</span>
                     </div>
                     <div style="display:flex; align-items:center; gap:8px;">
-                        <span class="badge" data-i18n="active_badge">فعال</span>
+                        <span class="badge" id="activeBadge4">فعال</span>
                         <div class="actions">
                             <button class="edit-btn" onclick="alert('ویرایش صرافی')"><i class="fas fa-edit"></i></button>
                             <button class="delete-btn" onclick="alert('حذف صرافی')"><i class="fas fa-trash"></i></button>
@@ -577,16 +561,16 @@
                     </div>
                 </div>
             </div>
-            <button class="add-btn" onclick="addExchange()"><i class="fas fa-plus"></i> <span data-i18n="add_exchange_btn">افزودن صرافی جدید</span></button>
+            <button class="add-btn" onclick="addExchange()"><i class="fas fa-plus"></i> <span id="addExchangeBtn">افزودن صرافی جدید</span></button>
         </div>
     </div>
 
     <!-- ===== صفحه تاریخچه ===== -->
     <div id="page-history" class="page">
         <div class="card">
-            <h3 data-i18n="history_title">📜 تمام تراکنش‌ها</h3>
+            <h3 id="historyTitle">📜 تمام تراکنش‌ها</h3>
             <div class="history-list" id="historyList">
-                <div class="empty-state" data-i18n="no_transaction">هیچ تراکنشی ثبت نشده</div>
+                <div class="empty-state" id="noTransaction">هیچ تراکنشی ثبت نشده</div>
             </div>
         </div>
     </div>
@@ -594,7 +578,7 @@
     <!-- ===== صفحه تنظیمات ===== -->
     <div id="page-settings" class="page">
         <div class="card">
-            <h3 data-i18n="language_title">🌐 زبان</h3>
+            <h3 id="languageTitle">🌐 زبان</h3>
             <div class="lang-selector">
                 <button class="lang-btn active" data-lang="fa" onclick="changeLang('fa')">فارسی</button>
                 <button class="lang-btn" data-lang="en" onclick="changeLang('en')">English</button>
@@ -605,42 +589,42 @@
             <div class="settings-item" onclick="alert('🎨 تغییر تم (به زودی...)')">
                 <div class="left">
                     <span class="icon"><i class="fas fa-moon"></i></span>
-                    <span class="label" data-i18n="theme_label">حالت شب</span>
+                    <span class="label" id="themeLabel">حالت شب</span>
                 </div>
-                <span class="value" data-i18n="theme_value">فعال</span>
+                <span class="value" id="themeValue">فعال</span>
             </div>
             <div class="settings-item" onclick="alert('🎨 انتخاب رنگ (به زودی...)')">
                 <div class="left">
                     <span class="icon"><i class="fas fa-palette"></i></span>
-                    <span class="label" data-i18n="color_label">رنگ اصلی</span>
+                    <span class="label" id="colorLabel">رنگ اصلی</span>
                 </div>
-                <span class="value" data-i18n="color_value">آبی-سبز</span>
+                <span class="value" id="colorValue">آبی-سبز</span>
             </div>
             <div class="settings-item" onclick="alert('🔔 تنظیمات اعلان (به زودی...)')">
                 <div class="left">
                     <span class="icon"><i class="fas fa-bell"></i></span>
-                    <span class="label" data-i18n="notif_label">اعلان‌ها</span>
+                    <span class="label" id="notifLabel">اعلان‌ها</span>
                 </div>
-                <span class="value" data-i18n="notif_value">فعال</span>
+                <span class="value" id="notifValue">فعال</span>
             </div>
             <div class="settings-item" onclick="alert('🔐 تنظیمات امنیت (به زودی...)')">
                 <div class="left">
                     <span class="icon"><i class="fas fa-shield-alt"></i></span>
-                    <span class="label" data-i18n="security_label">امنیت</span>
+                    <span class="label" id="securityLabel">امنیت</span>
                 </div>
-                <span class="value" data-i18n="security_value">اثر انگشت</span>
+                <span class="value" id="securityValue">اثر انگشت</span>
             </div>
             <div class="settings-item" onclick="alert('💾 پشتیبان‌گیری (به زودی...)')">
                 <div class="left">
                     <span class="icon"><i class="fas fa-cloud-upload-alt"></i></span>
-                    <span class="label" data-i18n="backup_label">پشتیبان‌گیری</span>
+                    <span class="label" id="backupLabel">پشتیبان‌گیری</span>
                 </div>
-                <span class="value" data-i18n="backup_value">دستی</span>
+                <span class="value" id="backupValue">دستی</span>
             </div>
             <div class="settings-item" onclick="alert('ℹ️ نسخه v9.2.0')">
                 <div class="left">
                     <span class="icon"><i class="fas fa-info-circle"></i></span>
-                    <span class="label" data-i18n="about_label">درباره</span>
+                    <span class="label" id="aboutLabel">درباره</span>
                 </div>
                 <span class="value">v9.2.0</span>
             </div>
@@ -649,7 +633,7 @@
             <div class="settings-item danger" onclick="alert('🚪 خروج از حساب (به زودی...)')">
                 <div class="left">
                     <span class="icon"><i class="fas fa-sign-out-alt"></i></span>
-                    <span class="label" data-i18n="logout_label">خروج از حساب</span>
+                    <span class="label" id="logoutLabel">خروج از حساب</span>
                 </div>
                 <span class="arrow"><i class="fas fa-chevron-left"></i></span>
             </div>
@@ -659,20 +643,20 @@
     <!-- ===== منوی پایین ===== -->
     <div class="bottom-nav">
         <div class="nav-item active" data-page="home" onclick="switchPage('home')">
-            <i class="fas fa-home"></i><span data-i18n="nav_home">خانه</span>
+            <i class="fas fa-home"></i><span id="navHome">خانه</span>
         </div>
         <div class="nav-item" data-page="wallet" onclick="switchPage('wallet')">
-            <i class="fas fa-wallet"></i><span data-i18n="nav_wallet">کیف پول</span>
+            <i class="fas fa-wallet"></i><span id="navWallet">کیف پول</span>
         </div>
         <div class="nav-item" data-page="manage" onclick="switchPage('manage')">
-            <i class="fas fa-layer-group"></i><span data-i18n="nav_manage">مدیریت</span>
+            <i class="fas fa-layer-group"></i><span id="navManage">مدیریت</span>
         </div>
         <div class="nav-item" data-page="history" onclick="switchPage('history')">
-            <i class="fas fa-clock"></i><span data-i18n="nav_history">تاریخچه</span>
+            <i class="fas fa-clock"></i><span id="navHistory">تاریخچه</span>
             <span class="dot" id="historyDot" style="display:none;"></span>
         </div>
         <div class="nav-item" data-page="settings" onclick="switchPage('settings')">
-            <i class="fas fa-sliders-h"></i><span data-i18n="nav_settings">تنظیمات</span>
+            <i class="fas fa-sliders-h"></i><span id="navSettings">تنظیمات</span>
         </div>
     </div>
 
@@ -683,120 +667,123 @@
         const translations = {
             fa: {
                 appTitle: '💰 کیف پول', appBadge: 'حرفه‌ای',
-                prices_title: '📊 قیمت لحظه‌ای ارزها',
-                loading_rate: 'در حال دریافت قیمت‌ها...',
-                total_label: 'مجموع دارایی',
-                assets_title: '💎 دارایی‌های شما',
-                add_currency_title: '➕ افزودن ارز جدید',
-                add_btn: 'افزودن',
-                find_on: 'از', coingecko_list: 'لیست CoinGecko', find: 'پیدا کن',
-                clear_all: '🗑️ پاک کردن همه',
-                manage_title: '📋 مدیریت',
-                banks_label: 'بانک‌ها', banks_desc: 'مدیریت بانک‌های متصل',
-                wallets_label: 'ولت‌ها', wallets_desc: 'مدیریت کیف پول‌های متصل',
-                exchanges_label: 'صرافی‌ها', exchanges_desc: 'مدیریت صرافی‌های متصل',
-                banks_title: '🏛️ بانک‌های من',
-                wallets_title: '🔐 کیف پول‌های متصل',
-                exchanges_title: '🏦 صرافی‌های متصل',
-                active_badge: 'فعال',
-                add_bank_btn: 'افزودن بانک جدید',
-                add_wallet_btn: 'افزودن کیف پول جدید',
-                add_exchange_btn: 'افزودن صرافی جدید',
-                back_to_manage: 'بازگشت به مدیریت',
-                history_title: '📜 تمام تراکنش‌ها', no_transaction: 'هیچ تراکنشی ثبت نشده',
-                language_title: '🌐 زبان',
-                theme_label: 'حالت شب', theme_value: 'فعال',
-                color_label: 'رنگ اصلی', color_value: 'آبی-سبز',
-                notif_label: 'اعلان‌ها', notif_value: 'فعال',
-                security_label: 'امنیت', security_value: 'اثر انگشت',
-                backup_label: 'پشتیبان‌گیری', backup_value: 'دستی',
-                about_label: 'درباره', logout_label: 'خروج از حساب',
-                nav_home: 'خانه', nav_wallet: 'کیف پول', nav_manage: 'مدیریت',
-                nav_history: 'تاریخچه', nav_settings: 'تنظیمات',
-                edit_bank: 'ویرایش بانک',
-                deactivate_bank: 'غیرفعال کردن',
-                activate_bank: 'فعال کردن',
-                delete_bank: 'حذف بانک',
-                active_status: 'فعال',
-                inactive_status: 'غیرفعال'
+                pricesTitle: '📊 قیمت لحظه‌ای ارزها',
+                loadingRate: 'در حال دریافت قیمت‌ها...',
+                totalLabel: 'مجموع دارایی',
+                assetsTitle: '💎 دارایی‌های شما',
+                addCurrencyTitle: '➕ افزودن ارز جدید',
+                addBtn: 'افزودن',
+                findOn: 'از', coingeckoList: 'لیست CoinGecko', find: 'پیدا کن',
+                clearAll: '🗑️ پاک کردن همه',
+                manageTitle: '📋 مدیریت',
+                banksLabel: 'بانک‌ها', banksDesc: 'مدیریت بانک‌های متصل',
+                walletsLabel: 'ولت‌ها', walletsDesc: 'مدیریت کیف پول‌های متصل',
+                exchangesLabel: 'صرافی‌ها', exchangesDesc: 'مدیریت صرافی‌های متصل',
+                banksTitle: '🏛️ بانک‌های من',
+                walletsTitle: '🔐 کیف پول‌های متصل',
+                exchangesTitle: '🏦 صرافی‌های متصل',
+                activeBadge: 'فعال',
+                addBankBtn: 'افزودن بانک جدید',
+                addWalletBtn: 'افزودن کیف پول جدید',
+                addExchangeBtn: 'افزودن صرافی جدید',
+                backToManage: 'بازگشت به مدیریت',
+                historyTitle: '📜 تمام تراکنش‌ها', noTransaction: 'هیچ تراکنشی ثبت نشده',
+                languageTitle: '🌐 زبان',
+                themeLabel: 'حالت شب', themeValue: 'فعال',
+                colorLabel: 'رنگ اصلی', colorValue: 'آبی-سبز',
+                notifLabel: 'اعلان‌ها', notifValue: 'فعال',
+                securityLabel: 'امنیت', securityValue: 'اثر انگشت',
+                backupLabel: 'پشتیبان‌گیری', backupValue: 'دستی',
+                aboutLabel: 'درباره', logoutLabel: 'خروج از حساب',
+                navHome: 'خانه', navWallet: 'کیف پول', navManage: 'مدیریت',
+                navHistory: 'تاریخچه', navSettings: 'تنظیمات',
+                editBank: 'ویرایش بانک',
+                deactivateBank: 'غیرفعال کردن',
+                activateBank: 'فعال کردن',
+                deleteBank: 'حذف بانک',
+                activeStatus: 'فعال',
+                inactiveStatus: 'غیرفعال',
+                emptyBanks: 'هیچ بانکی ثبت نشده است'
             },
             en: {
                 appTitle: '💰 Wallet', appBadge: 'Pro',
-                prices_title: '📊 Live Crypto Prices',
-                loading_rate: 'Fetching prices...',
-                total_label: 'Total Assets',
-                assets_title: '💎 Your Assets',
-                add_currency_title: '➕ Add New Currency',
-                add_btn: 'Add',
-                find_on: 'from', coingecko_list: 'CoinGecko List', find: 'find',
-                clear_all: '🗑️ Clear All',
-                manage_title: '📋 Management',
-                banks_label: 'Banks', banks_desc: 'Manage connected banks',
-                wallets_label: 'Wallets', wallets_desc: 'Manage connected wallets',
-                exchanges_label: 'Exchanges', exchanges_desc: 'Manage connected exchanges',
-                banks_title: '🏛️ My Banks',
-                wallets_title: '🔐 Connected Wallets',
-                exchanges_title: '🏦 Connected Exchanges',
-                active_badge: 'Active',
-                add_bank_btn: 'Add New Bank',
-                add_wallet_btn: 'Add New Wallet',
-                add_exchange_btn: 'Add New Exchange',
-                back_to_manage: 'Back to Management',
-                history_title: '📜 All Transactions', no_transaction: 'No transactions yet',
-                language_title: '🌐 Language',
-                theme_label: 'Night Mode', theme_value: 'Active',
-                color_label: 'Primary Color', color_value: 'Blue-Green',
-                notif_label: 'Notifications', notif_value: 'Active',
-                security_label: 'Security', security_value: 'Fingerprint',
-                backup_label: 'Backup', backup_value: 'Manual',
-                about_label: 'About', logout_label: 'Logout',
-                nav_home: 'Home', nav_wallet: 'Wallet', nav_manage: 'Manage',
-                nav_history: 'History', nav_settings: 'Settings',
-                edit_bank: 'Edit Bank',
-                deactivate_bank: 'Deactivate',
-                activate_bank: 'Activate',
-                delete_bank: 'Delete Bank',
-                active_status: 'Active',
-                inactive_status: 'Inactive'
+                pricesTitle: '📊 Live Crypto Prices',
+                loadingRate: 'Fetching prices...',
+                totalLabel: 'Total Assets',
+                assetsTitle: '💎 Your Assets',
+                addCurrencyTitle: '➕ Add New Currency',
+                addBtn: 'Add',
+                findOn: 'from', coingeckoList: 'CoinGecko List', find: 'find',
+                clearAll: '🗑️ Clear All',
+                manageTitle: '📋 Management',
+                banksLabel: 'Banks', banksDesc: 'Manage connected banks',
+                walletsLabel: 'Wallets', walletsDesc: 'Manage connected wallets',
+                exchangesLabel: 'Exchanges', exchangesDesc: 'Manage connected exchanges',
+                banksTitle: '🏛️ My Banks',
+                walletsTitle: '🔐 Connected Wallets',
+                exchangesTitle: '🏦 Connected Exchanges',
+                activeBadge: 'Active',
+                addBankBtn: 'Add New Bank',
+                addWalletBtn: 'Add New Wallet',
+                addExchangeBtn: 'Add New Exchange',
+                backToManage: 'Back to Management',
+                historyTitle: '📜 All Transactions', noTransaction: 'No transactions yet',
+                languageTitle: '🌐 Language',
+                themeLabel: 'Night Mode', themeValue: 'Active',
+                colorLabel: 'Primary Color', colorValue: 'Blue-Green',
+                notifLabel: 'Notifications', notifValue: 'Active',
+                securityLabel: 'Security', securityValue: 'Fingerprint',
+                backupLabel: 'Backup', backupValue: 'Manual',
+                aboutLabel: 'About', logoutLabel: 'Logout',
+                navHome: 'Home', navWallet: 'Wallet', navManage: 'Manage',
+                navHistory: 'History', navSettings: 'Settings',
+                editBank: 'Edit Bank',
+                deactivateBank: 'Deactivate',
+                activateBank: 'Activate',
+                deleteBank: 'Delete Bank',
+                activeStatus: 'Active',
+                inactiveStatus: 'Inactive',
+                emptyBanks: 'No banks registered'
             },
             ar: {
                 appTitle: '💰 المحفظة', appBadge: 'احترافي',
-                prices_title: '📊 أسعار العملات لحظياً',
-                loading_rate: 'جاري تحميل الأسعار...',
-                total_label: 'إجمالي الأصول',
-                assets_title: '💎 أصولك',
-                add_currency_title: '➕ إضافة عملة جديدة',
-                add_btn: 'إضافة',
-                find_on: 'من', coingecko_list: 'قائمة CoinGecko', find: 'ابحث',
-                clear_all: '🗑️ مسح الكل',
-                manage_title: '📋 إدارة',
-                banks_label: 'البنوك', banks_desc: 'إدارة البنوك المتصلة',
-                wallets_label: 'المحافظ', wallets_desc: 'إدارة المحافظ المتصلة',
-                exchanges_label: 'البورصات', exchanges_desc: 'إدارة البورصات المتصلة',
-                banks_title: '🏛️ بنوكي',
-                wallets_title: '🔐 المحافظ المتصلة',
-                exchanges_title: '🏦 البورصات المتصلة',
-                active_badge: 'نشط',
-                add_bank_btn: 'إضافة بنك جديد',
-                add_wallet_btn: 'إضافة محفظة جديدة',
-                add_exchange_btn: 'إضافة بورصة جديدة',
-                back_to_manage: 'العودة إلى الإدارة',
-                history_title: '📜 جميع المعاملات', no_transaction: 'لا توجد معاملات',
-                language_title: '🌐 اللغة',
-                theme_label: 'الوضع الليلي', theme_value: 'نشط',
-                color_label: 'اللون الأساسي', color_value: 'أزرق-أخضر',
-                notif_label: 'الإشعارات', notif_value: 'نشط',
-                security_label: 'الأمان', security_value: 'بصمة الإصبع',
-                backup_label: 'النسخ الاحتياطي', backup_value: 'يدوي',
-                about_label: 'حول', logout_label: 'تسجيل الخروج',
-                nav_home: 'الرئيسية', nav_wallet: 'المحفظة', nav_manage: 'إدارة',
-                nav_history: 'التاريخ', nav_settings: 'الإعدادات',
-                edit_bank: 'تعديل البنك',
-                deactivate_bank: 'إلغاء التنشيط',
-                activate_bank: 'تنشيط',
-                delete_bank: 'حذف البنك',
-                active_status: 'نشط',
-                inactive_status: 'غير نشط'
+                pricesTitle: '📊 أسعار العملات لحظياً',
+                loadingRate: 'جاري تحميل الأسعار...',
+                totalLabel: 'إجمالي الأصول',
+                assetsTitle: '💎 أصولك',
+                addCurrencyTitle: '➕ إضافة عملة جديدة',
+                addBtn: 'إضافة',
+                findOn: 'من', coingeckoList: 'قائمة CoinGecko', find: 'ابحث',
+                clearAll: '🗑️ مسح الكل',
+                manageTitle: '📋 إدارة',
+                banksLabel: 'البنوك', banksDesc: 'إدارة البنوك المتصلة',
+                walletsLabel: 'المحافظ', walletsDesc: 'إدارة المحافظ المتصلة',
+                exchangesLabel: 'البورصات', exchangesDesc: 'إدارة البورصات المتصلة',
+                banksTitle: '🏛️ بنوكي',
+                walletsTitle: '🔐 المحافظ المتصلة',
+                exchangesTitle: '🏦 البورصات المتصلة',
+                activeBadge: 'نشط',
+                addBankBtn: 'إضافة بنك جديد',
+                addWalletBtn: 'إضافة محفظة جديدة',
+                addExchangeBtn: 'إضافة بورصة جديدة',
+                backToManage: 'العودة إلى الإدارة',
+                historyTitle: '📜 جميع المعاملات', noTransaction: 'لا توجد معاملات',
+                languageTitle: '🌐 اللغة',
+                themeLabel: 'الوضع الليلي', themeValue: 'نشط',
+                colorLabel: 'اللون الأساسي', colorValue: 'أزرق-أخضر',
+                notifLabel: 'الإشعارات', notifValue: 'نشط',
+                securityLabel: 'الأمان', securityValue: 'بصمة الإصبع',
+                backupLabel: 'النسخ الاحتياطي', backupValue: 'يدوي',
+                aboutLabel: 'حول', logoutLabel: 'تسجيل الخروج',
+                navHome: 'الرئيسية', navWallet: 'المحفظة', navManage: 'إدارة',
+                navHistory: 'التاريخ', navSettings: 'الإعدادات',
+                editBank: 'تعديل البنك',
+                deactivateBank: 'إلغاء التنشيط',
+                activateBank: 'تنشيط',
+                deleteBank: 'حذف البنك',
+                activeStatus: 'نشط',
+                inactiveStatus: 'غير نشط',
+                emptyBanks: 'لا توجد بنوك مسجلة'
             }
         };
 
@@ -808,18 +795,65 @@
                 b.classList.toggle('active', b.dataset.lang === lang);
             });
             const t = translations[lang];
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.dataset.i18n;
-                if (t[key]) {
-                    if (el.tagName === 'INPUT' && el.placeholder) {
-                        el.placeholder = t[key];
-                    } else {
-                        el.textContent = t[key];
-                    }
-                }
-            });
-            document.querySelector('.header h1').textContent = t.appTitle;
-            document.querySelector('.header .badge').textContent = t.appBadge;
+            // به‌روزرسانی همه المان‌ها با id
+            const elements = {
+                appTitle: 'appTitle',
+                appBadge: 'appBadge',
+                pricesTitle: 'pricesTitle',
+                loadingRate: 'loadingRate',
+                totalLabel: 'totalLabel',
+                assetsTitle: 'assetsTitle',
+                addCurrencyTitle: 'addCurrencyTitle',
+                addBtn: 'addBtn',
+                findOn: 'findOn',
+                coingeckoList: 'coingeckoList',
+                find: 'find',
+                clearAll: 'clearAll',
+                manageTitle: 'manageTitle',
+                banksLabel: 'banksLabel',
+                banksDesc: 'banksDesc',
+                walletsLabel: 'walletsLabel',
+                walletsDesc: 'walletsDesc',
+                exchangesLabel: 'exchangesLabel',
+                exchangesDesc: 'exchangesDesc',
+                banksTitle: 'banksTitle',
+                walletsTitle: 'walletsTitle',
+                exchangesTitle: 'exchangesTitle',
+                activeBadge: 'activeBadge',
+                activeBadge2: 'activeBadge2',
+                activeBadge3: 'activeBadge3',
+                activeBadge4: 'activeBadge4',
+                addBankBtn: 'addBankBtn',
+                addWalletBtn: 'addWalletBtn',
+                addExchangeBtn: 'addExchangeBtn',
+                backToManage: 'backToManage',
+                backToManage2: 'backToManage2',
+                backToManage3: 'backToManage3',
+                historyTitle: 'historyTitle',
+                noTransaction: 'noTransaction',
+                languageTitle: 'languageTitle',
+                themeLabel: 'themeLabel',
+                themeValue: 'themeValue',
+                colorLabel: 'colorLabel',
+                colorValue: 'colorValue',
+                notifLabel: 'notifLabel',
+                notifValue: 'notifValue',
+                securityLabel: 'securityLabel',
+                securityValue: 'securityValue',
+                backupLabel: 'backupLabel',
+                backupValue: 'backupValue',
+                aboutLabel: 'aboutLabel',
+                logoutLabel: 'logoutLabel',
+                navHome: 'navHome',
+                navWallet: 'navWallet',
+                navManage: 'navManage',
+                navHistory: 'navHistory',
+                navSettings: 'navSettings'
+            };
+            for (let key in elements) {
+                const el = document.getElementById(elements[key]);
+                if (el && t[key]) el.textContent = t[key];
+            }
             renderBanks();
         }
 
@@ -884,21 +918,19 @@
         function renderBanks() {
             const container = document.getElementById('banksContainer');
             if (!container) return;
+            const t = translations[currentLang] || translations.fa;
 
             if (banks.length === 0) {
-                container.innerHTML = `<div class="empty-state">هیچ بانکی ثبت نشده است</div>`;
+                container.innerHTML = `<div class="empty-state">${t.emptyBanks}</div>`;
                 return;
             }
 
             let html = '';
-            const t = translations[currentLang] || translations.fa;
-
             for (let bank of banks) {
                 const colorClass = bankColors[bank.name] || 'color-blue';
                 const icon = bankIcons[bank.name] || '🏦';
-                const statusText = bank.active ? t.active_status : t.inactive_status;
+                const statusText = bank.active ? t.activeStatus : t.inactiveStatus;
                 const statusClass = bank.active ? 'active' : 'inactive';
-                const menuId = `bank-menu-${bank.id}`;
 
                 html += `
                     <div class="bank-card ${colorClass}" id="bank-card-${bank.id}">
@@ -912,17 +944,17 @@
                             </div>
                             <div style="position: relative;">
                                 <button class="menu-btn" onclick="toggleBankMenu('${bank.id}')"><i class="fas fa-ellipsis-v"></i></button>
-                                <div class="bank-menu" id="${menuId}">
+                                <div class="bank-menu" id="bank-menu-${bank.id}">
                                     <div class="menu-item" onclick="editBank(${bank.id})">
-                                        <i class="fas fa-edit icon-edit"></i> ${t.edit_bank}
+                                        <i class="fas fa-edit icon-edit"></i> ${t.editBank}
                                     </div>
                                     <div class="menu-item" onclick="toggleBankStatus(${bank.id})">
                                         <i class="${bank.active ? 'fas fa-pause icon-pause' : 'fas fa-play icon-play'}"></i> 
-                                        ${bank.active ? t.deactivate_bank : t.activate_bank}
+                                        ${bank.active ? t.deactivateBank : t.activateBank}
                                     </div>
                                     <div class="menu-divider"></div>
                                     <div class="menu-item" onclick="deleteBank(${bank.id})">
-                                        <i class="fas fa-trash icon-delete"></i> ${t.delete_bank}
+                                        <i class="fas fa-trash icon-delete"></i> ${t.deleteBank}
                                     </div>
                                 </div>
                             </div>
@@ -937,7 +969,6 @@
                     </div>
                 `;
             }
-
             container.innerHTML = html;
         }
 
@@ -957,6 +988,7 @@
         });
 
         function showAddBankForm() {
+            const t = translations[currentLang] || translations.fa;
             const name = prompt('نام بانک:');
             if (!name) return;
             const cardNumber = prompt('شماره کارت (۱۶ رقمی):');
@@ -979,6 +1011,7 @@
         function editBank(id) {
             const bank = banks.find(b => b.id === id);
             if (!bank) return;
+            const t = translations[currentLang] || translations.fa;
             const newName = prompt('نام جدید:', bank.name);
             if (newName === null) return;
             const newCard = prompt('شماره کارت جدید:', bank.cardNumber);
@@ -1004,6 +1037,7 @@
         function deleteBank(id) {
             const bank = banks.find(b => b.id === id);
             if (!bank) return;
+            const t = translations[currentLang] || translations.fa;
             if (!confirm(`آیا ${bank.name} حذف شود؟`)) return;
             banks = banks.filter(b => b.id !== id);
             saveBanks();
@@ -1011,7 +1045,7 @@
         }
 
         // ============================================================
-        //  سایر توابع (ارزها، قیمت‌ها، تاریخچه و ...)
+        //  سایر توابع
         // ============================================================
         let currencies = [
             { id: 'rial', label: 'ریال', symbol: '🇮🇷', amount: 12000000, isCrypto: false },
@@ -1027,7 +1061,8 @@
 
         async function fetchPrices() {
             const rateDisplay = document.getElementById('rateDisplay');
-            rateDisplay.innerHTML = '⏳ <span data-i18n="loading_rate">در حال دریافت قیمت‌ها...</span>';
+            const t = translations[currentLang] || translations.fa;
+            rateDisplay.innerHTML = `⏳ <span id="loadingRate">${t.loadingRate}</span>`;
 
             try {
                 const symbols = ['BTCUSDT', 'ETHUSDT', 'TONUSDT', 'TRXUSDT'];
@@ -1198,8 +1233,9 @@
         function updateHistory() {
             const container = document.getElementById('historyList');
             if (!container) return;
+            const t = translations[currentLang] || translations.fa;
             if (transactions.length === 0) {
-                container.innerHTML = `<div class="empty-state" data-i18n="no_transaction">هیچ تراکنشی ثبت نشده</div>`;
+                container.innerHTML = `<div class="empty-state" id="noTransaction">${t.noTransaction}</div>`;
                 return;
             }
             let html = '';
