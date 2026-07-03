@@ -121,13 +121,8 @@
         .history-item .withdraw { color: #ef4444; }
         .history-item .deposit { color: #4ade80; }
         .empty-state { color: #8899aa; text-align: center; padding: 24px 0; font-size: 13px; }
-        /* مدیریت ولت (طراحی جدید) */
-        .wallet-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 8px;
-        }
+        /* مدیریت ولت */
+        .wallet-grid { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
         .wallet-card {
             background: rgba(30, 38, 48, 0.4);
             border-radius: 18px;
@@ -171,12 +166,7 @@
         .add-btn:hover { background: rgba(0,136,204,0.05); }
         .add-btn i { margin-left: 8px; }
         /* زبان */
-        .lang-selector {
-            display: flex;
-            gap: 6px;
-            margin-top: 8px;
-            flex-wrap: wrap;
-        }
+        .lang-selector { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
         .lang-btn {
             padding: 4px 14px;
             border-radius: 30px;
@@ -189,31 +179,38 @@
             font-family: inherit;
             transition: .2s;
         }
-        .lang-btn.active {
-            background: rgba(0,136,204,0.15);
-            color: #4ade80;
-            border-color: rgba(0,136,204,0.2);
-        }
+        .lang-btn.active { background: rgba(0,136,204,0.15); color: #4ade80; border-color: rgba(0,136,204,0.2); }
         .lang-btn:hover { background: rgba(255,255,255,0.03); }
-        /* تنظیمات (مینیمال) */
-        .settings-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
+        /* تنظیمات مینیمال */
+        .settings-grid { display: flex; flex-direction: column; gap: 2px; }
         .settings-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            display: flex; justify-content: space-between; align-items: center;
             padding: 12px 0;
             border-bottom: 1px solid rgba(255,255,255,0.03);
+            cursor: pointer;
+            transition: .2s;
         }
         .settings-item:last-child { border-bottom: none; }
+        .settings-item:hover { background: rgba(255,255,255,0.02); }
         .settings-item .left { display: flex; align-items: center; gap: 12px; }
         .settings-item .icon { color: #0088cc; font-size: 18px; width: 28px; text-align: center; }
         .settings-item .label { color: #e8edf5; font-size: 14px; }
         .settings-item .value { color: #8899aa; font-size: 13px; }
         .settings-item .arrow { color: #8899aa; font-size: 14px; }
+        /* بنر VPN */
+        .vpn-banner {
+            background: rgba(0,136,204,0.06);
+            border: 1px solid rgba(0,136,204,0.1);
+            border-radius: 16px;
+            padding: 10px 14px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 12px;
+            color: #8899aa;
+        }
+        .vpn-banner i { color: #0088cc; font-size: 16px; }
         /* نمودار */
         .line-chart-container { height: 130px; margin: 6px 0 0; }
         /* منوی پایین */
@@ -238,19 +235,6 @@
             position: absolute; top: 2px; right: 6px; width: 6px; height: 6px;
             background: #ef4444; border-radius: 50%; border: 2px solid rgba(15,21,30,0.85);
         }
-        .vpn-banner {
-            background: rgba(0,136,204,0.08);
-            border: 1px solid rgba(0,136,204,0.12);
-            border-radius: 16px;
-            padding: 10px 14px;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 12px;
-            color: #8899aa;
-        }
-        .vpn-banner i { color: #0088cc; font-size: 16px; }
         @media(max-width:480px){
             .header h1 { font-size: 16px; }
             .bottom-nav { padding: 2px 0; }
@@ -278,7 +262,7 @@
     <div id="page-home" class="page active">
         <div class="vpn-banner">
             <i class="fas fa-shield-alt"></i>
-            <span>برای دریافت نرخ لحظه‌ای، از فیلترشکن استفاده کنید</span>
+            <span>برای دریافت نرخ لحظه‌ای، فیلترشکن را روشن کنید</span>
         </div>
         <div class="rate-box" id="rateDisplay">📈 در حال دریافت نرخ...</div>
         <div class="card" style="padding-bottom:6px;">
@@ -310,7 +294,7 @@
         <button onclick="clearAllData()" style="width:100%; padding:14px; border:none; border-radius:18px; background:linear-gradient(135deg,#ef4444,#dc2626); color:#fff; font-weight:600; cursor:pointer; font-family:inherit;">🗑️ پاک کردن همه</button>
     </div>
 
-    <!-- صفحه ۳: مدیریت (ولت جدید) -->
+    <!-- صفحه ۳: مدیریت -->
     <div id="page-manage" class="page">
         <div class="card">
             <h3>🔐 کیف پول‌های من</h3>
@@ -366,7 +350,7 @@
         </div>
     </div>
 
-    <!-- صفحه ۵: تنظیمات (مینیمال) -->
+    <!-- صفحه ۵: تنظیمات -->
     <div id="page-settings" class="page">
         <div class="card">
             <h3>🌐 زبان</h3>
@@ -413,17 +397,17 @@
                     </div>
                     <span class="value">دستی</span>
                 </div>
-                <div class="settings-item" onclick="alert('نسخه v4.0.0')">
+                <div class="settings-item" onclick="alert('نسخه v4.1.0')">
                     <div class="left">
                         <span class="icon"><i class="fas fa-info-circle"></i></span>
                         <span class="label">درباره</span>
                     </div>
-                    <span class="value">v4.0.0</span>
+                    <span class="value">v4.1.0</span>
                 </div>
             </div>
         </div>
         <div class="card" style="border:1px solid rgba(239,68,68,0.1);">
-            <div class="settings-item">
+            <div class="settings-item" onclick="alert('خروج از حساب (به زودی...)')">
                 <div class="left">
                     <span class="icon" style="color:#ef4444;"><i class="fas fa-sign-out-alt"></i></span>
                     <span class="label" style="color:#ef4444;">خروج از حساب</span>
@@ -454,42 +438,32 @@
     </div>
 
     <script>
-        // ========== ترجمه‌ها (کامل) ==========
+        // ========== ترجمه‌ها ==========
         const i18n = {
-            fa: {
-                home: 'خانه', wallet: 'کیف پول', manage: 'مدیریت',
-                history: 'تاریخچه', settings: 'تنظیمات', total: 'مجموع دارایی',
-                appTitle: '💰 کیف پول', appBadge: 'حرفه‌ای'
-            },
-            en: {
-                home: 'Home', wallet: 'Wallet', manage: 'Manage',
-                history: 'History', settings: 'Settings', total: 'Total Assets',
-                appTitle: '💰 Wallet', appBadge: 'Pro'
-            },
-            ar: {
-                home: 'الرئيسية', wallet: 'المحفظة', manage: 'إدارة',
-                history: 'التاريخ', settings: 'الإعدادات', total: 'إجمالي الأصول',
-                appTitle: '💰 المحفظة', appBadge: 'احترافي'
-            }
+            fa: { home: 'خانه', wallet: 'کیف پول', manage: 'مدیریت', history: 'تاریخچه', settings: 'تنظیمات',
+                total: 'مجموع دارایی', appTitle: '💰 کیف پول', appBadge: 'حرفه‌ای' },
+            en: { home: 'Home', wallet: 'Wallet', manage: 'Manage', history: 'History', settings: 'Settings',
+                total: 'Total Assets', appTitle: '💰 Wallet', appBadge: 'Pro' },
+            ar: { home: 'الرئيسية', wallet: 'المحفظة', manage: 'إدارة', history: 'التاريخ', settings: 'الإعدادات',
+                total: 'إجمالي الأصول', appTitle: '💰 المحفظة', appBadge: 'احترافي' }
         };
         let currentLang = 'fa';
 
         function changeLang(lang) {
-            currentLang = lang;
-            // تغییر دکمه‌ها
-            document.querySelectorAll('.lang-btn').forEach(b => {
-                b.classList.toggle('active', b.dataset.lang === lang);
-            });
-            // تغییر تمام المان‌های دارای data-i18n
-            const t = i18n[lang];
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.dataset.i18n;
-                if (t[key]) el.textContent = t[key];
-            });
-            // تغییر هدر
-            document.getElementById('appTitle').textContent = t.appTitle;
-            document.getElementById('appBadge').textContent = t.appBadge;
-            document.getElementById('totalLabel').textContent = t.total;
+            try {
+                currentLang = lang;
+                document.querySelectorAll('.lang-btn').forEach(b => {
+                    b.classList.toggle('active', b.dataset.lang === lang);
+                });
+                const t = i18n[lang];
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.dataset.i18n;
+                    if (t[key]) el.textContent = t[key];
+                });
+                document.getElementById('appTitle').textContent = t.appTitle;
+                document.getElementById('appBadge').textContent = t.appBadge;
+                document.getElementById('totalLabel').textContent = t.total;
+            } catch (e) { console.warn('خطا در تغییر زبان:', e); }
         }
 
         // ========== وضعیت ==========
@@ -506,182 +480,199 @@
         ];
         let lineChartInstance = null;
 
-        // ========== دریافت نرخ ارز (با ۳ API مختلف) ==========
+        // ========== دریافت نرخ ارز ==========
         async function fetchRates() {
-            const cryptoIds = currencies.filter(c => c.isCrypto).map(c => c.id).join(',');
-            if (!cryptoIds) return;
+            try {
+                const cryptoIds = currencies.filter(c => c.isCrypto).map(c => c.id).join(',');
+                if (!cryptoIds) return;
 
-            // لیست APIهای پشتیبان
-            const apis = [
-                `https://api.coingecko.com/api/v3/simple/price?ids=${cryptoIds}&vs_currencies=usd`,
-                `https://api.allorigins.win/raw?url=${encodeURIComponent('https://api.coingecko.com/api/v3/simple/price?ids=' + cryptoIds + '&vs_currencies=usd')}`,
-                `https://corsproxy.io/?${encodeURIComponent('https://api.coingecko.com/api/v3/simple/price?ids=' + cryptoIds + '&vs_currencies=usd')}`
-            ];
+                const apis = [
+                    `https://api.coingecko.com/api/v3/simple/price?ids=${cryptoIds}&vs_currencies=usd`,
+                    `https://api.allorigins.win/raw?url=${encodeURIComponent('https://api.coingecko.com/api/v3/simple/price?ids=' + cryptoIds + '&vs_currencies=usd')}`,
+                    `https://corsproxy.io/?${encodeURIComponent('https://api.coingecko.com/api/v3/simple/price?ids=' + cryptoIds + '&vs_currencies=usd')}`
+                ];
 
-            for (let api of apis) {
-                try {
-                    const response = await fetch(api);
-                    if (!response.ok) continue;
-                    const data = await response.json();
-                    let hasData = false;
-                    for (let id in data) {
-                        if (data[id] && data[id].usd) {
-                            prices[id] = data[id].usd;
-                            hasData = true;
+                for (let api of apis) {
+                    try {
+                        const response = await fetch(api);
+                        if (!response.ok) continue;
+                        const data = await response.json();
+                        let hasData = false;
+                        for (let id in data) {
+                            if (data[id] && data[id].usd) {
+                                prices[id] = data[id].usd;
+                                hasData = true;
+                            }
                         }
-                    }
-                    if (hasData) {
-                        updateRateDisplay();
-                        return;
-                    }
-                } catch (e) {
-                    console.warn('API failed, trying next...', e);
+                        if (hasData) {
+                            updateRateDisplay();
+                            return;
+                        }
+                    } catch (e) { console.warn('API failed:', e); }
                 }
-            }
-            // اگر همه APIها fail شدن
-            document.getElementById('rateDisplay').innerHTML = '⚠️ برای دریافت نرخ، فیلترشکن را روشن کنید';
+                document.getElementById('rateDisplay').innerHTML = '⚠️ برای دریافت نرخ، فیلترشکن را روشن کنید';
+            } catch (e) { console.warn('خطا در دریافت نرخ:', e); }
         }
 
         function updateRateDisplay() {
-            let html = '';
-            for (let c of currencies) {
-                if (c.isCrypto && prices[c.id]) {
-                    html += `${c.symbol} ${c.label}: <span>$${prices[c.id].toLocaleString()}</span> | `;
+            try {
+                let html = '';
+                for (let c of currencies) {
+                    if (c.isCrypto && prices[c.id]) {
+                        html += `${c.symbol} ${c.label}: <span>$${prices[c.id].toLocaleString()}</span> | `;
+                    }
                 }
-            }
-            if (prices['usdt']) html += `💵 تتر: <span>$${prices['usdt']}</span>`;
-            document.getElementById('rateDisplay').innerHTML = html || '📈 در حال دریافت نرخ...';
+                if (prices['usdt']) html += `💵 تتر: <span>$${prices['usdt']}</span>`;
+                document.getElementById('rateDisplay').innerHTML = html || '📈 در حال دریافت نرخ...';
+            } catch (e) { console.warn('خطا در نمایش نرخ:', e); }
         }
 
         // ========== ذخیره/بازیابی ==========
         function saveData() {
-            localStorage.setItem('portfolio_data', JSON.stringify({ currencies, transactions }));
+            try {
+                localStorage.setItem('portfolio_data', JSON.stringify({ currencies, transactions }));
+            } catch (e) { console.warn('خطا در ذخیره:', e); }
         }
 
         function loadData() {
-            const saved = localStorage.getItem('portfolio_data');
-            if (saved) {
-                try {
+            try {
+                const saved = localStorage.getItem('portfolio_data');
+                if (saved) {
                     const data = JSON.parse(saved);
-                    currencies = data.currencies;
+                    currencies = data.currencies || currencies;
                     transactions = data.transactions || [];
-                } catch (e) { console.warn('خطا در بارگذاری:', e); }
-            }
+                }
+            } catch (e) { console.warn('خطا در بارگذاری:', e); }
         }
 
         // ========== رندر لیست ارزها ==========
         function renderCurrencyList() {
-            const container = document.getElementById('currencyList');
-            container.innerHTML = '';
-            for (let c of currencies) {
-                const div = document.createElement('div');
-                div.className = 'currency-item';
-                const val = c.amount.toLocaleString();
-                div.innerHTML = `
-                    <div class="info">
-                        <span class="icon">${c.symbol}</span>
-                        <span class="name">${c.label}</span>
-                    </div>
-                    <div style="display:flex; align-items:center; gap:12px;">
-                        <span class="balance">${val} <small>${c.id === 'rial' ? 'تومان' : ''}</small></span>
-                        <div class="actions">
-                            <button class="deposit-btn" onclick="quickAction('${c.id}','deposit')"><i class="fas fa-plus"></i></button>
-                            <button class="withdraw-btn" onclick="quickAction('${c.id}','withdraw')"><i class="fas fa-minus"></i></button>
+            try {
+                const container = document.getElementById('currencyList');
+                if (!container) return;
+                container.innerHTML = '';
+                for (let c of currencies) {
+                    const div = document.createElement('div');
+                    div.className = 'currency-item';
+                    const val = c.amount.toLocaleString();
+                    div.innerHTML = `
+                        <div class="info">
+                            <span class="icon">${c.symbol}</span>
+                            <span class="name">${c.label}</span>
                         </div>
-                    </div>
-                `;
-                container.appendChild(div);
-            }
-            updateTotal();
-            updateHistory();
-            updateStats();
-            saveData();
+                        <div style="display:flex; align-items:center; gap:12px;">
+                            <span class="balance">${val} <small>${c.id === 'rial' ? 'تومان' : ''}</small></span>
+                            <div class="actions">
+                                <button class="deposit-btn" onclick="quickAction('${c.id}','deposit')"><i class="fas fa-plus"></i></button>
+                                <button class="withdraw-btn" onclick="quickAction('${c.id}','withdraw')"><i class="fas fa-minus"></i></button>
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(div);
+                }
+                updateTotal();
+                updateHistory();
+                updateStats();
+                saveData();
+            } catch (e) { console.warn('خطا در رندر لیست:', e); }
         }
 
         // ========== اقدام سریع ==========
         function quickAction(id, type) {
-            const c = currencies.find(x => x.id === id);
-            if (!c) return;
-            const amount = type === 'deposit' ? 1000 : (c.id === 'rial' ? 100000 : 1);
-            if (type === 'withdraw' && amount > c.amount) {
-                alert(`موجودی کافی نیست! موجودی: ${c.amount.toLocaleString()}`);
-                return;
-            }
-            c.amount = type === 'deposit' ? c.amount + amount : c.amount - amount;
-            transactions.push({
-                label: `${type === 'deposit' ? '➕' : '➖'} ${c.symbol} ${c.label} ${type === 'deposit' ? '+' : '-'}${amount.toLocaleString()}`,
-                amount: amount,
-                type: type,
-                date: new Date().toLocaleString('fa-IR')
-            });
-            renderCurrencyList();
-            document.getElementById('historyDot').style.display = 'block';
+            try {
+                const c = currencies.find(x => x.id === id);
+                if (!c) return;
+                const amount = type === 'deposit' ? 1000 : (c.id === 'rial' ? 100000 : 1);
+                if (type === 'withdraw' && amount > c.amount) {
+                    alert(`موجودی کافی نیست! موجودی: ${c.amount.toLocaleString()}`);
+                    return;
+                }
+                c.amount = type === 'deposit' ? c.amount + amount : c.amount - amount;
+                transactions.push({
+                    label: `${type === 'deposit' ? '➕' : '➖'} ${c.symbol} ${c.label} ${type === 'deposit' ? '+' : '-'}${amount.toLocaleString()}`,
+                    amount: amount,
+                    type: type,
+                    date: new Date().toLocaleString('fa-IR')
+                });
+                renderCurrencyList();
+                document.getElementById('historyDot').style.display = 'block';
+            } catch (e) { console.warn('خطا در اقدام سریع:', e); }
         }
 
         // ========== افزودن ارز جدید ==========
         function addNewCurrency() {
-            const input = document.getElementById('newCurrencyInput');
-            const id = input.value.trim().toLowerCase();
-            if (!id) return alert('شناسه ارز رو وارد کن');
-            if (currencies.find(c => c.id === id)) return alert('این ارز قبلاً اضافه شده');
-            fetch(`https://api.coingecko.com/api/v3/coins/${id}`)
-                .then(res => res.json())
-                .then(data => {
-                    const symbol = data.symbol ? data.symbol.toUpperCase() : id.slice(0, 3).toUpperCase();
-                    currencies.push({ id, label: data.name || id, symbol, amount: 0, isCrypto: true });
-                    input.value = '';
-                    renderCurrencyList();
-                    fetchRates();
-                })
-                .catch(() => alert('ارز پیدا نشد! شناسه رو چک کن.'));
+            try {
+                const input = document.getElementById('newCurrencyInput');
+                if (!input) return;
+                const id = input.value.trim().toLowerCase();
+                if (!id) return alert('شناسه ارز رو وارد کن');
+                if (currencies.find(c => c.id === id)) return alert('این ارز قبلاً اضافه شده');
+                fetch(`https://api.coingecko.com/api/v3/coins/${id}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        const symbol = data.symbol ? data.symbol.toUpperCase() : id.slice(0, 3).toUpperCase();
+                        currencies.push({ id, label: data.name || id, symbol, amount: 0, isCrypto: true });
+                        input.value = '';
+                        renderCurrencyList();
+                        fetchRates();
+                    })
+                    .catch(() => alert('ارز پیدا نشد! شناسه رو چک کن.'));
+            } catch (e) { console.warn('خطا در افزودن ارز:', e); }
         }
 
         // ========== مجموع ==========
         function updateTotal() {
-            let totalUsd = 0;
-            for (let c of currencies) {
-                if (c.id === 'rial') totalUsd += c.amount / 58000;
-                else if (c.isCrypto && prices[c.id]) totalUsd += c.amount * prices[c.id];
-                else if (c.id === 'usdt') totalUsd += c.amount * 1;
-            }
-            const totalRial = totalUsd * 58000;
-            document.getElementById('totalRial').textContent = totalRial.toLocaleString() + ' تومان';
-            document.getElementById('totalUsd').textContent = `≈ ${totalUsd.toFixed(2)} تتر`;
+            try {
+                let totalUsd = 0;
+                for (let c of currencies) {
+                    if (c.id === 'rial') totalUsd += c.amount / 58000;
+                    else if (c.isCrypto && prices[c.id]) totalUsd += c.amount * prices[c.id];
+                    else if (c.id === 'usdt') totalUsd += c.amount * 1;
+                }
+                const totalRial = totalUsd * 58000;
+                const rialEl = document.getElementById('totalRial');
+                const usdEl = document.getElementById('totalUsd');
+                if (rialEl) rialEl.textContent = totalRial.toLocaleString() + ' تومان';
+                if (usdEl) usdEl.textContent = `≈ ${totalUsd.toFixed(2)} تتر`;
+            } catch (e) { console.warn('خطا در محاسبه مجموع:', e); }
         }
 
         // ========== تاریخچه ==========
         function updateHistory() {
-            const container = document.getElementById('historyList');
-            if (transactions.length === 0) {
-                container.innerHTML = '<div class="empty-state">هیچ تراکنشی ثبت نشده</div>';
-                return;
-            }
-            let html = '';
-            const reversed = [...transactions].reverse().slice(0, 30);
-            for (let t of reversed) {
-                const cls = t.type === 'withdraw' ? 'withdraw' : 'deposit';
-                html += `
-                    <div class="history-item">
-                        <span>${t.label}</span>
-                        <span>
-                            <span class="amount ${cls}">${t.type === 'withdraw' ? '-' : '+'}${t.amount.toLocaleString()}</span>
-                            <span class="date">${t.date}</span>
-                        </span>
-                    </div>
-                `;
-            }
-            container.innerHTML = html;
-            document.getElementById('historyDot').style.display = transactions.length > 0 ? 'block' : 'none';
+            try {
+                const container = document.getElementById('historyList');
+                if (!container) return;
+                if (transactions.length === 0) {
+                    container.innerHTML = '<div class="empty-state">هیچ تراکنشی ثبت نشده</div>';
+                    return;
+                }
+                let html = '';
+                const reversed = [...transactions].reverse().slice(0, 30);
+                for (let t of reversed) {
+                    const cls = t.type === 'withdraw' ? 'withdraw' : 'deposit';
+                    html += `
+                        <div class="history-item">
+                            <span>${t.label}</span>
+                            <span>
+                                <span class="amount ${cls}">${t.type === 'withdraw' ? '-' : '+'}${t.amount.toLocaleString()}</span>
+                                <span class="date">${t.date}</span>
+                            </span>
+                        </div>
+                    `;
+                }
+                container.innerHTML = html;
+                document.getElementById('historyDot').style.display = transactions.length > 0 ? 'block' : 'none';
+            } catch (e) { console.warn('خطا در تاریخچه:', e); }
         }
 
         // ========== نمودار خطی ==========
         function updateLineChart() {
-            const ctx = document.getElementById('lineChart');
-            if (!ctx) return;
-            if (lineChartInstance) lineChartInstance.destroy();
-            const days = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنجشنبه', 'جمعه'];
-            const values = [125, 130, 128, 135, 140, 138, 145];
             try {
+                const ctx = document.getElementById('lineChart');
+                if (!ctx) return;
+                if (lineChartInstance) lineChartInstance.destroy();
+                const days = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنجشنبه', 'جمعه'];
+                const values = [125, 130, 128, 135, 140, 138, 145];
                 lineChartInstance = new Chart(ctx, {
                     type: 'line',
                     data: {
@@ -709,25 +700,31 @@
                         }
                     }
                 });
-            } catch (e) { console.warn('نمودار:', e); }
+            } catch (e) { console.warn('خطا در نمودار:', e); }
         }
 
         // ========== مدیریت ولت‌ها ==========
         function addWallet() {
-            const name = prompt('نام کیف پول:');
-            if (!name) return;
-            const address = prompt('آدرس کیف پول:');
-            if (!address) return;
-            alert(`✅ کیف پول ${name} با آدرس ${address} اضافه شد!`);
+            try {
+                const name = prompt('نام کیف پول:');
+                if (!name) return;
+                const address = prompt('آدرس کیف پول:');
+                if (!address) return;
+                alert(`✅ کیف پول ${name} با آدرس ${address} اضافه شد!`);
+            } catch (e) { console.warn('خطا در افزودن ولت:', e); }
         }
 
         function editWallet(id) {
-            const newName = prompt('نام جدید:');
-            if (newName) alert(`کیف پول ${id} به ${newName} تغییر یافت.`);
+            try {
+                const newName = prompt('نام جدید:');
+                if (newName) alert(`کیف پول ${id} به ${newName} تغییر یافت.`);
+            } catch (e) { console.warn('خطا در ویرایش ولت:', e); }
         }
 
         function removeWallet(id) {
-            if (confirm(`کیف پول ${id} حذف شود؟`)) alert(`کیف پول ${id} حذف شد.`);
+            try {
+                if (confirm(`کیف پول ${id} حذف شود؟`)) alert(`کیف پول ${id} حذف شد.`);
+            } catch (e) { console.warn('خطا در حذف ولت:', e); }
         }
 
         function connectExchange() { alert('اتصال به صرافی (OKX/Binance) به زودی...'); }
@@ -736,37 +733,47 @@
 
         // ========== آمار ==========
         function updateStats() {
-            document.getElementById('statsCurrencies').textContent = currencies.length;
-            document.getElementById('statsTransactions').textContent = transactions.length;
+            try {
+                const statsCurrencies = document.getElementById('statsCurrencies');
+                const statsTransactions = document.getElementById('statsTransactions');
+                if (statsCurrencies) statsCurrencies.textContent = currencies.length;
+                if (statsTransactions) statsTransactions.textContent = transactions.length;
+            } catch (e) { console.warn('خطا در آمار:', e); }
         }
 
         // ========== پاک کردن ==========
         function clearAllData() {
-            if (!confirm('همه داده‌ها پاک میشن؟')) return;
-            for (let c of currencies) c.amount = 0;
-            transactions = [];
-            localStorage.clear();
-            renderCurrencyList();
+            try {
+                if (!confirm('همه داده‌ها پاک میشن؟')) return;
+                for (let c of currencies) c.amount = 0;
+                transactions = [];
+                localStorage.clear();
+                renderCurrencyList();
+            } catch (e) { console.warn('خطا در پاک کردن:', e); }
         }
 
         // ========== تغییر صفحه ==========
         function switchPage(page) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(`page-${page}`).classList.add('active');
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.querySelector(`.nav-item[data-page="${page}"]`).classList.add('active');
-            if (page === 'home') { updateTotal();
-                updateLineChart(); }
-            if (page === 'history') updateHistory();
-            if (page === 'settings') updateStats();
+            try {
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                document.getElementById(`page-${page}`).classList.add('active');
+                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                document.querySelector(`.nav-item[data-page="${page}"]`).classList.add('active');
+                if (page === 'home') { updateTotal();
+                    updateLineChart(); }
+                if (page === 'history') updateHistory();
+                if (page === 'settings') updateStats();
+            } catch (e) { console.warn('خطا در تغییر صفحه:', e); }
         }
 
         // ========== شروع ==========
-        loadData();
-        renderCurrencyList();
-        fetchRates();
-        setInterval(fetchRates, 60000);
-        setTimeout(updateLineChart, 400);
+        try {
+            loadData();
+            renderCurrencyList();
+            fetchRates();
+            setInterval(fetchRates, 60000);
+            setTimeout(updateLineChart, 400);
+        } catch (e) { console.warn('خطا در شروع برنامه:', e); }
     </script>
 </body>
 </html>
