@@ -130,6 +130,73 @@
         .history-item .withdraw { color: #ef4444; }
         .history-item .deposit { color: #4ade80; }
         .empty-state { color: #8899aa; text-align: center; padding: 24px 0; font-size: 13px; }
+        /* مدیریت جدید */
+        .manage-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+            margin-top: 4px;
+        }
+        .manage-item {
+            background: rgba(30,38,48,0.5);
+            border-radius: 20px;
+            padding: 20px 12px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.04);
+            cursor: pointer;
+            transition: all .2s;
+        }
+        .manage-item:hover {
+            border-color: rgba(0,136,204,0.3);
+            background: rgba(30,38,48,0.7);
+            transform: translateY(-2px);
+        }
+        .manage-item .icon { font-size: 32px; color: #0088cc; margin-bottom: 8px; }
+        .manage-item .label { font-size: 14px; font-weight: 600; color: #fff; }
+        .manage-item .desc { font-size: 11px; color: #8899aa; margin-top: 4px; }
+        /* لیست مدیریت (بانک، ولت، صرافی) */
+        .list-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        .list-item:last-child { border-bottom: none; }
+        .list-item .info { display: flex; flex-direction: column; gap: 2px; }
+        .list-item .name { font-weight: 600; font-size: 14px; color: #fff; }
+        .list-item .address { font-size: 12px; color: #8899aa; font-family: monospace; }
+        .list-item .badge {
+            background: rgba(74,222,128,0.08);
+            color: #4ade80;
+            padding: 2px 10px;
+            border-radius: 30px;
+            font-size: 10px;
+            border: 1px solid rgba(74,222,128,0.08);
+        }
+        .list-item .actions button {
+            background: transparent; border: none; color: #8899aa;
+            cursor: pointer; font-size: 16px; padding: 4px 8px;
+            border-radius: 8px;
+        }
+        .list-item .actions button:hover { background: rgba(255,255,255,0.05); }
+        .list-item .actions .edit-btn { color: #0088cc; }
+        .list-item .actions .delete-btn { color: #ef4444; }
+        .add-btn {
+            width: 100%; margin-top: 12px; padding: 12px;
+            border: 1px dashed rgba(0,136,204,0.3);
+            border-radius: 16px;
+            background: transparent; color: #0088cc;
+            font-weight: 600; cursor: pointer; font-family: inherit;
+        }
+        .add-btn:hover { background: rgba(0,136,204,0.05); }
+        .add-btn i { margin-left: 8px; }
+        /* بازگشت */
+        .back-btn {
+            background: transparent; border: none; color: #0088cc;
+            font-size: 14px; cursor: pointer; font-family: inherit;
+            display: flex; align-items: center; gap: 6px;
+            margin-bottom: 8px;
+            padding: 4px 0;
+        }
+        .back-btn:hover { color: #4ade80; }
         .wallet-card {
             background: rgba(30,38,48,0.4);
             border-radius: 18px;
@@ -157,15 +224,6 @@
         .wallet-card .actions button:hover { background: rgba(255,255,255,0.05); }
         .wallet-card .actions .edit-btn { color: #0088cc; }
         .wallet-card .actions .delete-btn { color: #ef4444; }
-        .add-btn {
-            width: 100%; margin-top: 12px; padding: 12px;
-            border: 1px dashed rgba(0,136,204,0.3);
-            border-radius: 16px;
-            background: transparent; color: #0088cc;
-            font-weight: 600; cursor: pointer; font-family: inherit;
-        }
-        .add-btn:hover { background: rgba(0,136,204,0.05); }
-        .add-btn i { margin-left: 8px; }
         .lang-selector { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
         .lang-btn {
             padding: 4px 14px; border-radius: 30px;
@@ -228,11 +286,11 @@
         }
         @media(max-width:480px){
             .price-grid { grid-template-columns: repeat(2, 1fr); }
+            .manage-grid { grid-template-columns: 1fr; gap: 8px; }
             .header h1 { font-size: 16px; }
             .bottom-nav { padding: 2px 0; }
             .nav-item { min-width: 44px; padding: 2px 6px; }
             .nav-item i { font-size: 16px; }
-            .wallet-card { padding: 12px 14px; }
         }
     </style>
 </head>
@@ -250,7 +308,7 @@
         </div>
     </div>
 
-    <!-- صفحه خانه -->
+    <!-- ========== صفحه خانه ========== -->
     <div id="page-home" class="page active">
         <div class="card">
             <h3 data-i18n="prices_title">📊 قیمت لحظه‌ای ارزها</h3>
@@ -289,7 +347,7 @@
         </div>
     </div>
 
-    <!-- کیف پول -->
+    <!-- ========== صفحه کیف پول ========== -->
     <div id="page-wallet" class="page">
         <div class="card">
             <h3 data-i18n="assets_title">💎 دارایی‌های شما</h3>
@@ -308,12 +366,74 @@
         <button class="btn-danger" onclick="clearAllData()" data-i18n="clear_all">🗑️ پاک کردن همه</button>
     </div>
 
-    <!-- مدیریت -->
+    <!-- ========== صفحه مدیریت (میانی) ========== -->
     <div id="page-manage" class="page">
         <div class="card">
-            <h3 data-i18n="wallets_title">🔐 کیف پول‌های من</h3>
+            <h3 data-i18n="manage_title">📋 مدیریت</h3>
+            <div class="manage-grid">
+                <div class="manage-item" onclick="switchPage('banks')">
+                    <div class="icon"><i class="fas fa-university"></i></div>
+                    <div class="label" data-i18n="banks_label">بانک‌ها</div>
+                    <div class="desc" data-i18n="banks_desc">مدیریت بانک‌های متصل</div>
+                </div>
+                <div class="manage-item" onclick="switchPage('wallets')">
+                    <div class="icon"><i class="fas fa-wallet"></i></div>
+                    <div class="label" data-i18n="wallets_label">ولت‌ها</div>
+                    <div class="desc" data-i18n="wallets_desc">مدیریت کیف پول‌های متصل</div>
+                </div>
+                <div class="manage-item" onclick="switchPage('exchanges')">
+                    <div class="icon"><i class="fas fa-exchange-alt"></i></div>
+                    <div class="label" data-i18n="exchanges_label">صرافی‌ها</div>
+                    <div class="desc" data-i18n="exchanges_desc">مدیریت صرافی‌های متصل</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== صفحه بانک‌ها ========== -->
+    <div id="page-banks" class="page">
+        <div class="card">
+            <button class="back-btn" onclick="switchPage('manage')"><i class="fas fa-arrow-right"></i> <span data-i18n="back_to_manage">بازگشت به مدیریت</span></button>
+            <h3 data-i18n="banks_title">🏛️ بانک‌های متصل</h3>
+            <div id="banksList">
+                <div class="list-item">
+                    <div class="info">
+                        <span class="name">بانک تجارت</span>
+                        <span class="address">شماره حساب: ۱۲۳۴۵۶۷۸۹۰</span>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span class="badge" data-i18n="active_badge">فعال</span>
+                        <div class="actions">
+                            <button class="edit-btn" onclick="alert('ویرایش بانک')"><i class="fas fa-edit"></i></button>
+                            <button class="delete-btn" onclick="alert('حذف بانک')"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="list-item">
+                    <div class="info">
+                        <span class="name">بانک ملی</span>
+                        <span class="address">شماره حساب: ۰۹۸۷۶۵۴۳۲۱</span>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span class="badge" data-i18n="active_badge">فعال</span>
+                        <div class="actions">
+                            <button class="edit-btn" onclick="alert('ویرایش بانک')"><i class="fas fa-edit"></i></button>
+                            <button class="delete-btn" onclick="alert('حذف بانک')"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="add-btn" onclick="addBank()"><i class="fas fa-plus"></i> <span data-i18n="add_bank_btn">افزودن بانک جدید</span></button>
+        </div>
+    </div>
+
+    <!-- ========== صفحه ولت‌ها ========== -->
+    <div id="page-wallets" class="page">
+        <div class="card">
+            <button class="back-btn" onclick="switchPage('manage')"><i class="fas fa-arrow-right"></i> <span data-i18n="back_to_manage">بازگشت به مدیریت</span></button>
+            <h3 data-i18n="wallets_title">🔐 کیف پول‌های متصل</h3>
             <div id="walletsList">
-                <div class="wallet-card">
+                <div class="list-item">
                     <div class="info">
                         <span class="name">TON Wallet</span>
                         <span class="address">۰x1234...5678</span>
@@ -326,7 +446,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="wallet-card">
+                <div class="list-item">
                     <div class="info">
                         <span class="name">Bitget Wallet</span>
                         <span class="address">۰x9876...5432</span>
@@ -342,19 +462,46 @@
             </div>
             <button class="add-btn" onclick="addWallet()"><i class="fas fa-plus"></i> <span data-i18n="add_wallet_btn">افزودن کیف پول جدید</span></button>
         </div>
+    </div>
+
+    <!-- ========== صفحه صرافی‌ها ========== -->
+    <div id="page-exchanges" class="page">
         <div class="card">
-            <h3 data-i18n="exchanges_title">🏦 صرافی‌ها</h3>
-            <div style="padding:12px 0; color:#8899aa; text-align:center; font-size:13px;" data-i18n="no_exchange">هیچ صرافی متصل نیست</div>
-            <button class="add-btn" style="border-color:rgba(139,92,246,0.3); color:#8b5cf6;" onclick="connectExchange()"><i class="fas fa-link"></i> <span data-i18n="connect_exchange_btn">اتصال صرافی</span></button>
-        </div>
-        <div class="card">
-            <h3 data-i18n="banks_title">🏛️ بانک‌ها</h3>
-            <div style="padding:12px 0; color:#8899aa; text-align:center; font-size:13px;" data-i18n="no_bank">هیچ بانکی متصل نیست</div>
-            <button class="add-btn" style="border-color:rgba(245,158,11,0.3); color:#f59e0b;" onclick="connectBank()"><i class="fas fa-university"></i> <span data-i18n="connect_bank_btn">اتصال بانک</span></button>
+            <button class="back-btn" onclick="switchPage('manage')"><i class="fas fa-arrow-right"></i> <span data-i18n="back_to_manage">بازگشت به مدیریت</span></button>
+            <h3 data-i18n="exchanges_title">🏦 صرافی‌های متصل</h3>
+            <div id="exchangesList">
+                <div class="list-item">
+                    <div class="info">
+                        <span class="name">Binance</span>
+                        <span class="address">API Key: *****1234</span>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span class="badge" data-i18n="active_badge">فعال</span>
+                        <div class="actions">
+                            <button class="edit-btn" onclick="alert('ویرایش صرافی')"><i class="fas fa-edit"></i></button>
+                            <button class="delete-btn" onclick="alert('حذف صرافی')"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="list-item">
+                    <div class="info">
+                        <span class="name">OKX</span>
+                        <span class="address">API Key: *****5678</span>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span class="badge" data-i18n="active_badge">فعال</span>
+                        <div class="actions">
+                            <button class="edit-btn" onclick="alert('ویرایش صرافی')"><i class="fas fa-edit"></i></button>
+                            <button class="delete-btn" onclick="alert('حذف صرافی')"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="add-btn" onclick="addExchange()"><i class="fas fa-plus"></i> <span data-i18n="add_exchange_btn">افزودن صرافی جدید</span></button>
         </div>
     </div>
 
-    <!-- تاریخچه -->
+    <!-- ========== صفحه تاریخچه ========== -->
     <div id="page-history" class="page">
         <div class="card">
             <h3 data-i18n="history_title">📜 تمام تراکنش‌ها</h3>
@@ -364,7 +511,7 @@
         </div>
     </div>
 
-    <!-- تنظیمات -->
+    <!-- ========== صفحه تنظیمات ========== -->
     <div id="page-settings" class="page">
         <div class="card">
             <h3 data-i18n="language_title">🌐 زبان</h3>
@@ -410,12 +557,12 @@
                 </div>
                 <span class="value" data-i18n="backup_value">دستی</span>
             </div>
-            <div class="settings-item" onclick="alert('ℹ️ نسخه v8.0.0')">
+            <div class="settings-item" onclick="alert('ℹ️ نسخه v9.0.0')">
                 <div class="left">
                     <span class="icon"><i class="fas fa-info-circle"></i></span>
                     <span class="label" data-i18n="about_label">درباره</span>
                 </div>
-                <span class="value">v8.0.0</span>
+                <span class="value">v9.0.0</span>
             </div>
         </div>
         <div class="card" style="border:1px solid rgba(239,68,68,0.1);">
@@ -429,7 +576,7 @@
         </div>
     </div>
 
-    <!-- منوی پایین -->
+    <!-- ========== منوی پایین ========== -->
     <div class="bottom-nav">
         <div class="nav-item active" data-page="home" onclick="switchPage('home')">
             <i class="fas fa-home"></i><span data-i18n="nav_home">خانه</span>
@@ -462,12 +609,18 @@
                 add_btn: 'افزودن',
                 find_on: 'از', coingecko_list: 'لیست CoinGecko', find: 'پیدا کن',
                 clear_all: '🗑️ پاک کردن همه',
-                wallets_title: '🔐 کیف پول‌های من', active_badge: 'فعال',
+                manage_title: '📋 مدیریت',
+                banks_label: 'بانک‌ها', banks_desc: 'مدیریت بانک‌های متصل',
+                wallets_label: 'ولت‌ها', wallets_desc: 'مدیریت کیف پول‌های متصل',
+                exchanges_label: 'صرافی‌ها', exchanges_desc: 'مدیریت صرافی‌های متصل',
+                banks_title: '🏛️ بانک‌های متصل',
+                wallets_title: '🔐 کیف پول‌های متصل',
+                exchanges_title: '🏦 صرافی‌های متصل',
+                active_badge: 'فعال',
+                add_bank_btn: 'افزودن بانک جدید',
                 add_wallet_btn: 'افزودن کیف پول جدید',
-                exchanges_title: '🏦 صرافی‌ها', no_exchange: 'هیچ صرافی متصل نیست',
-                connect_exchange_btn: 'اتصال صرافی',
-                banks_title: '🏛️ بانک‌ها', no_bank: 'هیچ بانکی متصل نیست',
-                connect_bank_btn: 'اتصال بانک',
+                add_exchange_btn: 'افزودن صرافی جدید',
+                back_to_manage: 'بازگشت به مدیریت',
                 history_title: '📜 تمام تراکنش‌ها', no_transaction: 'هیچ تراکنشی ثبت نشده',
                 language_title: '🌐 زبان',
                 theme_label: 'حالت شب', theme_value: 'فعال',
@@ -489,12 +642,18 @@
                 add_btn: 'Add',
                 find_on: 'from', coingecko_list: 'CoinGecko List', find: 'find',
                 clear_all: '🗑️ Clear All',
-                wallets_title: '🔐 My Wallets', active_badge: 'Active',
+                manage_title: '📋 Management',
+                banks_label: 'Banks', banks_desc: 'Manage connected banks',
+                wallets_label: 'Wallets', wallets_desc: 'Manage connected wallets',
+                exchanges_label: 'Exchanges', exchanges_desc: 'Manage connected exchanges',
+                banks_title: '🏛️ Connected Banks',
+                wallets_title: '🔐 Connected Wallets',
+                exchanges_title: '🏦 Connected Exchanges',
+                active_badge: 'Active',
+                add_bank_btn: 'Add New Bank',
                 add_wallet_btn: 'Add New Wallet',
-                exchanges_title: '🏦 Exchanges', no_exchange: 'No exchange connected',
-                connect_exchange_btn: 'Connect Exchange',
-                banks_title: '🏛️ Banks', no_bank: 'No bank connected',
-                connect_bank_btn: 'Connect Bank',
+                add_exchange_btn: 'Add New Exchange',
+                back_to_manage: 'Back to Management',
                 history_title: '📜 All Transactions', no_transaction: 'No transactions yet',
                 language_title: '🌐 Language',
                 theme_label: 'Night Mode', theme_value: 'Active',
@@ -516,12 +675,18 @@
                 add_btn: 'إضافة',
                 find_on: 'من', coingecko_list: 'قائمة CoinGecko', find: 'ابحث',
                 clear_all: '🗑️ مسح الكل',
-                wallets_title: '🔐 محافظي', active_badge: 'نشط',
+                manage_title: '📋 إدارة',
+                banks_label: 'البنوك', banks_desc: 'إدارة البنوك المتصلة',
+                wallets_label: 'المحافظ', wallets_desc: 'إدارة المحافظ المتصلة',
+                exchanges_label: 'البورصات', exchanges_desc: 'إدارة البورصات المتصلة',
+                banks_title: '🏛️ البنوك المتصلة',
+                wallets_title: '🔐 المحافظ المتصلة',
+                exchanges_title: '🏦 البورصات المتصلة',
+                active_badge: 'نشط',
+                add_bank_btn: 'إضافة بنك جديد',
                 add_wallet_btn: 'إضافة محفظة جديدة',
-                exchanges_title: '🏦 البورصات', no_exchange: 'لا توجد بورصة متصلة',
-                connect_exchange_btn: 'ربط البورصة',
-                banks_title: '🏛️ البنوك', no_bank: 'لا يوجد بنك متصل',
-                connect_bank_btn: 'ربط البنك',
+                add_exchange_btn: 'إضافة بورصة جديدة',
+                back_to_manage: 'العودة إلى الإدارة',
                 history_title: '📜 جميع المعاملات', no_transaction: 'لا توجد معاملات',
                 language_title: '🌐 اللغة',
                 theme_label: 'الوضع الليلي', theme_value: 'نشط',
@@ -576,11 +741,9 @@
             rateDisplay.innerHTML = '⏳ <span data-i18n="loading_rate">در حال دریافت قیمت‌ها...</span>';
 
             try {
-                // لیست نمادهای مورد نظر در Binance
                 const symbols = ['BTCUSDT', 'ETHUSDT', 'TONUSDT', 'TRXUSDT'];
                 let results = {};
 
-                // دریافت قیمت برای هر نماد به صورت جداگانه (برای جلوگیری از خطای CORS)
                 for (let sym of symbols) {
                     try {
                         const url = `https://api.binance.com/api/v3/ticker/price?symbol=${sym}`;
@@ -593,27 +756,21 @@
                                 results[key] = price;
                             }
                         }
-                    } catch (e) {
-                        console.warn(`خطا در دریافت ${sym}:`, e);
-                    }
+                    } catch (e) { console.warn(`خطا در دریافت ${sym}:`, e); }
                 }
 
-                // اگر داده‌ای دریافت شد
                 if (Object.keys(results).length > 0) {
-                    // ذخیره در prices
                     if (results.btc) prices.bitcoin = results.btc;
                     if (results.eth) prices.ethereum = results.eth;
                     if (results.ton) prices.toncoin = results.ton;
                     if (results.trx) prices.tron = results.trx;
                     prices.usdt = 1;
 
-                    // بروزرسانی UI
                     updatePriceUI('btc', results.btc || 0);
                     updatePriceUI('eth', results.eth || 0);
                     updatePriceUI('ton', results.ton || 0);
                     updatePriceUI('trx', results.trx || 0);
 
-                    // بروزرسانی rateDisplay
                     let html = '';
                     if (results.btc) html += `BTC: <span>$${results.btc.toFixed(2)}</span> | `;
                     if (results.eth) html += `ETH: <span>$${results.eth.toFixed(2)}</span> | `;
@@ -624,7 +781,6 @@
                     } else {
                         rateDisplay.innerHTML = '⚠️ داده‌ای دریافت نشد';
                     }
-
                     updateTotal();
                 } else {
                     rateDisplay.innerHTML = '⚠️ خطا در دریافت قیمت‌ها. دوباره تلاش کنید. <button class="refresh-btn" onclick="fetchPrices()"><i class="fas fa-sync-alt"></i></button>';
@@ -639,7 +795,6 @@
             const priceEl = document.getElementById(`price-${symbol}`);
             const usdEl = document.getElementById(`price-${symbol}-usd`);
             if (priceEl && price > 0) {
-                // نمایش قیمت با دقت مناسب
                 let displayPrice = price;
                 if (symbol === 'trx') displayPrice = price.toFixed(6);
                 else if (symbol === 'ton') displayPrice = price.toFixed(4);
@@ -654,9 +809,7 @@
             } else if (priceEl) {
                 priceEl.textContent = '⏳';
                 priceEl.style.color = '#8899aa';
-                if (usdEl) {
-                    usdEl.textContent = '$0';
-                }
+                if (usdEl) usdEl.textContent = '$0';
             }
         }
 
@@ -794,6 +947,15 @@
             if (tEl) tEl.textContent = transactions.length;
         }
 
+        // ========== مدیریت بانک ==========
+        function addBank() {
+            const name = prompt('نام بانک:');
+            if (!name) return;
+            const account = prompt('شماره حساب:');
+            if (!account) return;
+            alert(`✅ بانک ${name} با شماره حساب ${account} اضافه شد!`);
+        }
+
         // ========== مدیریت ولت ==========
         function addWallet() {
             const name = prompt('نام کیف پول:');
@@ -812,9 +974,14 @@
             if (confirm(`کیف پول ${id} حذف شود؟`)) alert(`کیف پول ${id} حذف شد.`);
         }
 
-        function connectExchange() { alert('اتصال به صرافی (OKX/Binance) به زودی...'); }
-
-        function connectBank() { alert('اتصال به بانک (تجارت/ملی) به زودی...'); }
+        // ========== مدیریت صرافی ==========
+        function addExchange() {
+            const name = prompt('نام صرافی:');
+            if (!name) return;
+            const apiKey = prompt('API Key:');
+            if (!apiKey) return;
+            alert(`✅ صرافی ${name} با API Key ${apiKey} اضافه شد!`);
+        }
 
         // ========== پاک کردن ==========
         function clearAllData() {
@@ -830,7 +997,12 @@
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(`page-${page}`).classList.add('active');
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.querySelector(`.nav-item[data-page="${page}"]`).classList.add('active');
+            // اگر صفحه مدیریت یا زیرمجموعه‌هایش باشه، منوی مدیریت رو فعال نگه دار
+            if (page === 'manage' || page === 'banks' || page === 'wallets' || page === 'exchanges') {
+                document.querySelector(`.nav-item[data-page="manage"]`).classList.add('active');
+            } else {
+                document.querySelector(`.nav-item[data-page="${page}"]`).classList.add('active');
+            }
             if (page === 'home') { updateTotal(); }
             if (page === 'history') updateHistory();
             if (page === 'settings') updateStats();
