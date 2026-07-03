@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>کیف پول من</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <!-- ===== کتابخانه آیکون‌های اختصاصی بانک‌ها ===== -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/iranianbanklogos/dist/ibl.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -168,7 +166,7 @@
         .manage-item .label { font-size: 14px; font-weight: 600; color: #fff; }
         .manage-item .desc { font-size: 11px; color: #8899aa; margin-top: 4px; }
         
-        /* ===== کارت‌های بانکی (با آیکون‌های اختصاصی) ===== */
+        /* ===== کارت‌های بانکی ===== */
         .bank-card {
             border-radius: 20px;
             padding: 20px;
@@ -185,16 +183,14 @@
             align-items: flex-start;
         }
         .bank-card .bank-icon {
-            width: 48px;
-            height: 48px;
+            width: 48px; height: 48px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 28px;
             flex-shrink: 0;
-        }
-        .bank-card .bank-icon i {
-            font-size: 40px;
-            line-height: 1;
         }
         .bank-card .bank-name { font-weight: 700; font-size: 18px; color: #fff; }
         .bank-card .card-number { font-size: 13px; color: rgba(255,255,255,0.6); direction: ltr; letter-spacing: 2px; }
@@ -228,9 +224,7 @@
             font-size: 13px;
             transition: .15s;
         }
-        .bank-card .bank-menu .menu-item:hover {
-            background: rgba(255,255,255,0.05);
-        }
+        .bank-card .bank-menu .menu-item:hover { background: rgba(255,255,255,0.05); }
         .bank-card .bank-menu .menu-item .icon-edit { color: #0088cc; width: 18px; }
         .bank-card .bank-menu .menu-item .icon-pause { color: #f59e0b; width: 18px; }
         .bank-card .bank-menu .menu-item .icon-play { color: #4ade80; width: 18px; }
@@ -354,6 +348,63 @@
         .settings-item.danger .label { color: #ef4444; }
         .settings-item.danger .icon { color: #ef4444; }
         
+        /* ===== پیامک‌ها ===== */
+        .sms-item {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        .sms-item:last-child { border-bottom: none; }
+        .sms-item .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .sms-item .sender {
+            font-weight: 600;
+            color: #fff;
+        }
+        .sms-item .date {
+            font-size: 12px;
+            color: #6a7b8c;
+        }
+        .sms-item .body {
+            font-size: 13px;
+            color: #b0c4db;
+            margin-top: 4px;
+        }
+        .sms-item .amount {
+            font-weight: 700;
+            margin-top: 4px;
+        }
+        .sms-item .amount.deposit { color: #4ade80; }
+        .sms-item .amount.withdraw { color: #ef4444; }
+        .sms-summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 8px;
+        }
+        .sms-summary .stat {
+            background: rgba(30,38,48,0.4);
+            border-radius: 16px;
+            padding: 12px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.04);
+        }
+        .sms-summary .stat .num {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+        }
+        .sms-summary .stat .label {
+            font-size: 11px;
+            color: #8899aa;
+            margin-top: 2px;
+        }
+        .sms-summary .stat.deposit .num { color: #4ade80; }
+        .sms-summary .stat.withdraw .num { color: #ef4444; }
+        .sms-summary .stat.balance .num { color: #0088cc; }
+        
         /* ===== منوی پایین ===== */
         .bottom-nav {
             position: fixed; bottom: 12px; left: 12px; right: 12px;
@@ -366,15 +417,19 @@
             display: flex; flex-direction: column; align-items: center;
             color: #8899aa; font-size: 10px; cursor: pointer;
             padding: 4px 10px; border-radius: 20px;
-            min-width: 50px; position: relative;
+            min-width: 44px;
+            position: relative;
         }
         .nav-item i { font-size: 18px; }
         .nav-item span { font-weight: 500; font-size: 9px; margin-top: 1px; }
         .nav-item.active { color: #4ade80; background: rgba(74,222,128,0.06); }
         .nav-item.active i { transform: translateY(-2px); }
         .nav-item .dot {
-            position: absolute; top: 2px; right: 6px; width: 6px; height: 6px;
-            background: #ef4444; border-radius: 50%; border: 2px solid rgba(15,21,30,0.85);
+            position: absolute; top: 2px; right: 4px;
+            width: 6px; height: 6px;
+            background: #ef4444;
+            border-radius: 50%;
+            border: 2px solid rgba(15,21,30,0.85);
         }
         
         /* ===== ورودی‌ها ===== */
@@ -402,10 +457,10 @@
             .manage-grid { grid-template-columns: 1fr; gap: 8px; }
             .header h1 { font-size: 16px; }
             .bottom-nav { padding: 2px 0; }
-            .nav-item { min-width: 44px; padding: 2px 6px; }
+            .nav-item { min-width: 40px; padding: 2px 6px; }
             .nav-item i { font-size: 16px; }
             .bank-card .bank-menu { left: 0; right: 0; min-width: unset; }
-            .bank-card .bank-icon i { font-size: 32px; }
+            .sms-summary { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -504,7 +559,7 @@
         </div>
     </div>
 
-    <!-- ===== صفحه بانک‌ها (با آیکون‌های اختصاصی) ===== -->
+    <!-- ===== صفحه بانک‌ها ===== -->
     <div id="page-banks" class="page">
         <div class="card">
             <button class="back-btn" onclick="switchPage('manage')"><i class="fas fa-arrow-right"></i> <span id="backToManage">بازگشت به مدیریت</span></button>
@@ -588,6 +643,33 @@
         </div>
     </div>
 
+    <!-- ===== صفحه پیامک‌ها ===== -->
+    <div id="page-sms" class="page">
+        <div class="card">
+            <h3 id="smsTitle">📩 پیامک‌های دریافتی</h3>
+            
+            <!-- خلاصه -->
+            <div class="sms-summary" id="smsSummary">
+                <div class="stat deposit">
+                    <div class="num" id="smsTotalDeposit">۰</div>
+                    <div class="label">مجموع واریز</div>
+                </div>
+                <div class="stat withdraw">
+                    <div class="num" id="smsTotalWithdraw">۰</div>
+                    <div class="label">مجموع برداشت</div>
+                </div>
+                <div class="stat balance">
+                    <div class="num" id="smsBalance">۰</div>
+                    <div class="label">تراز</div>
+                </div>
+            </div>
+            
+            <div id="smsList" style="margin-top:12px;">
+                <div class="empty-state" id="noSms">هیچ پیامکی دریافت نشده</div>
+            </div>
+        </div>
+    </div>
+
     <!-- ===== صفحه تاریخچه ===== -->
     <div id="page-history" class="page">
         <div class="card">
@@ -644,12 +726,12 @@
                 </div>
                 <span class="value" id="backupValue">دستی</span>
             </div>
-            <div class="settings-item" onclick="alert('ℹ️ نسخه v9.4.0')">
+            <div class="settings-item" onclick="alert('ℹ️ نسخه v9.5.0')">
                 <div class="left">
                     <span class="icon"><i class="fas fa-info-circle"></i></span>
                     <span class="label" id="aboutLabel">درباره</span>
                 </div>
-                <span class="value">v9.4.0</span>
+                <span class="value">v9.5.0</span>
             </div>
         </div>
         <div class="card" style="border:1px solid rgba(239,68,68,0.1);">
@@ -663,7 +745,7 @@
         </div>
     </div>
 
-    <!-- ===== منوی پایین ===== -->
+    <!-- ===== منوی پایین (۵ تایی) ===== -->
     <div class="bottom-nav">
         <div class="nav-item active" data-page="home" onclick="switchPage('home')">
             <i class="fas fa-home"></i><span id="navHome">خانه</span>
@@ -674,9 +756,9 @@
         <div class="nav-item" data-page="manage" onclick="switchPage('manage')">
             <i class="fas fa-layer-group"></i><span id="navManage">مدیریت</span>
         </div>
-        <div class="nav-item" data-page="history" onclick="switchPage('history')">
-            <i class="fas fa-clock"></i><span id="navHistory">تاریخچه</span>
-            <span class="dot" id="historyDot" style="display:none;"></span>
+        <div class="nav-item" data-page="sms" onclick="switchPage('sms')">
+            <i class="fas fa-sms"></i><span id="navSms">پیامک‌ها</span>
+            <span class="dot" id="smsDot" style="display:none;"></span>
         </div>
         <div class="nav-item" data-page="settings" onclick="switchPage('settings')">
             <i class="fas fa-sliders-h"></i><span id="navSettings">تنظیمات</span>
@@ -710,6 +792,9 @@
                 addWalletBtn: 'افزودن کیف پول جدید',
                 addExchangeBtn: 'افزودن صرافی جدید',
                 backToManage: 'بازگشت به مدیریت',
+                smsTitle: '📩 پیامک‌های دریافتی',
+                noSms: 'هیچ پیامکی دریافت نشده',
+                navSms: 'پیامک‌ها',
                 historyTitle: '📜 تمام تراکنش‌ها', noTransaction: 'هیچ تراکنشی ثبت نشده',
                 languageTitle: '🌐 زبان',
                 themeLabel: 'حالت شب', themeValue: 'فعال',
@@ -750,6 +835,9 @@
                 addWalletBtn: 'Add New Wallet',
                 addExchangeBtn: 'Add New Exchange',
                 backToManage: 'Back to Management',
+                smsTitle: '📩 Received SMS',
+                noSms: 'No SMS received yet',
+                navSms: 'SMS',
                 historyTitle: '📜 All Transactions', noTransaction: 'No transactions yet',
                 languageTitle: '🌐 Language',
                 themeLabel: 'Night Mode', themeValue: 'Active',
@@ -790,6 +878,9 @@
                 addWalletBtn: 'إضافة محفظة جديدة',
                 addExchangeBtn: 'إضافة بورصة جديدة',
                 backToManage: 'العودة إلى الإدارة',
+                smsTitle: '📩 الرسائل القصيرة المستلمة',
+                noSms: 'لم يتم استلام أي رسالة قصيرة',
+                navSms: 'الرسائل',
                 historyTitle: '📜 جميع المعاملات', noTransaction: 'لا توجد معاملات',
                 languageTitle: '🌐 اللغة',
                 themeLabel: 'الوضع الليلي', themeValue: 'نشط',
@@ -851,6 +942,9 @@
                 backToManage: 'backToManage',
                 backToManage2: 'backToManage2',
                 backToManage3: 'backToManage3',
+                smsTitle: 'smsTitle',
+                noSms: 'noSms',
+                navSms: 'navSms',
                 historyTitle: 'historyTitle',
                 noTransaction: 'noTransaction',
                 languageTitle: 'languageTitle',
@@ -880,26 +974,24 @@
         }
 
         // ============================================================
-        //  مدیریت بانک‌ها (با آیکون‌های اختصاصی)
+        //  مدیریت بانک‌ها
         // ============================================================
         let banks = [];
         let bankIdCounter = 0;
 
-        // ===== آیکون‌های اختصاصی بانک‌ها (با کتابخانه iranianbanklogos) =====
         const bankIcons = {
-            'بانک تجارت': '<i class="ibl- بانک تجارت size-32"></i>',
-            'بانک ملی': '<i class="ibl- بانک ملی size-32"></i>',
-            'بانک صادرات': '<i class="ibl- بانک صادرات size-32"></i>',
-            'بانک ملت': '<i class="ibl- بانک ملت size-32"></i>',
-            'بانک کشاورزی': '<i class="ibl- بانک کشاورزی size-32"></i>',
-            'بانک مسکن': '<i class="ibl- بانک مسکن size-32"></i>',
-            'بانک سپه': '<i class="ibl- بانک سپه size-32"></i>',
-            'بانک پاسارگاد': '<i class="ibl- بانک پاسارگاد size-32"></i>',
-            'بانک سامان': '<i class="ibl- بانک سامان size-32"></i>',
-            'بانک پارسیان': '<i class="ibl- بانک پارسیان size-32"></i>'
+            'بانک تجارت': '🏦',
+            'بانک ملی': '🏛️',
+            'بانک صادرات': '🏧',
+            'بانک ملت': '🏢',
+            'بانک کشاورزی': '🌾',
+            'بانک مسکن': '🏠',
+            'بانک سپه': '⚔️',
+            'بانک پاسارگاد': '🏛️',
+            'بانک سامان': '💠',
+            'بانک پارسیان': '🪷'
         };
 
-        // ===== رنگ‌های کارت بر اساس نام بانک =====
         const bankColors = {
             'بانک تجارت': 'color-blue',
             'بانک ملی': 'color-green',
@@ -913,7 +1005,6 @@
             'بانک پارسیان': 'color-pink'
         };
 
-        // ===== بارگذاری بانک‌ها =====
         function loadBanks() {
             try {
                 const saved = localStorage.getItem('banks_data');
@@ -940,7 +1031,6 @@
             } catch (e) {}
         }
 
-        // ===== رندر کارت‌های بانکی =====
         function renderBanks() {
             const container = document.getElementById('banksContainer');
             if (!container) return;
@@ -954,7 +1044,7 @@
             let html = '';
             for (let bank of banks) {
                 const colorClass = bankColors[bank.name] || 'color-blue';
-                const iconHtml = bankIcons[bank.name] || '🏦';
+                const icon = bankIcons[bank.name] || '🏦';
                 const statusText = bank.active ? t.activeStatus : t.inactiveStatus;
                 const statusClass = bank.active ? 'active' : 'inactive';
 
@@ -962,7 +1052,7 @@
                     <div class="bank-card ${colorClass}" id="bank-card-${bank.id}">
                         <div class="card-header">
                             <div style="display: flex; align-items: center; gap: 12px;">
-                                <div class="bank-icon">${iconHtml}</div>
+                                <div class="bank-icon">${icon}</div>
                                 <div>
                                     <div class="bank-name">${bank.name}</div>
                                     <div class="card-number">${bank.cardNumber}</div>
@@ -998,7 +1088,6 @@
             container.innerHTML = html;
         }
 
-        // ===== منوی همبرگری =====
         function toggleBankMenu(bankId) {
             const menu = document.getElementById(`bank-menu-${bankId}`);
             if (!menu) return;
@@ -1014,7 +1103,6 @@
             }
         });
 
-        // ===== افزودن بانک =====
         function showAddBankForm() {
             const t = translations[currentLang] || translations.fa;
             const name = prompt('نام بانک:');
@@ -1036,7 +1124,6 @@
             renderBanks();
         }
 
-        // ===== ویرایش بانک =====
         function editBank(id) {
             const bank = banks.find(b => b.id === id);
             if (!bank) return;
@@ -1055,7 +1142,6 @@
             renderBanks();
         }
 
-        // ===== تغییر وضعیت =====
         function toggleBankStatus(id) {
             const bank = banks.find(b => b.id === id);
             if (!bank) return;
@@ -1064,7 +1150,6 @@
             renderBanks();
         }
 
-        // ===== حذف بانک =====
         function deleteBank(id) {
             const bank = banks.find(b => b.id === id);
             if (!bank) return;
@@ -1073,6 +1158,76 @@
             banks = banks.filter(b => b.id !== id);
             saveBanks();
             renderBanks();
+        }
+
+        // ============================================================
+        //  مدیریت پیامک‌ها
+        // ============================================================
+        let smsMessages = [];
+
+        function loadSms() {
+            try {
+                const saved = localStorage.getItem('sms_data');
+                if (saved) {
+                    smsMessages = JSON.parse(saved);
+                } else {
+                    // داده‌های نمونه برای تست
+                    smsMessages = [
+                        { id: 1, sender: 'TejaratBank', body: 'مبلغ ۱,۲۵۰,۰۰۰ ریال واریز شد. موجودی: ۱۲,۵۰۰,۰۰۰ ریال', date: '۱۴۰۲/۱۰/۱۲ ۱۵:۳۰', type: 'deposit', amount: 1250000, balance: 12500000 },
+                        { id: 2, sender: 'TejaratBank', body: 'مبلغ ۵۰۰,۰۰۰ ریال برداشت شد. موجودی: ۱۲,۰۰۰,۰۰۰ ریال', date: '۱۴۰۲/۱۰/۱۲ ۱۶:۴۵', type: 'withdraw', amount: 500000, balance: 12000000 }
+                    ];
+                    saveSms();
+                }
+            } catch (e) {
+                smsMessages = [];
+            }
+        }
+
+        function saveSms() {
+            try {
+                localStorage.setItem('sms_data', JSON.stringify(smsMessages));
+            } catch (e) {}
+        }
+
+        function renderSms() {
+            const container = document.getElementById('smsList');
+            if (!container) return;
+            const t = translations[currentLang] || translations.fa;
+
+            // محاسبه خلاصه
+            let totalDeposit = 0, totalWithdraw = 0;
+            for (let sms of smsMessages) {
+                if (sms.type === 'deposit') totalDeposit += sms.amount || 0;
+                else if (sms.type === 'withdraw') totalWithdraw += sms.amount || 0;
+            }
+            document.getElementById('smsTotalDeposit').textContent = totalDeposit.toLocaleString();
+            document.getElementById('smsTotalWithdraw').textContent = totalWithdraw.toLocaleString();
+            document.getElementById('smsBalance').textContent = (totalDeposit - totalWithdraw).toLocaleString();
+
+            // نمایش دات در صورت وجود پیامک جدید
+            document.getElementById('smsDot').style.display = smsMessages.length > 0 ? 'block' : 'none';
+
+            if (smsMessages.length === 0) {
+                container.innerHTML = `<div class="empty-state" id="noSms">${t.noSms}</div>`;
+                return;
+            }
+
+            let html = '';
+            for (let sms of smsMessages) {
+                const amountClass = sms.type === 'deposit' ? 'deposit' : 'withdraw';
+                const amountSign = sms.type === 'deposit' ? '+' : '-';
+                html += `
+                    <div class="sms-item">
+                        <div class="header">
+                            <span class="sender">${sms.sender}</span>
+                            <span class="date">${sms.date}</span>
+                        </div>
+                        <div class="body">${sms.body}</div>
+                        <div class="amount ${amountClass}">${amountSign} ${sms.amount ? sms.amount.toLocaleString() : '۰'} ریال</div>
+                    </div>
+                `;
+            }
+            container.innerHTML = html;
         }
 
         // ============================================================
@@ -1342,6 +1497,7 @@
             }
             
             if (page === 'banks') renderBanks();
+            if (page === 'sms') renderSms();
             if (page === 'home') { updateTotal(); }
             if (page === 'history') updateHistory();
             if (page === 'settings') updateStats();
@@ -1352,8 +1508,10 @@
         // ============================================================
         loadBanks();
         loadData();
+        loadSms();
         renderAll();
         renderBanks();
+        renderSms();
         fetchPrices();
         setInterval(fetchPrices, 30000);
     </script>
