@@ -6,7 +6,7 @@
     <title>کیف پول من</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        /* ===== استایل‌های عمومی (همانند قبل) ===== */
+        /* ===== استایل‌های عمومی ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -167,7 +167,7 @@
         .manage-item .label { font-size: 14px; font-weight: 600; color: #fff; }
         .manage-item .desc { font-size: 11px; color: #8899aa; margin-top: 4px; }
         
-        /* ===== کارت‌های بانکی (نسخه نهایی با تغییرات) ===== */
+        /* ===== کارت‌های بانکی ===== */
         .bank-card {
             border-radius: 20px;
             padding: 20px;
@@ -495,15 +495,13 @@
         </div>
     </div>
 
-    <!-- ===== صفحه بانک‌ها (با تغییرات نهایی) ===== -->
+    <!-- ===== صفحه بانک‌ها (نسخه نهایی) ===== -->
     <div id="page-banks" class="page">
         <div class="card">
             <button class="back-btn" onclick="switchPage('manage')"><i class="fas fa-arrow-right"></i> <span data-i18n="back_to_manage">بازگشت به مدیریت</span></button>
             <h3 data-i18n="banks_title">🏛️ بانک‌های من</h3>
             
-            <div id="banksContainer" style="margin-top:12px;">
-                <!-- کارت‌ها توسط جاوااسکریپت رندر میشن -->
-            </div>
+            <div id="banksContainer" style="margin-top:12px;"></div>
 
             <button class="add-btn" onclick="showAddBankForm()"><i class="fas fa-plus"></i> <span data-i18n="add_bank_btn">افزودن بانک جدید</span></button>
         </div>
@@ -822,17 +820,15 @@
             });
             document.querySelector('.header h1').textContent = t.appTitle;
             document.querySelector('.header .badge').textContent = t.appBadge;
-            // رندر مجدد بانک‌ها برای ترجمه
             renderBanks();
         }
 
         // ============================================================
-        //  مدیریت بانک‌ها (با تغییرات نهایی)
+        //  مدیریت بانک‌ها
         // ============================================================
         let banks = [];
         let bankIdCounter = 0;
 
-        // آیکون‌های بانک‌ها (برای نمایش در کارت)
         const bankIcons = {
             'بانک تجارت': '🏦',
             'بانک ملی': '🏛️',
@@ -846,7 +842,6 @@
             'بانک پارسیان': '🪷'
         };
 
-        // رنگ‌های کارت بر اساس نام بانک
         const bankColors = {
             'بانک تجارت': 'color-blue',
             'بانک ملی': 'color-green',
@@ -860,7 +855,6 @@
             'بانک پارسیان': 'color-pink'
         };
 
-        // ===== بارگذاری بانک‌ها از localStorage =====
         function loadBanks() {
             try {
                 const saved = localStorage.getItem('banks_data');
@@ -869,7 +863,6 @@
                     banks = data.banks || [];
                     bankIdCounter = data.counter || 0;
                 } else {
-                    // داده‌های نمونه با آیکون اختصاصی بانک تجارت
                     banks = [
                         { id: ++bankIdCounter, name: 'بانک تجارت', cardNumber: '**** **** **** 1234', balance: 12450000, active: true },
                         { id: ++bankIdCounter, name: 'بانک ملی', cardNumber: '**** **** **** 5678', balance: 8200000, active: false }
@@ -877,7 +870,6 @@
                     saveBanks();
                 }
             } catch (e) {
-                console.warn('خطا در بارگذاری بانک‌ها:', e);
                 banks = [];
                 bankIdCounter = 0;
             }
@@ -886,27 +878,23 @@
         function saveBanks() {
             try {
                 localStorage.setItem('banks_data', JSON.stringify({ banks, counter: bankIdCounter }));
-            } catch (e) {
-                console.warn('خطا در ذخیره بانک‌ها:', e);
-            }
+            } catch (e) {}
         }
 
-        // ===== رندر کردن کارت‌های بانکی =====
         function renderBanks() {
             const container = document.getElementById('banksContainer');
             if (!container) return;
 
             if (banks.length === 0) {
-                container.innerHTML = `<div class="empty-state" style="padding:20px 0;">هیچ بانکی ثبت نشده است</div>`;
+                container.innerHTML = `<div class="empty-state">هیچ بانکی ثبت نشده است</div>`;
                 return;
             }
 
             let html = '';
-            const t = translations[currentLang];
+            const t = translations[currentLang] || translations.fa;
 
             for (let bank of banks) {
                 const colorClass = bankColors[bank.name] || 'color-blue';
-                // گرفتن آیکون از لیست آیکون‌ها
                 const icon = bankIcons[bank.name] || '🏦';
                 const statusText = bank.active ? t.active_status : t.inactive_status;
                 const statusClass = bank.active ? 'active' : 'inactive';
@@ -953,7 +941,6 @@
             container.innerHTML = html;
         }
 
-        // ===== منوی همبرگری =====
         function toggleBankMenu(bankId) {
             const menu = document.getElementById(`bank-menu-${bankId}`);
             if (!menu) return;
@@ -963,16 +950,13 @@
             menu.classList.toggle('show');
         }
 
-        // بستن منو با کلیک بیرون
         document.addEventListener('click', function(e) {
             if (!e.target.closest('.bank-card')) {
                 document.querySelectorAll('.bank-menu').forEach(m => m.classList.remove('show'));
             }
         });
 
-        // ===== افزودن بانک جدید =====
         function showAddBankForm() {
-            const t = translations[currentLang];
             const name = prompt('نام بانک:');
             if (!name) return;
             const cardNumber = prompt('شماره کارت (۱۶ رقمی):');
@@ -992,11 +976,9 @@
             renderBanks();
         }
 
-        // ===== ویرایش بانک =====
         function editBank(id) {
             const bank = banks.find(b => b.id === id);
             if (!bank) return;
-            const t = translations[currentLang];
             const newName = prompt('نام جدید:', bank.name);
             if (newName === null) return;
             const newCard = prompt('شماره کارت جدید:', bank.cardNumber);
@@ -1011,7 +993,6 @@
             renderBanks();
         }
 
-        // ===== تغییر وضعیت فعال/غیرفعال =====
         function toggleBankStatus(id) {
             const bank = banks.find(b => b.id === id);
             if (!bank) return;
@@ -1020,11 +1001,9 @@
             renderBanks();
         }
 
-        // ===== حذف بانک =====
         function deleteBank(id) {
             const bank = banks.find(b => b.id === id);
             if (!bank) return;
-            const t = translations[currentLang];
             if (!confirm(`آیا ${bank.name} حذف شود؟`)) return;
             banks = banks.filter(b => b.id !== id);
             saveBanks();
@@ -1032,7 +1011,7 @@
         }
 
         // ============================================================
-        //  سایر داده‌ها و توابع (ارزها، قیمت‌ها، تاریخچه و ...)
+        //  سایر توابع (ارزها، قیمت‌ها، تاریخچه و ...)
         // ============================================================
         let currencies = [
             { id: 'rial', label: 'ریال', symbol: '🇮🇷', amount: 12000000, isCrypto: false },
@@ -1046,7 +1025,6 @@
             { label: '➖ برداشت ۲۰ دلار', amount: 20, type: 'withdraw', date: '۱۴۰۲/۱۰/۱۱' }
         ];
 
-        // ===== دریافت قیمت از Binance =====
         async function fetchPrices() {
             const rateDisplay = document.getElementById('rateDisplay');
             rateDisplay.innerHTML = '⏳ <span data-i18n="loading_rate">در حال دریافت قیمت‌ها...</span>';
@@ -1067,7 +1045,7 @@
                                 results[key] = price;
                             }
                         }
-                    } catch (e) { console.warn(`خطا در دریافت ${sym}:`, e); }
+                    } catch (e) {}
                 }
 
                 if (Object.keys(results).length > 0) {
@@ -1097,7 +1075,6 @@
                     rateDisplay.innerHTML = '⚠️ خطا در دریافت قیمت‌ها. دوباره تلاش کنید. <button class="refresh-btn" onclick="fetchPrices()"><i class="fas fa-sync-alt"></i></button>';
                 }
             } catch (e) {
-                console.error('خطا در fetchPrices:', e);
                 rateDisplay.innerHTML = '⚠️ خطا در دریافت قیمت‌ها. دوباره تلاش کنید. <button class="refresh-btn" onclick="fetchPrices()"><i class="fas fa-sync-alt"></i></button>';
             }
         }
@@ -1110,7 +1087,6 @@
                 if (symbol === 'trx') displayPrice = price.toFixed(6);
                 else if (symbol === 'ton') displayPrice = price.toFixed(4);
                 else displayPrice = price.toFixed(2);
-                
                 priceEl.textContent = `$${displayPrice}`;
                 priceEl.style.color = '#4ade80';
                 if (usdEl) {
@@ -1124,7 +1100,6 @@
             }
         }
 
-        // ===== ذخیره/بازیابی =====
         function saveData() {
             localStorage.setItem('wallet_data', JSON.stringify({ currencies, transactions }));
         }
@@ -1140,7 +1115,6 @@
             } catch (e) {}
         }
 
-        // ===== رندر =====
         function renderAll() {
             renderCurrencies();
             updateTotal();
@@ -1173,7 +1147,6 @@
             }
         }
 
-        // ===== اقدام سریع =====
         function quickAction(id, type) {
             const c = currencies.find(x => x.id === id);
             if (!c) return;
@@ -1193,7 +1166,6 @@
             document.getElementById('historyDot').style.display = 'block';
         }
 
-        // ===== افزودن ارز =====
         function addNewCurrency() {
             const input = document.getElementById('newCurrencyInput');
             const id = input.value.trim().toLowerCase();
@@ -1211,7 +1183,6 @@
                 .catch(() => alert('ارز پیدا نشد! شناسه رو چک کن.'));
         }
 
-        // ===== مجموع =====
         function updateTotal() {
             let totalUsd = 0;
             for (let c of currencies) {
@@ -1224,7 +1195,6 @@
             document.getElementById('totalUsd').textContent = `≈ ${totalUsd.toFixed(2)} تتر`;
         }
 
-        // ===== تاریخچه =====
         function updateHistory() {
             const container = document.getElementById('historyList');
             if (!container) return;
@@ -1250,7 +1220,6 @@
             document.getElementById('historyDot').style.display = transactions.length > 0 ? 'block' : 'none';
         }
 
-        // ===== آمار =====
         function updateStats() {
             const cEl = document.getElementById('statsCurrencies');
             const tEl = document.getElementById('statsTransactions');
@@ -1258,7 +1227,6 @@
             if (tEl) tEl.textContent = transactions.length;
         }
 
-        // ===== مدیریت ولت =====
         function addWallet() {
             const name = prompt('نام کیف پول:');
             if (!name) return;
@@ -1276,7 +1244,6 @@
             if (confirm(`کیف پول ${id} حذف شود؟`)) alert(`کیف پول ${id} حذف شد.`);
         }
 
-        // ===== مدیریت صرافی =====
         function addExchange() {
             const name = prompt('نام صرافی:');
             if (!name) return;
@@ -1285,7 +1252,6 @@
             alert(`✅ صرافی ${name} با API Key ${apiKey} اضافه شد!`);
         }
 
-        // ===== پاک کردن =====
         function clearAllData() {
             if (!confirm('همه داده‌ها پاک میشن؟')) return;
             for (let c of currencies) c.amount = 0;
@@ -1294,7 +1260,6 @@
             renderAll();
         }
 
-        // ===== تغییر صفحه =====
         function switchPage(page) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             const target = document.getElementById(`page-${page}`);
