@@ -563,7 +563,7 @@
             <div class="settings-item" onclick="alert('🔔 تنظیمات اعلان (به زودی...)')"><div class="left"><span class="icon"><i class="fas fa-bell"></i></span><span class="label" id="notifLabel">اعلان‌ها</span></div><span class="value" id="notifValue">فعال</span></div>
             <div class="settings-item" onclick="alert('🔐 تنظیمات امنیت (به زودی...)')"><div class="left"><span class="icon"><i class="fas fa-shield-alt"></i></span><span class="label" id="securityLabel">امنیت</span></div><span class="value" id="securityValue">اثر انگشت</span></div>
             <div class="settings-item" onclick="alert('💾 پشتیبان‌گیری (به زودی...)')"><div class="left"><span class="icon"><i class="fas fa-cloud-upload-alt"></i></span><span class="label" id="backupLabel">پشتیبان‌گیری</span></div><span class="value" id="backupValue">دستی</span></div>
-            <div class="settings-item" onclick="alert('ℹ️ نسخه v9.5.0')"><div class="left"><span class="icon"><i class="fas fa-info-circle"></i></span><span class="label" id="aboutLabel">درباره</span></div><span class="value">v9.5.0</span></div>
+            <div class="settings-item" onclick="alert('ℹ️ نسخه v9.6.0')"><div class="left"><span class="icon"><i class="fas fa-info-circle"></i></span><span class="label" id="aboutLabel">درباره</span></div><span class="value">v9.6.0</span></div>
         </div>
         <div class="card" style="border:1px solid rgba(239,68,68,0.1);">
             <div class="settings-item danger" onclick="alert('🚪 خروج از حساب (به زودی...)')"><div class="left"><span class="icon"><i class="fas fa-sign-out-alt"></i></span><span class="label" id="logoutLabel">خروج از حساب</span></div><span class="arrow"><i class="fas fa-chevron-left"></i></span></div>
@@ -745,19 +745,85 @@
         }
 
         // ============================================================
-        //  مدیریت پیامک‌ها
+        //  مدیریت پیامک‌ها با تحلیل هوشمند
         // ============================================================
         let smsMessages = [];
+
+        // ===== تابع پارس کردن پیامک =====
+        function parseSms(text) {
+            let amount = 0;
+            let balance = 0;
+            let type = 'unknown';
+            
+            // استخراج مبلغ (اعداد با کاما یا بدون کاما)
+            const amountMatch = text.match(/([\d,]+)\s*ریال/);
+            if (amountMatch) {
+                amount = parseInt(amountMatch[1].replace(/,/g, ''));
+            }
+            
+            // استخراج موجودی
+            const balanceMatch = text.match(/([\d,]+)\s*ریال\s*(?:موجودی|مانده)/);
+            if (balanceMatch) {
+                balance = parseInt(balanceMatch[1].replace(/,/g, ''));
+            }
+            
+            // تشخیص نوع تراکنش بر اساس کلمات کلیدی
+            if (text.includes('واریز') || text.includes('شارژ')) {
+                type = 'deposit';
+            } else if (text.includes('برداشت') || text.includes('خرید') || text.includes('انتقال')) {
+                type = 'withdraw';
+            } else if (text.includes('کارمزد')) {
+                type = 'withdraw';
+            }
+            
+            return { amount, balance, type };
+        }
+
+        // ===== تابع افزودن پیامک جدید با تحلیل =====
+        function addSms(sender, body, date) {
+            const parsed = parseSms(body);
+            const newSms = {
+                id: Date.now(),
+                sender: sender || 'TejaratBank',
+                body: body,
+                date: date || new Date().toLocaleString('fa-IR'),
+                type: parsed.type,
+                amount: parsed.amount,
+                balance: parsed.balance
+            };
+            
+            smsMessages.unshift(newSms);
+            saveSms();
+            
+            // بروزرسانی موجودی کارت بانک تجارت
+            if (parsed.balance > 0 && sender && sender.includes('Tejarat')) {
+                updateBankBalance('بانک تجارت', parsed.balance);
+            }
+            
+            renderSms();
+            return newSms;
+        }
+
+        // ===== تابع بروزرسانی موجودی بانک =====
+        function updateBankBalance(bankName, newBalance) {
+            const bank = banks.find(b => b.name === bankName);
+            if (bank) {
+                bank.balance = newBalance;
+                saveBanks();
+                renderBanks();
+            }
+        }
 
         function loadSms() {
             try {
                 const saved = localStorage.getItem('sms_data');
                 if (saved) { smsMessages = JSON.parse(saved); } 
                 else {
-                    smsMessages = [
-                        { id: 1, sender: 'TejaratBank', body: 'مبلغ ۱,۲۵۰,۰۰۰ ریال واریز شد. موجودی: ۱۲,۵۰۰,۰۰۰ ریال', date: '۱۴۰۲/۱۰/۱۲ ۱۵:۳۰', type: 'deposit', amount: 1250000, balance: 12500000 },
-                        { id: 2, sender: 'TejaratBank', body: 'مبلغ ۵۰۰,۰۰۰ ریال برداشت شد. موجودی: ۱۲,۰۰۰,۰۰۰ ریال', date: '۱۴۰۲/۱۰/۱۲ ۱۶:۴۵', type: 'withdraw', amount: 500000, balance: 12000000 }
-                    ];
+                    // داده‌های نمونه با تحلیل
+                    const sample1 = addSms('TejaratBank', 'مبلغ ۱,۲۵۰,۰۰۰ ریال واریز شد. موجودی: ۱۲,۵۰۰,۰۰۰ ریال', '۱۴۰۲/۱۰/۱۲ ۱۵:۳۰');
+                    const sample2 = addSms('TejaratBank', 'مبلغ ۵۰۰,۰۰۰ ریال برداشت شد. موجودی: ۱۲,۰۰۰,۰۰۰ ریال', '۱۴۰۲/۱۰/۱۲ ۱۶:۴۵');
+                    // اون‌ها رو از آرایه حذف می‌کنیم تا دوبار نمایش داده نشن
+                    smsMessages = [];
                     saveSms();
                 }
             } catch(e){ smsMessages = []; }
