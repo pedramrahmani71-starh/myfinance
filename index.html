@@ -15,7 +15,6 @@
             direction: rtl;
             min-height: 100vh;
         }
-        /* هدر */
         .header {
             display: flex;
             justify-content: space-between;
@@ -44,11 +43,9 @@
             display: flex; align-items: center; justify-content: center;
             font-weight: 700; font-size: 14px; color: #fff;
         }
-        /* صفحات */
         .page { display: none; padding: 12px 16px 20px; animation: fadeIn .35s ease; }
         .page.active { display: block; }
         @keyframes fadeIn { from{opacity:0; transform:translateY(12px);} to{opacity:1; transform:translateY(0);} }
-        /* کارت‌ها */
         .card {
             background: rgba(22,27,36,0.7);
             backdrop-filter: blur(16px);
@@ -59,8 +56,6 @@
             box-shadow: 0 8px 32px rgba(0,0,0,0.25);
         }
         .card h3 { font-size: 13px; color: #8899aa; font-weight: 400; margin-bottom: 6px; }
-        .card .value { font-size: 28px; font-weight: 700; color: #fff; direction: ltr; text-align: left; }
-        /* بخش قیمت‌ها */
         .price-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -76,30 +71,9 @@
             transition: all .2s;
         }
         .price-item:hover { border-color: rgba(0,136,204,0.2); background: rgba(30,38,48,0.7); }
-        .price-item .symbol {
-            font-size: 16px;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 2px;
-        }
-        .price-item .price {
-            font-size: 14px;
-            font-weight: 600;
-            color: #4ade80;
-            direction: ltr;
-        }
-        .price-item .price.usd {
-            font-size: 11px;
-            color: #8899aa;
-            font-weight: 400;
-        }
-        .price-item .change {
-            font-size: 11px;
-            margin-top: 2px;
-        }
-        .price-item .change.up { color: #4ade80; }
-        .price-item .change.down { color: #ef4444; }
-        /* لیست ارزها */
+        .price-item .symbol { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 2px; }
+        .price-item .price { font-size: 14px; font-weight: 600; color: #4ade80; direction: ltr; }
+        .price-item .price.usd { font-size: 11px; color: #8899aa; font-weight: 400; }
         .currency-item {
             display: flex; justify-content: space-between; align-items: center;
             padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
@@ -119,7 +93,6 @@
         .currency-item .actions button:hover { background: rgba(255,255,255,0.05); }
         .currency-item .actions .deposit-btn { color: #4ade80; }
         .currency-item .actions .withdraw-btn { color: #ef4444; }
-        /* مجموع */
         .total-box {
             background: linear-gradient(135deg, rgba(0,136,204,0.08), rgba(74,222,128,0.04));
             padding: 16px 20px;
@@ -130,7 +103,6 @@
         .total-box .amount { font-size: 28px; font-weight: 700; background: linear-gradient(135deg, #4ade80, #0088cc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .total-box .label { font-size: 13px; color: #8899aa; }
         .total-box .sub { font-size: 13px; color: #8899aa; margin-top: 2px; }
-        /* نرخ */
         .rate-box {
             background: rgba(15,21,30,0.5);
             backdrop-filter: blur(8px);
@@ -147,7 +119,6 @@
             background: transparent; border: none; color: #0088cc;
             cursor: pointer; font-size: 14px; margin-right: 8px;
         }
-        /* تاریخچه */
         .history-list { max-height: 300px; overflow-y: auto; margin-top: 8px; padding-top: 6px; }
         .history-item {
             display: flex; justify-content: space-between; align-items: center;
@@ -159,7 +130,6 @@
         .history-item .withdraw { color: #ef4444; }
         .history-item .deposit { color: #4ade80; }
         .empty-state { color: #8899aa; text-align: center; padding: 24px 0; font-size: 13px; }
-        /* ولت */
         .wallet-card {
             background: rgba(30,38,48,0.4);
             border-radius: 18px;
@@ -197,7 +167,6 @@
         }
         .add-btn:hover { background: rgba(0,136,204,0.05); }
         .add-btn i { margin-left: 8px; }
-        /* زبان */
         .lang-selector { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
         .lang-btn {
             padding: 4px 14px; border-radius: 30px;
@@ -208,7 +177,6 @@
         }
         .lang-btn.active { background: rgba(0,136,204,0.15); color: #4ade80; border-color: rgba(0,136,204,0.2); }
         .lang-btn:hover { background: rgba(255,255,255,0.03); }
-        /* تنظیمات */
         .settings-item {
             display: flex; justify-content: space-between; align-items: center;
             padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.03);
@@ -221,7 +189,6 @@
         .settings-item .value { color: #8899aa; font-size: 13px; }
         .settings-item.danger .label { color: #ef4444; }
         .settings-item.danger .icon { color: #ef4444; }
-        /* بنر VPN */
         .vpn-banner {
             background: rgba(0,136,204,0.06);
             border: 1px solid rgba(0,136,204,0.1);
@@ -232,7 +199,6 @@
             font-size: 12px; color: #8899aa;
         }
         .vpn-banner i { color: #0088cc; font-size: 16px; }
-        /* منوی پایین */
         .bottom-nav {
             position: fixed; bottom: 12px; left: 12px; right: 12px;
             background: rgba(15,21,30,0.85); backdrop-filter: blur(24px);
@@ -326,7 +292,7 @@
 
         <div class="vpn-banner">
             <i class="fas fa-shield-alt"></i>
-            <span data-i18n="vpn_notice">برای دریافت نرخ لحظه‌ای، فیلترشکن را روشن کنید</span>
+            <span data-i18n="vpn_notice">دریافت نرخ از CoinMarketCap (نیاز به اینترنت)</span>
         </div>
         <div class="rate-box" id="rateDisplay">
             📈 <span data-i18n="loading_rate">در حال دریافت نرخ...</span>
@@ -460,12 +426,12 @@
                 </div>
                 <span class="value" data-i18n="backup_value">دستی</span>
             </div>
-            <div class="settings-item" onclick="alert('ℹ️ نسخه v5.2.0')">
+            <div class="settings-item" onclick="alert('ℹ️ نسخه v6.0.0')">
                 <div class="left">
                     <span class="icon"><i class="fas fa-info-circle"></i></span>
                     <span class="label" data-i18n="about_label">درباره</span>
                 </div>
-                <span class="value">v5.2.0</span>
+                <span class="value">v6.0.0</span>
             </div>
         </div>
         <div class="card" style="border:1px solid rgba(239,68,68,0.1);">
@@ -506,7 +472,7 @@
                 appTitle: '💰 کیف پول',
                 appBadge: 'حرفه‌ای',
                 prices_title: '📊 قیمت لحظه‌ای ارزها',
-                vpn_notice: 'برای دریافت نرخ لحظه‌ای، فیلترشکن را روشن کنید',
+                vpn_notice: 'دریافت نرخ از CoinMarketCap (نیاز به اینترنت)',
                 loading_rate: 'در حال دریافت نرخ...',
                 total_label: 'مجموع دارایی',
                 assets_title: '💎 دارایی‌های شما',
@@ -550,7 +516,7 @@
                 appTitle: '💰 Wallet',
                 appBadge: 'Pro',
                 prices_title: '📊 Live Crypto Prices',
-                vpn_notice: 'Enable VPN for live rates',
+                vpn_notice: 'Fetching from CoinMarketCap (requires internet)',
                 loading_rate: 'Fetching rates...',
                 total_label: 'Total Assets',
                 assets_title: '💎 Your Assets',
@@ -594,7 +560,7 @@
                 appTitle: '💰 المحفظة',
                 appBadge: 'احترافي',
                 prices_title: '📊 أسعار العملات لحظياً',
-                vpn_notice: 'قم بتشغيل VPN للحصول على الأسعار',
+                vpn_notice: 'جارٍ التحميل من CoinMarketCap (يحتاج إنترنت)',
                 loading_rate: 'جاري تحميل الأسعار...',
                 total_label: 'إجمالي الأصول',
                 assets_title: '💎 أصولك',
@@ -672,115 +638,85 @@
         ];
 
         // ارزهای مورد نظر برای بخش قیمت‌ها
-        const watchlist = ['bitcoin', 'ethereum', 'toncoin', 'tron'];
-        const watchlistSymbols = {
-            bitcoin: 'BTC',
-            ethereum: 'ETH',
-            toncoin: 'TON',
-            tron: 'TRX'
+        const watchlist = ['BTC', 'ETH', 'TON', 'TRX'];
+        const watchlistIds = {
+            'BTC': 'bitcoin',
+            'ETH': 'ethereum',
+            'TON': 'toncoin',
+            'TRX': 'tron'
         };
 
-        // ========== دریافت نرخ ارز ==========
+        // ========== دریافت نرخ ارز از CoinMarketCap ==========
         async function fetchRates() {
             const rateDisplay = document.getElementById('rateDisplay');
             rateDisplay.innerHTML = '⏳ <span data-i18n="loading_rate">در حال دریافت نرخ...</span>';
 
             try {
-                // دریافت قیمت برای همه ارزها (برای بخش قیمت‌ها)
-                const allIds = [...new Set([...currencies.filter(c => c.isCrypto).map(c => c.id), ...watchlist])].join(',');
-                if (!allIds) return;
+                // ارزهای مورد نظر (با نام انگلیسی که CoinMarketCap می‌شناسه)
+                const symbols = 'BTC,ETH,TON,TRX,USDT';
 
-                // API 1: CoinGecko
-                let data = null;
-                try {
-                    const url = `https://api.coingecko.com/api/v3/simple/price?ids=${allIds}&vs_currencies=usd`;
-                    const proxy = 'https://api.allorigins.win/raw?url=';
-                    const res = await fetch(proxy + encodeURIComponent(url));
-                    if (res.ok) data = await res.json();
-                } catch (e) { console.warn('CoinGecko failed:', e); }
+                // 1. دریافت قیمت لحظه‌ای از CoinMarketCap (بدون کلید)
+                const cmcUrl = `https://pro-api.coinmarketcap.com/trial-pro-api/v2/cryptocurrency/quotes/latest?symbol=${symbols}`;
+                const response = await fetch(cmcUrl, {
+                    headers: { 'Accept': 'application/json' }
+                });
 
-                // API 2: Nobitex (برای تتر)
-                if (!data || !data.usdt) {
-                    try {
-                        const res = await fetch('https://api.nobitex.ir/v2/orderbook/USDTIRT');
-                        if (res.ok) {
-                            const nb = await res.json();
-                            if (nb.lastTradePrice) {
-                                const rialPrice = parseFloat(nb.lastTradePrice);
-                                const usdRial = 58000;
-                                const usdtUsd = rialPrice / usdRial;
-                                if (!data) data = {};
-                                data.usdt = { usd: usdtUsd };
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log('CoinMarketCap Data:', data); // برای دیباگ
+
+                if (data.status && data.status.error_code === 0 && data.data) {
+                    // بروزرسانی prices با داده‌های جدید
+                    for (let symbol in data.data) {
+                        const coinData = data.data[symbol];
+                        if (coinData && coinData.quote && coinData.quote.USD) {
+                            const price = coinData.quote.USD.price;
+                            // ذخیره قیمت با شناسه کوچک شده (مثلاً bitcoin)
+                            const key = symbol.toLowerCase();
+                            prices[key] = price;
+                            
+                            // بروزرسانی بخش قیمت‌ها
+                            const priceEl = document.getElementById(`price-${key}`);
+                            if (priceEl) {
+                                priceEl.textContent = `$${price.toFixed(2)}`;
+                            }
+                            // بروزرسانی قیمت به دلار (برای نمایش زیر آن)
+                            const priceUsdEl = document.getElementById(`price-${key}-usd`);
+                            if (priceUsdEl) {
+                                priceUsdEl.textContent = `$${price.toFixed(2)}`;
                             }
                         }
-                    } catch (e) { console.warn('Nobitex failed:', e); }
-                }
+                    }
 
-                // API 3: Bitpin
-                if (!data || !data.usdt) {
-                    try {
-                        const res = await fetch('https://api.bitpin.ir/v1/mkt/markets/');
-                        if (res.ok) {
-                            const bp = await res.json();
-                            const pair = bp.results?.find(p => p.id === 'USDTIRT');
-                            if (pair && pair.last_price) {
-                                const rialPrice = parseFloat(pair.last_price);
-                                const usdRial = 58000;
-                                const usdtUsd = rialPrice / usdRial;
-                                if (!data) data = {};
-                                data.usdt = { usd: usdtUsd };
-                            }
-                        }
-                    } catch (e) { console.warn('Bitpin failed:', e); }
-                }
-
-                // بروزرسانی prices
-                if (data) {
-                    for (let id in data) {
-                        if (data[id] && data[id].usd) {
-                            prices[id] = data[id].usd;
+                    // بروزرسانی نرخ‌ها در rate-box
+                    let html = '';
+                    for (let symbol in data.data) {
+                        const coinData = data.data[symbol];
+                        if (coinData && coinData.quote && coinData.quote.USD) {
+                            const price = coinData.quote.USD.price;
+                            const sym = coinData.symbol;
+                            html += `${sym}: <span>$${price.toLocaleString()}</span> | `;
                         }
                     }
-                }
-
-                // بروزرسانی بخش قیمت‌ها
-                updatePriceGrid();
-
-                // نمایش نرخ‌ها در rate-box
-                let html = '';
-                for (let c of currencies) {
-                    if (c.isCrypto && prices[c.id]) {
-                        html += `${c.symbol} ${c.label}: <span>$${prices[c.id].toLocaleString()}</span> | `;
+                    if (html) {
+                        rateDisplay.innerHTML = html + ` <button class="refresh-btn" onclick="fetchRates()"><i class="fas fa-sync-alt"></i></button>`;
+                    } else {
+                        rateDisplay.innerHTML = '⚠️ داده‌ای دریافت نشد';
                     }
-                }
-                if (prices.usdt) html += `💵 تتر: <span>$${prices.usdt}</span>`;
-                if (html) {
-                    rateDisplay.innerHTML = html + ` <button class="refresh-btn" onclick="fetchRates()"><i class="fas fa-sync-alt"></i></button>`;
+
+                    // بروزرسانی مجموع دارایی
+                    updateTotal();
                 } else {
-                    rateDisplay.innerHTML =
-                        '⚠️ <span data-i18n="vpn_notice">برای دریافت نرخ، فیلترشکن را روشن کنید</span> <button class="refresh-btn" onclick="fetchRates()"><i class="fas fa-sync-alt"></i></button>';
+                    throw new Error('پاسخ API نامعتبر است');
                 }
 
-                updateTotal();
-            } catch (e) {
+            } catch (error) {
+                console.error('خطا در دریافت نرخ:', error);
                 rateDisplay.innerHTML =
-                    '⚠️ <span data-i18n="vpn_notice">برای دریافت نرخ، فیلترشکن را روشن کنید</span> <button class="refresh-btn" onclick="fetchRates()"><i class="fas fa-sync-alt"></i></button>';
-            }
-        }
-
-        // ========== بروزرسانی بخش قیمت‌ها ==========
-        function updatePriceGrid() {
-            for (let id of watchlist) {
-                const symbol = watchlistSymbols[id];
-                const priceEl = document.getElementById(`price-${symbol.toLowerCase()}`);
-                const priceUsdEl = document.getElementById(`price-${symbol.toLowerCase()}-usd`);
-                if (priceEl && prices[id]) {
-                    priceEl.textContent = `$${prices[id].toFixed(2)}`;
-                    priceUsdEl.textContent = `$${prices[id].toFixed(2)}`;
-                } else if (priceEl) {
-                    priceEl.textContent = '⏳';
-                    priceUsdEl.textContent = '⏳';
-                }
+                    '⚠️ خطا در دریافت نرخ. لطفاً اتصال اینترنت را بررسی کنید. <button class="refresh-btn" onclick="fetchRates()"><i class="fas fa-sync-alt"></i></button>';
             }
         }
 
