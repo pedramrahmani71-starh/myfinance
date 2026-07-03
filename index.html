@@ -6,178 +6,96 @@
     <title>کیف پول من</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: #0a0c12;
             color: #e8edf5;
             padding: 0 0 90px 0;
             direction: rtl;
+            min-height: 100vh;
         }
+        /* هدر */
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 16px 20px 12px;
-            background: rgba(10, 12, 18, 0.85);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(10,12,18,0.85);
+            backdrop-filter: blur(24px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
             position: sticky;
             top: 0;
             z-index: 100;
         }
-        .header h1 {
-            font-size: 20px;
-            font-weight: 700;
-            color: #fff;
-        }
+        .header h1 { font-size: 20px; font-weight: 700; color: #fff; }
         .header .badge {
-            background: rgba(0, 136, 204, 0.15);
+            background: rgba(0,136,204,0.15);
             color: #4ade80;
             padding: 2px 14px;
             border-radius: 30px;
             font-size: 10px;
-            border: 1px solid rgba(74, 222, 128, 0.15);
+            border: 1px solid rgba(74,222,128,0.15);
         }
         .header .avatar {
-            width: 38px;
-            height: 38px;
+            width: 38px; height: 38px;
             border-radius: 50%;
             background: linear-gradient(135deg, #0088cc, #4ade80);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 14px;
-            color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 14px; color: #fff;
         }
-        .page {
-            display: none;
-            padding: 12px 16px 20px;
-            animation: fadeIn .3s ease;
-        }
-        .page.active {
-            display: block;
-        }
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+        /* صفحات */
+        .page { display: none; padding: 12px 16px 20px; animation: fadeIn .35s ease; }
+        .page.active { display: block; }
+        @keyframes fadeIn { from{opacity:0; transform:translateY(12px);} to{opacity:1; transform:translateY(0);} }
+        /* کارت‌ها */
         .card {
-            background: rgba(22, 27, 36, 0.7);
-            backdrop-filter: blur(12px);
+            background: rgba(22,27,36,0.7);
+            backdrop-filter: blur(16px);
             border-radius: 24px;
             padding: 16px 18px;
             margin-bottom: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+            transition: all .2s;
         }
-        .card h3 {
-            font-size: 13px;
-            color: #8899aa;
-            font-weight: 400;
-            margin-bottom: 6px;
-        }
-        .card .value {
-            font-size: 28px;
-            font-weight: 700;
-            color: #fff;
-            direction: ltr;
-            text-align: left;
-        }
+        .card h3 { font-size: 13px; color: #8899aa; font-weight: 400; margin-bottom: 6px; }
+        .card .value { font-size: 28px; font-weight: 700; color: #fff; direction: ltr; text-align: left; }
+        /* لیست ارزها */
         .currency-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
         }
-        .currency-item:last-child {
-            border-bottom: none;
-        }
-        .currency-item .info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .currency-item .icon {
-            font-size: 20px;
-            width: 36px;
-            text-align: center;
-        }
-        .currency-item .name {
-            font-weight: 500;
-            font-size: 14px;
-        }
-        .currency-item .balance {
-            font-weight: 600;
-            color: #fff;
-            direction: ltr;
-        }
-        .currency-item .balance small {
-            color: #8899aa;
-            font-weight: 400;
-            font-size: 12px;
-            margin-right: 4px;
-        }
-        .currency-item .actions {
-            display: flex;
-            gap: 6px;
-        }
+        .currency-item:last-child { border-bottom: none; }
+        .currency-item .info { display: flex; align-items: center; gap: 12px; }
+        .currency-item .icon { font-size: 20px; width: 36px; text-align: center; }
+        .currency-item .name { font-weight: 500; font-size: 14px; }
+        .currency-item .balance { font-weight: 600; color: #fff; direction: ltr; }
+        .currency-item .balance small { color: #8899aa; font-weight: 400; font-size: 12px; margin-right: 4px; }
+        .currency-item .actions { display: flex; gap: 6px; }
         .currency-item .actions button {
-            background: transparent;
-            border: none;
-            color: #8899aa;
-            cursor: pointer;
-            font-size: 14px;
-            padding: 4px 8px;
-            border-radius: 8px;
+            background: transparent; border: none; color: #8899aa;
+            cursor: pointer; font-size: 14px; padding: 4px 8px; border-radius: 8px;
             transition: .2s;
         }
-        .currency-item .actions button:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
-        .currency-item .actions .deposit-btn {
-            color: #4ade80;
-        }
-        .currency-item .actions .withdraw-btn {
-            color: #ef4444;
-        }
+        .currency-item .actions button:hover { background: rgba(255,255,255,0.05); }
+        .currency-item .actions .deposit-btn { color: #4ade80; }
+        .currency-item .actions .withdraw-btn { color: #ef4444; }
+        /* مجموع */
         .total-box {
-            background: linear-gradient(135deg, rgba(0, 136, 204, 0.06), rgba(74, 222, 128, 0.03));
+            background: linear-gradient(135deg, rgba(0,136,204,0.08), rgba(74,222,128,0.04));
             padding: 16px 20px;
             border-radius: 24px;
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255,255,255,0.05);
+            backdrop-filter: blur(8px);
         }
-        .total-box .amount {
-            font-size: 28px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #4ade80, #0088cc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .total-box .label {
-            font-size: 13px;
-            color: #8899aa;
-        }
-        .total-box .sub {
-            font-size: 13px;
-            color: #8899aa;
-            margin-top: 2px;
-        }
+        .total-box .amount { font-size: 28px; font-weight: 700; background: linear-gradient(135deg, #4ade80, #0088cc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .total-box .label { font-size: 13px; color: #8899aa; }
+        .total-box .sub { font-size: 13px; color: #8899aa; margin-top: 2px; }
+        /* نرخ */
         .rate-box {
-            background: rgba(15, 21, 30, 0.5);
+            background: rgba(15,21,30,0.5);
             backdrop-filter: blur(8px);
             padding: 10px 16px;
             border-radius: 18px;
@@ -185,304 +103,148 @@
             margin-bottom: 12px;
             font-size: 12px;
             color: #8899aa;
-            border: 1px solid rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255,255,255,0.04);
         }
-        .rate-box span {
-            color: #4ade80;
-            font-weight: 600;
+        .rate-box span { color: #4ade80; font-weight: 600; }
+        .rate-box .refresh-btn {
+            background: transparent; border: none; color: #0088cc;
+            cursor: pointer; font-size: 14px; margin-right: 8px;
         }
-        .history-list {
-            max-height: 280px;
-            overflow-y: auto;
-            margin-top: 8px;
-            padding-top: 6px;
-        }
+        /* تاریخچه */
+        .history-list { max-height: 300px; overflow-y: auto; margin-top: 8px; padding-top: 6px; }
         .history-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-            font-size: 13px;
-            color: #8899aa;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
+            font-size: 13px; color: #8899aa;
         }
-        .history-item .amount {
-            font-weight: 600;
-            color: #fff;
-        }
-        .history-item .date {
-            font-size: 11px;
-            color: #6a7b8c;
-            margin-right: 8px;
-        }
-        .history-item .withdraw {
-            color: #ef4444;
-        }
-        .history-item .deposit {
-            color: #4ade80;
-        }
-        .empty-state {
-            color: #8899aa;
-            text-align: center;
-            padding: 24px 0;
-            font-size: 13px;
-        }
+        .history-item .amount { font-weight: 600; color: #fff; }
+        .history-item .date { font-size: 11px; color: #6a7b8c; margin-right: 8px; }
+        .history-item .withdraw { color: #ef4444; }
+        .history-item .deposit { color: #4ade80; }
+        .empty-state { color: #8899aa; text-align: center; padding: 24px 0; font-size: 13px; }
+        /* ولت */
         .wallet-card {
-            background: rgba(30, 38, 48, 0.4);
+            background: rgba(30,38,48,0.4);
             border-radius: 18px;
             padding: 14px 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: 1px solid rgba(255, 255, 255, 0.04);
+            display: flex; justify-content: space-between; align-items: center;
+            border: 1px solid rgba(255,255,255,0.04);
             margin-bottom: 10px;
+            transition: .2s;
         }
-        .wallet-card .info {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-        .wallet-card .name {
-            font-weight: 600;
-            font-size: 15px;
-            color: #fff;
-        }
-        .wallet-card .address {
-            font-size: 12px;
-            color: #8899aa;
-            font-family: monospace;
-        }
+        .wallet-card:hover { border-color: rgba(255,255,255,0.08); }
+        .wallet-card .info { display: flex; flex-direction: column; gap: 2px; }
+        .wallet-card .name { font-weight: 600; font-size: 15px; color: #fff; }
+        .wallet-card .address { font-size: 12px; color: #8899aa; font-family: monospace; }
         .wallet-card .badge {
-            background: rgba(74, 222, 128, 0.08);
+            background: rgba(74,222,128,0.08);
             color: #4ade80;
             padding: 2px 10px;
             border-radius: 30px;
             font-size: 10px;
-            border: 1px solid rgba(74, 222, 128, 0.08);
+            border: 1px solid rgba(74,222,128,0.08);
         }
         .wallet-card .actions button {
-            background: transparent;
-            border: none;
-            color: #8899aa;
-            cursor: pointer;
-            font-size: 16px;
-            padding: 4px 8px;
+            background: transparent; border: none; color: #8899aa;
+            cursor: pointer; font-size: 16px; padding: 4px 8px;
             border-radius: 8px;
             transition: .2s;
         }
-        .wallet-card .actions button:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
-        .wallet-card .actions .edit-btn {
-            color: #0088cc;
-        }
-        .wallet-card .actions .delete-btn {
-            color: #ef4444;
-        }
+        .wallet-card .actions button:hover { background: rgba(255,255,255,0.05); }
+        .wallet-card .actions .edit-btn { color: #0088cc; }
+        .wallet-card .actions .delete-btn { color: #ef4444; }
         .add-btn {
-            width: 100%;
-            margin-top: 12px;
-            padding: 12px;
-            border: 1px dashed rgba(0, 136, 204, 0.3);
+            width: 100%; margin-top: 12px; padding: 12px;
+            border: 1px dashed rgba(0,136,204,0.3);
             border-radius: 16px;
-            background: transparent;
-            color: #0088cc;
-            font-weight: 600;
-            cursor: pointer;
-            font-family: inherit;
+            background: transparent; color: #0088cc;
+            font-weight: 600; cursor: pointer; font-family: inherit;
             transition: .2s;
         }
-        .add-btn:hover {
-            background: rgba(0, 136, 204, 0.05);
-        }
-        .add-btn i {
-            margin-left: 8px;
-        }
-        .lang-selector {
-            display: flex;
-            gap: 6px;
-            margin-top: 8px;
-            flex-wrap: wrap;
-        }
+        .add-btn:hover { background: rgba(0,136,204,0.05); }
+        .add-btn i { margin-left: 8px; }
+        /* زبان */
+        .lang-selector { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
         .lang-btn {
-            padding: 4px 14px;
-            border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            background: transparent;
-            color: #8899aa;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 500;
-            font-family: inherit;
-            transition: .2s;
+            padding: 4px 14px; border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.06);
+            background: transparent; color: #8899aa;
+            cursor: pointer; font-size: 12px; font-weight: 500;
+            font-family: inherit; transition: .2s;
         }
-        .lang-btn.active {
-            background: rgba(0, 136, 204, 0.15);
-            color: #4ade80;
-            border-color: rgba(0, 136, 204, 0.2);
-        }
-        .lang-btn:hover {
-            background: rgba(255, 255, 255, 0.03);
-        }
+        .lang-btn.active { background: rgba(0,136,204,0.15); color: #4ade80; border-color: rgba(0,136,204,0.2); }
+        .lang-btn:hover { background: rgba(255,255,255,0.03); }
+        /* تنظیمات */
         .settings-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-            cursor: pointer;
-            transition: .2s;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.03);
+            cursor: pointer; transition: .2s;
         }
-        .settings-item:last-child {
-            border-bottom: none;
-        }
-        .settings-item:hover {
-            background: rgba(255, 255, 255, 0.02);
-        }
-        .settings-item .left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .settings-item .icon {
-            color: #0088cc;
-            font-size: 18px;
-            width: 28px;
-            text-align: center;
-        }
-        .settings-item .label {
-            color: #e8edf5;
-            font-size: 14px;
-        }
-        .settings-item .value {
-            color: #8899aa;
-            font-size: 13px;
-        }
+        .settings-item:last-child { border-bottom: none; }
+        .settings-item:hover { background: rgba(255,255,255,0.02); padding-left: 4px; border-radius: 8px; }
+        .settings-item .left { display: flex; align-items: center; gap: 12px; }
+        .settings-item .icon { color: #0088cc; font-size: 18px; width: 28px; text-align: center; }
+        .settings-item .label { color: #e8edf5; font-size: 14px; }
+        .settings-item .value { color: #8899aa; font-size: 13px; }
+        .settings-item .arrow { color: #8899aa; font-size: 14px; }
+        .settings-item.danger .label { color: #ef4444; }
+        .settings-item.danger .icon { color: #ef4444; }
+        /* بنر VPN */
         .vpn-banner {
-            background: rgba(0, 136, 204, 0.06);
-            border: 1px solid rgba(0, 136, 204, 0.1);
+            background: rgba(0,136,204,0.06);
+            border: 1px solid rgba(0,136,204,0.1);
             border-radius: 16px;
             padding: 10px 14px;
             margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 12px;
-            color: #8899aa;
+            display: flex; align-items: center; gap: 10px;
+            font-size: 12px; color: #8899aa;
         }
-        .vpn-banner i {
-            color: #0088cc;
-            font-size: 16px;
-        }
+        .vpn-banner i { color: #0088cc; font-size: 16px; }
+        /* منوی پایین */
         .bottom-nav {
-            position: fixed;
-            bottom: 12px;
-            left: 12px;
-            right: 12px;
-            background: rgba(15, 21, 30, 0.85);
-            backdrop-filter: blur(24px);
-            border-radius: 32px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding: 4px 0;
-            z-index: 1000;
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+            position: fixed; bottom: 12px; left: 12px; right: 12px;
+            background: rgba(15,21,30,0.85); backdrop-filter: blur(24px);
+            border-radius: 32px; border: 1px solid rgba(255,255,255,0.06);
+            display: flex; justify-content: space-around; align-items: center;
+            padding: 4px 0; z-index: 1000; box-shadow: 0 8px 40px rgba(0,0,0,0.4);
         }
         .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: #8899aa;
-            font-size: 10px;
-            transition: .2s;
-            cursor: pointer;
-            padding: 4px 10px;
-            border-radius: 20px;
-            min-width: 50px;
-            position: relative;
+            display: flex; flex-direction: column; align-items: center;
+            color: #8899aa; font-size: 10px; transition: .2s;
+            cursor: pointer; padding: 4px 10px; border-radius: 20px;
+            min-width: 50px; position: relative;
         }
-        .nav-item i {
-            font-size: 18px;
-            margin-bottom: 0;
-        }
-        .nav-item span {
-            font-weight: 500;
-            font-size: 9px;
-            margin-top: 1px;
-        }
-        .nav-item.active {
-            color: #4ade80;
-            background: rgba(74, 222, 128, 0.06);
-        }
-        .nav-item.active i {
-            transform: translateY(-2px);
-        }
+        .nav-item i { font-size: 18px; margin-bottom: 0; }
+        .nav-item span { font-weight: 500; font-size: 9px; margin-top: 1px; }
+        .nav-item.active { color: #4ade80; background: rgba(74,222,128,0.06); }
+        .nav-item.active i { transform: translateY(-2px); }
         .nav-item .dot {
-            position: absolute;
-            top: 2px;
-            right: 6px;
-            width: 6px;
-            height: 6px;
-            background: #ef4444;
-            border-radius: 50%;
-            border: 2px solid rgba(15, 21, 30, 0.85);
+            position: absolute; top: 2px; right: 6px; width: 6px; height: 6px;
+            background: #ef4444; border-radius: 50%; border: 2px solid rgba(15,21,30,0.85);
         }
-        .input-group {
-            display: flex;
-            gap: 8px;
-            margin-top: 8px;
-        }
+        .input-group { display: flex; gap: 8px; margin-top: 8px; }
         .input-group input {
-            flex: 1;
-            padding: 10px 14px;
-            border: none;
-            border-radius: 16px;
-            background: rgba(30, 38, 48, 0.6);
-            color: #fff;
-            font-size: 14px;
-            outline: none;
-            font-family: inherit;
+            flex: 1; padding: 10px 14px; border: none; border-radius: 16px;
+            background: rgba(30,38,48,0.6); color: #fff; font-size: 14px;
+            outline: none; font-family: inherit;
         }
         .input-group button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 16px;
+            padding: 10px 20px; border: none; border-radius: 16px;
             background: linear-gradient(135deg, #0088cc, #4ade80);
-            color: #fff;
-            font-weight: 600;
-            cursor: pointer;
-            font-family: inherit;
+            color: #fff; font-weight: 600; cursor: pointer; font-family: inherit;
+            white-space: nowrap;
         }
         .btn-danger {
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 18px;
+            width: 100%; padding: 14px; border: none; border-radius: 18px;
             background: linear-gradient(135deg, #ef4444, #dc2626);
-            color: #fff;
-            font-weight: 600;
-            cursor: pointer;
-            font-family: inherit;
+            color: #fff; font-weight: 600; cursor: pointer; font-family: inherit;
         }
-        @media(max-width:480px) {
-            .header h1 {
-                font-size: 16px;
-            }
-            .bottom-nav {
-                padding: 2px 0;
-            }
-            .nav-item {
-                min-width: 44px;
-                padding: 2px 6px;
-            }
-            .nav-item i {
-                font-size: 16px;
-            }
-            .wallet-card {
-                padding: 12px 14px;
-            }
+        @media(max-width:480px){
+            .header h1 { font-size: 16px; }
+            .bottom-nav { padding: 2px 0; }
+            .nav-item { min-width: 44px; padding: 2px 6px; }
+            .nav-item i { font-size: 16px; }
+            .wallet-card { padding: 12px 14px; }
         }
     </style>
 </head>
@@ -491,11 +253,11 @@
     <!-- هدر -->
     <div class="header">
         <div>
-            <h1 id="appTitle">💰 کیف پول</h1>
-            <span class="badge" id="appBadge">حرفه‌ای</span>
+            <h1 data-i18n="appTitle">💰 کیف پول</h1>
+            <span class="badge" data-i18n="appBadge">حرفه‌ای</span>
         </div>
         <div style="display:flex; gap:12px; align-items:center;">
-            <i class="fas fa-search" style="color:#8899aa; font-size:18px; cursor:pointer;" onclick="alert('جستجو...')"></i>
+            <i class="fas fa-search" style="color:#8899aa; font-size:18px; cursor:pointer;" onclick="alert('🔍 جستجو')"></i>
             <div class="avatar">پ</div>
         </div>
     </div>
@@ -504,17 +266,17 @@
     <div id="page-home" class="page active">
         <div class="vpn-banner">
             <i class="fas fa-shield-alt"></i>
-            <span>برای دریافت نرخ لحظه‌ای، فیلترشکن را روشن کنید</span>
+            <span data-i18n="vpn_notice">برای دریافت نرخ لحظه‌ای، فیلترشکن را روشن کنید</span>
         </div>
-        <div class="rate-box" id="rateDisplay">📈 در حال دریافت نرخ...</div>
-        <div class="card">
-            <h3>📊 خلاصه دارایی</h3>
-            <div style="height:80px; display:flex; align-items:center; justify-content:center; color:#8899aa; font-size:14px;">
-                نمودار به زودی...
-            </div>
+        <div class="rate-box" id="rateDisplay">
+            📈 <span data-i18n="loading_rate">در حال دریافت نرخ...</span>
+            <button class="refresh-btn" onclick="fetchRates()"><i class="fas fa-sync-alt"></i></button>
+        </div>
+        <div class="card" style="text-align:center; color:#8899aa; padding:20px;">
+            <div style="font-size:14px;" data-i18n="chart_placeholder">📊 نمودار تغییرات به زودی...</div>
         </div>
         <div class="total-box">
-            <div class="label" id="totalLabel">مجموع دارایی</div>
+            <div class="label" data-i18n="total_label">مجموع دارایی</div>
             <div class="amount" id="totalRial">۰</div>
             <div class="sub" id="totalUsd">≈ ۰ تتر</div>
         </div>
@@ -523,24 +285,26 @@
     <!-- کیف پول -->
     <div id="page-wallet" class="page">
         <div class="card">
-            <h3>💎 دارایی‌های شما</h3>
+            <h3 data-i18n="assets_title">💎 دارایی‌های شما</h3>
             <div id="currencyList"></div>
         </div>
         <div class="card">
-            <h3>➕ افزودن ارز جدید</h3>
+            <h3 data-i18n="add_currency_title">➕ افزودن ارز جدید</h3>
             <div class="input-group">
                 <input type="text" id="newCurrencyInput" placeholder="شناسه ارز (مثلاً dogecoin)">
-                <button onclick="addNewCurrency()">افزودن</button>
+                <button onclick="addNewCurrency()" data-i18n="add_btn">افزودن</button>
             </div>
-            <div style="font-size:10px; color:#8899aa; margin-top:4px;">🟢 از <a href="https://api.coingecko.com/api/v3/coins/list" target="_blank" style="color:#0088cc;">لیست CoinGecko</a> پیدا کن</div>
+            <div style="font-size:10px; color:#8899aa; margin-top:4px;">
+                🟢 <span data-i18n="find_on">از</span> <a href="https://api.coingecko.com/api/v3/coins/list" target="_blank" style="color:#0088cc;" data-i18n="coingecko_list">لیست CoinGecko</a> <span data-i18n="find">پیدا کن</span>
+            </div>
         </div>
-        <button class="btn-danger" onclick="clearAllData()">🗑️ پاک کردن همه</button>
+        <button class="btn-danger" onclick="clearAllData()" data-i18n="clear_all">🗑️ پاک کردن همه</button>
     </div>
 
     <!-- مدیریت -->
     <div id="page-manage" class="page">
         <div class="card">
-            <h3>🔐 کیف پول‌های من</h3>
+            <h3 data-i18n="wallets_title">🔐 کیف پول‌های من</h3>
             <div id="walletsList">
                 <div class="wallet-card">
                     <div class="info">
@@ -548,7 +312,7 @@
                         <span class="address">۰x1234...5678</span>
                     </div>
                     <div style="display:flex; align-items:center; gap:8px;">
-                        <span class="badge">فعال</span>
+                        <span class="badge" data-i18n="active_badge">فعال</span>
                         <div class="actions">
                             <button class="edit-btn" onclick="editWallet('ton')"><i class="fas fa-edit"></i></button>
                             <button class="delete-btn" onclick="removeWallet('ton')"><i class="fas fa-trash"></i></button>
@@ -561,7 +325,7 @@
                         <span class="address">۰x9876...5432</span>
                     </div>
                     <div style="display:flex; align-items:center; gap:8px;">
-                        <span class="badge">فعال</span>
+                        <span class="badge" data-i18n="active_badge">فعال</span>
                         <div class="actions">
                             <button class="edit-btn" onclick="editWallet('bitget')"><i class="fas fa-edit"></i></button>
                             <button class="delete-btn" onclick="removeWallet('bitget')"><i class="fas fa-trash"></i></button>
@@ -569,26 +333,26 @@
                     </div>
                 </div>
             </div>
-            <button class="add-btn" onclick="addWallet()"><i class="fas fa-plus"></i> افزودن کیف پول جدید</button>
+            <button class="add-btn" onclick="addWallet()"><i class="fas fa-plus"></i> <span data-i18n="add_wallet_btn">افزودن کیف پول جدید</span></button>
         </div>
         <div class="card">
-            <h3>🏦 صرافی‌ها</h3>
-            <div style="padding:12px 0; color:#8899aa; text-align:center; font-size:13px;">هیچ صرافی متصل نیست</div>
-            <button class="add-btn" style="border-color:rgba(139,92,246,0.3); color:#8b5cf6;" onclick="connectExchange()"><i class="fas fa-link"></i> اتصال صرافی</button>
+            <h3 data-i18n="exchanges_title">🏦 صرافی‌ها</h3>
+            <div style="padding:12px 0; color:#8899aa; text-align:center; font-size:13px;" data-i18n="no_exchange">هیچ صرافی متصل نیست</div>
+            <button class="add-btn" style="border-color:rgba(139,92,246,0.3); color:#8b5cf6;" onclick="connectExchange()"><i class="fas fa-link"></i> <span data-i18n="connect_exchange_btn">اتصال صرافی</span></button>
         </div>
         <div class="card">
-            <h3>🏛️ بانک‌ها</h3>
-            <div style="padding:12px 0; color:#8899aa; text-align:center; font-size:13px;">هیچ بانکی متصل نیست</div>
-            <button class="add-btn" style="border-color:rgba(245,158,11,0.3); color:#f59e0b;" onclick="connectBank()"><i class="fas fa-university"></i> اتصال بانک</button>
+            <h3 data-i18n="banks_title">🏛️ بانک‌ها</h3>
+            <div style="padding:12px 0; color:#8899aa; text-align:center; font-size:13px;" data-i18n="no_bank">هیچ بانکی متصل نیست</div>
+            <button class="add-btn" style="border-color:rgba(245,158,11,0.3); color:#f59e0b;" onclick="connectBank()"><i class="fas fa-university"></i> <span data-i18n="connect_bank_btn">اتصال بانک</span></button>
         </div>
     </div>
 
     <!-- تاریخچه -->
     <div id="page-history" class="page">
         <div class="card">
-            <h3>📜 تمام تراکنش‌ها</h3>
+            <h3 data-i18n="history_title">📜 تمام تراکنش‌ها</h3>
             <div class="history-list" id="historyList">
-                <div class="empty-state">هیچ تراکنشی ثبت نشده</div>
+                <div class="empty-state" data-i18n="no_transaction">هیچ تراکنشی ثبت نشده</div>
             </div>
         </div>
     </div>
@@ -596,7 +360,7 @@
     <!-- تنظیمات -->
     <div id="page-settings" class="page">
         <div class="card">
-            <h3>🌐 زبان</h3>
+            <h3 data-i18n="language_title">🌐 زبان</h3>
             <div class="lang-selector">
                 <button class="lang-btn active" data-lang="fa" onclick="changeLang('fa')">فارسی</button>
                 <button class="lang-btn" data-lang="en" onclick="changeLang('en')">English</button>
@@ -604,56 +368,56 @@
             </div>
         </div>
         <div class="card">
-            <div class="settings-item" onclick="alert('تغییر تم (به زودی...)')">
+            <div class="settings-item" onclick="alert('🎨 تغییر تم (به زودی...)')">
                 <div class="left">
                     <span class="icon"><i class="fas fa-moon"></i></span>
-                    <span class="label">حالت شب</span>
+                    <span class="label" data-i18n="theme_label">حالت شب</span>
                 </div>
-                <span class="value">فعال</span>
+                <span class="value" data-i18n="theme_value">فعال</span>
             </div>
-            <div class="settings-item" onclick="alert('انتخاب رنگ (به زودی...)')">
+            <div class="settings-item" onclick="alert('🎨 انتخاب رنگ (به زودی...)')">
                 <div class="left">
                     <span class="icon"><i class="fas fa-palette"></i></span>
-                    <span class="label">رنگ اصلی</span>
+                    <span class="label" data-i18n="color_label">رنگ اصلی</span>
                 </div>
-                <span class="value">آبی-سبز</span>
+                <span class="value" data-i18n="color_value">آبی-سبز</span>
             </div>
-            <div class="settings-item" onclick="alert('تنظیمات اعلان (به زودی...)')">
+            <div class="settings-item" onclick="alert('🔔 تنظیمات اعلان (به زودی...)')">
                 <div class="left">
                     <span class="icon"><i class="fas fa-bell"></i></span>
-                    <span class="label">اعلان‌ها</span>
+                    <span class="label" data-i18n="notif_label">اعلان‌ها</span>
                 </div>
-                <span class="value">فعال</span>
+                <span class="value" data-i18n="notif_value">فعال</span>
             </div>
-            <div class="settings-item" onclick="alert('تنظیمات امنیت (به زودی...)')">
+            <div class="settings-item" onclick="alert('🔐 تنظیمات امنیت (به زودی...)')">
                 <div class="left">
                     <span class="icon"><i class="fas fa-shield-alt"></i></span>
-                    <span class="label">امنیت</span>
+                    <span class="label" data-i18n="security_label">امنیت</span>
                 </div>
-                <span class="value">اثر انگشت</span>
+                <span class="value" data-i18n="security_value">اثر انگشت</span>
             </div>
-            <div class="settings-item" onclick="alert('پشتیبان‌گیری (به زودی...)')">
+            <div class="settings-item" onclick="alert('💾 پشتیبان‌گیری (به زودی...)')">
                 <div class="left">
                     <span class="icon"><i class="fas fa-cloud-upload-alt"></i></span>
-                    <span class="label">پشتیبان‌گیری</span>
+                    <span class="label" data-i18n="backup_label">پشتیبان‌گیری</span>
                 </div>
-                <span class="value">دستی</span>
+                <span class="value" data-i18n="backup_value">دستی</span>
             </div>
-            <div class="settings-item" onclick="alert('نسخه v5.0.0')">
+            <div class="settings-item" onclick="alert('ℹ️ نسخه v5.1.0')">
                 <div class="left">
                     <span class="icon"><i class="fas fa-info-circle"></i></span>
-                    <span class="label">درباره</span>
+                    <span class="label" data-i18n="about_label">درباره</span>
                 </div>
-                <span class="value">v5.0.0</span>
+                <span class="value">v5.1.0</span>
             </div>
         </div>
         <div class="card" style="border:1px solid rgba(239,68,68,0.1);">
-            <div class="settings-item" onclick="alert('خروج از حساب (به زودی...)')">
+            <div class="settings-item danger" onclick="alert('🚪 خروج از حساب (به زودی...)')">
                 <div class="left">
-                    <span class="icon" style="color:#ef4444;"><i class="fas fa-sign-out-alt"></i></span>
-                    <span class="label" style="color:#ef4444;">خروج از حساب</span>
+                    <span class="icon"><i class="fas fa-sign-out-alt"></i></span>
+                    <span class="label" data-i18n="logout_label">خروج از حساب</span>
                 </div>
-                <span class="value" style="color:#ef4444;"><i class="fas fa-chevron-left"></i></span>
+                <span class="arrow"><i class="fas fa-chevron-left"></i></span>
             </div>
         </div>
     </div>
@@ -661,46 +425,185 @@
     <!-- منوی پایین -->
     <div class="bottom-nav">
         <div class="nav-item active" data-page="home" onclick="switchPage('home')">
-            <i class="fas fa-home"></i><span data-i18n="home">خانه</span>
+            <i class="fas fa-home"></i><span data-i18n="nav_home">خانه</span>
         </div>
         <div class="nav-item" data-page="wallet" onclick="switchPage('wallet')">
-            <i class="fas fa-wallet"></i><span data-i18n="wallet">کیف پول</span>
+            <i class="fas fa-wallet"></i><span data-i18n="nav_wallet">کیف پول</span>
         </div>
         <div class="nav-item" data-page="manage" onclick="switchPage('manage')">
-            <i class="fas fa-layer-group"></i><span data-i18n="manage">مدیریت</span>
+            <i class="fas fa-layer-group"></i><span data-i18n="nav_manage">مدیریت</span>
         </div>
         <div class="nav-item" data-page="history" onclick="switchPage('history')">
-            <i class="fas fa-clock"></i><span data-i18n="history">تاریخچه</span>
+            <i class="fas fa-clock"></i><span data-i18n="nav_history">تاریخچه</span>
             <span class="dot" id="historyDot" style="display:none;"></span>
         </div>
         <div class="nav-item" data-page="settings" onclick="switchPage('settings')">
-            <i class="fas fa-sliders-h"></i><span data-i18n="settings">تنظیمات</span>
+            <i class="fas fa-sliders-h"></i><span data-i18n="nav_settings">تنظیمات</span>
         </div>
     </div>
 
     <script>
-        // ========== ترجمه‌ها ==========
+        // ========== ترجمه‌ها (کامل) ==========
         const translations = {
-            fa: { home: 'خانه', wallet: 'کیف پول', manage: 'مدیریت', history: 'تاریخچه', settings: 'تنظیمات',
-            total: 'مجموع دارایی', appTitle: '💰 کیف پول', appBadge: 'حرفه‌ای' },
-            en: { home: 'Home', wallet: 'Wallet', manage: 'Manage', history: 'History', settings: 'Settings',
-                total: 'Total Assets', appTitle: '💰 Wallet', appBadge: 'Pro' },
-            ar: { home: 'الرئيسية', wallet: 'المحفظة', manage: 'إدارة', history: 'التاريخ', settings: 'الإعدادات',
-                total: 'إجمالي الأصول', appTitle: '💰 المحفظة', appBadge: 'احترافي' }
+            fa: {
+                appTitle: '💰 کیف پول',
+                appBadge: 'حرفه‌ای',
+                vpn_notice: 'برای دریافت نرخ لحظه‌ای، فیلترشکن را روشن کنید',
+                loading_rate: 'در حال دریافت نرخ...',
+                chart_placeholder: '📊 نمودار تغییرات به زودی...',
+                total_label: 'مجموع دارایی',
+                assets_title: '💎 دارایی‌های شما',
+                add_currency_title: '➕ افزودن ارز جدید',
+                add_btn: 'افزودن',
+                find_on: 'از',
+                coingecko_list: 'لیست CoinGecko',
+                find: 'پیدا کن',
+                clear_all: '🗑️ پاک کردن همه',
+                wallets_title: '🔐 کیف پول‌های من',
+                active_badge: 'فعال',
+                add_wallet_btn: 'افزودن کیف پول جدید',
+                exchanges_title: '🏦 صرافی‌ها',
+                no_exchange: 'هیچ صرافی متصل نیست',
+                connect_exchange_btn: 'اتصال صرافی',
+                banks_title: '🏛️ بانک‌ها',
+                no_bank: 'هیچ بانکی متصل نیست',
+                connect_bank_btn: 'اتصال بانک',
+                history_title: '📜 تمام تراکنش‌ها',
+                no_transaction: 'هیچ تراکنشی ثبت نشده',
+                language_title: '🌐 زبان',
+                theme_label: 'حالت شب',
+                theme_value: 'فعال',
+                color_label: 'رنگ اصلی',
+                color_value: 'آبی-سبز',
+                notif_label: 'اعلان‌ها',
+                notif_value: 'فعال',
+                security_label: 'امنیت',
+                security_value: 'اثر انگشت',
+                backup_label: 'پشتیبان‌گیری',
+                backup_value: 'دستی',
+                about_label: 'درباره',
+                logout_label: 'خروج از حساب',
+                nav_home: 'خانه',
+                nav_wallet: 'کیف پول',
+                nav_manage: 'مدیریت',
+                nav_history: 'تاریخچه',
+                nav_settings: 'تنظیمات'
+            },
+            en: {
+                appTitle: '💰 Wallet',
+                appBadge: 'Pro',
+                vpn_notice: 'Enable VPN for live rates',
+                loading_rate: 'Fetching rates...',
+                chart_placeholder: '📊 Chart coming soon...',
+                total_label: 'Total Assets',
+                assets_title: '💎 Your Assets',
+                add_currency_title: '➕ Add New Currency',
+                add_btn: 'Add',
+                find_on: 'from',
+                coingecko_list: 'CoinGecko List',
+                find: 'find',
+                clear_all: '🗑️ Clear All',
+                wallets_title: '🔐 My Wallets',
+                active_badge: 'Active',
+                add_wallet_btn: 'Add New Wallet',
+                exchanges_title: '🏦 Exchanges',
+                no_exchange: 'No exchange connected',
+                connect_exchange_btn: 'Connect Exchange',
+                banks_title: '🏛️ Banks',
+                no_bank: 'No bank connected',
+                connect_bank_btn: 'Connect Bank',
+                history_title: '📜 All Transactions',
+                no_transaction: 'No transactions yet',
+                language_title: '🌐 Language',
+                theme_label: 'Night Mode',
+                theme_value: 'Active',
+                color_label: 'Primary Color',
+                color_value: 'Blue-Green',
+                notif_label: 'Notifications',
+                notif_value: 'Active',
+                security_label: 'Security',
+                security_value: 'Fingerprint',
+                backup_label: 'Backup',
+                backup_value: 'Manual',
+                about_label: 'About',
+                logout_label: 'Logout',
+                nav_home: 'Home',
+                nav_wallet: 'Wallet',
+                nav_manage: 'Manage',
+                nav_history: 'History',
+                nav_settings: 'Settings'
+            },
+            ar: {
+                appTitle: '💰 المحفظة',
+                appBadge: 'احترافي',
+                vpn_notice: 'قم بتشغيل VPN للحصول على الأسعار',
+                loading_rate: 'جاري تحميل الأسعار...',
+                chart_placeholder: '📊 الرسم البياني قريباً...',
+                total_label: 'إجمالي الأصول',
+                assets_title: '💎 أصولك',
+                add_currency_title: '➕ إضافة عملة جديدة',
+                add_btn: 'إضافة',
+                find_on: 'من',
+                coingecko_list: 'قائمة CoinGecko',
+                find: 'ابحث',
+                clear_all: '🗑️ مسح الكل',
+                wallets_title: '🔐 محافظي',
+                active_badge: 'نشط',
+                add_wallet_btn: 'إضافة محفظة جديدة',
+                exchanges_title: '🏦 البورصات',
+                no_exchange: 'لا توجد بورصة متصلة',
+                connect_exchange_btn: 'ربط البورصة',
+                banks_title: '🏛️ البنوك',
+                no_bank: 'لا يوجد بنك متصل',
+                connect_bank_btn: 'ربط البنك',
+                history_title: '📜 جميع المعاملات',
+                no_transaction: 'لا توجد معاملات',
+                language_title: '🌐 اللغة',
+                theme_label: 'الوضع الليلي',
+                theme_value: 'نشط',
+                color_label: 'اللون الأساسي',
+                color_value: 'أزرق-أخضر',
+                notif_label: 'الإشعارات',
+                notif_value: 'نشط',
+                security_label: 'الأمان',
+                security_value: 'بصمة الإصبع',
+                backup_label: 'النسخ الاحتياطي',
+                backup_value: 'يدوي',
+                about_label: 'حول',
+                logout_label: 'تسجيل الخروج',
+                nav_home: 'الرئيسية',
+                nav_wallet: 'المحفظة',
+                nav_manage: 'إدارة',
+                nav_history: 'التاريخ',
+                nav_settings: 'الإعدادات'
+            }
         };
+
         let currentLang = 'fa';
 
+        // ========== تابع تغییر زبان (پیشرفته) ==========
         function changeLang(lang) {
             currentLang = lang;
-            document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+            // تغییر وضعیت دکمه‌ها
+            document.querySelectorAll('.lang-btn').forEach(b => {
+                b.classList.toggle('active', b.dataset.lang === lang);
+            });
+            // تغییر تمام المان‌های دارای data-i18n
             const t = translations[lang];
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.dataset.i18n;
-                if (t[key]) el.textContent = t[key];
+                if (t[key]) {
+                    // اگر المان input یا placeholder داره
+                    if (el.tagName === 'INPUT' && el.placeholder) {
+                        el.placeholder = t[key];
+                    } else {
+                        el.textContent = t[key];
+                    }
+                }
             });
-            document.getElementById('appTitle').textContent = t.appTitle;
-            document.getElementById('appBadge').textContent = t.appBadge;
-            document.getElementById('totalLabel').textContent = t.total;
+            // تغییر عنوان هدر
+            document.querySelector('.header h1').textContent = t.appTitle;
+            document.querySelector('.header .badge').textContent = t.appBadge;
         }
 
         // ========== داده‌ها ==========
@@ -716,35 +619,95 @@
             { label: '➖ برداشت ۲۰ دلار', amount: 20, type: 'withdraw', date: '۱۴۰۲/۱۰/۱۱' }
         ];
 
-        // ========== دریافت نرخ ==========
+        // ========== دریافت نرخ ارز (با ۳ API پشتیبان) ==========
         async function fetchRates() {
+            const rateDisplay = document.getElementById('rateDisplay');
+            rateDisplay.innerHTML = '⏳ <span data-i18n="loading_rate">در حال دریافت نرخ...</span>';
+
             try {
                 const ids = currencies.filter(c => c.isCrypto).map(c => c.id).join(',');
-                if (!ids) return;
-                const url =
-                    `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd`;
-                const proxy = 'https://api.allorigins.win/raw?url=';
-                const response = await fetch(proxy + encodeURIComponent(url));
-                if (!response.ok) throw new Error('Network error');
-                const data = await response.json();
-                for (let id in data) {
-                    if (data[id] && data[id].usd) prices[id] = data[id].usd;
+                if (!ids) {
+                    rateDisplay.innerHTML = '⚠️ ارز دیجیتالی وجود ندارد';
+                    return;
                 }
-                updateRateDisplay();
-            } catch (e) {
-                document.getElementById('rateDisplay').innerHTML = '⚠️ برای دریافت نرخ، فیلترشکن را روشن کنید';
-            }
-        }
 
-        function updateRateDisplay() {
-            let html = '';
-            for (let c of currencies) {
-                if (c.isCrypto && prices[c.id]) {
-                    html += `${c.symbol} ${c.label}: <span>$${prices[c.id].toLocaleString()}</span> | `;
+                // API 1: CoinGecko
+                let data = null;
+                try {
+                    const url =
+                        `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd`;
+                    const proxy = 'https://api.allorigins.win/raw?url=';
+                    const res = await fetch(proxy + encodeURIComponent(url));
+                    if (res.ok) data = await res.json();
+                } catch (e) { console.warn('CoinGecko failed:', e); }
+
+                // API 2: Nobitex (برای تتر به ریال)
+                if (!data || !data.usdt) {
+                    try {
+                        const res = await fetch('https://api.nobitex.ir/v2/orderbook/USDTIRT');
+                        if (res.ok) {
+                            const nb = await res.json();
+                            if (nb.lastTradePrice) {
+                                const rialPrice = parseFloat(nb.lastTradePrice);
+                                // ذخیره نرخ تتر به دلار (تقسیم بر نرخ فرضی دلار)
+                                const usdRial = 58000; // نرخ فرضی دلار
+                                const usdtUsd = rialPrice / usdRial;
+                                if (!data) data = {};
+                                data.usdt = { usd: usdtUsd };
+                            }
+                        }
+                    } catch (e) { console.warn('Nobitex failed:', e); }
                 }
+
+                // API 3: Bitpin
+                if (!data || !data.usdt) {
+                    try {
+                        const res = await fetch('https://api.bitpin.ir/v1/mkt/markets/');
+                        if (res.ok) {
+                            const bp = await res.json();
+                            // پیدا کردن جفت USDT/IRT
+                            const pair = bp.results?.find(p => p.id === 'USDTIRT');
+                            if (pair && pair.last_price) {
+                                const rialPrice = parseFloat(pair.last_price);
+                                const usdRial = 58000;
+                                const usdtUsd = rialPrice / usdRial;
+                                if (!data) data = {};
+                                data.usdt = { usd: usdtUsd };
+                            }
+                        }
+                    } catch (e) { console.warn('Bitpin failed:', e); }
+                }
+
+                // بروزرسانی prices
+                if (data) {
+                    for (let id in data) {
+                        if (data[id] && data[id].usd) {
+                            prices[id] = data[id].usd;
+                        }
+                    }
+                }
+
+                // نمایش نرخ‌ها
+                let html = '';
+                for (let c of currencies) {
+                    if (c.isCrypto && prices[c.id]) {
+                        html += `${c.symbol} ${c.label}: <span>$${prices[c.id].toLocaleString()}</span> | `;
+                    }
+                }
+                if (prices.usdt) html += `💵 تتر: <span>$${prices.usdt}</span>`;
+                if (html) {
+                    rateDisplay.innerHTML = html + ` <button class="refresh-btn" onclick="fetchRates()"><i class="fas fa-sync-alt"></i></button>`;
+                } else {
+                    rateDisplay.innerHTML =
+                        '⚠️ <span data-i18n="vpn_notice">برای دریافت نرخ، فیلترشکن را روشن کنید</span> <button class="refresh-btn" onclick="fetchRates()"><i class="fas fa-sync-alt"></i></button>';
+                }
+
+                // بروزرسانی مجموع
+                updateTotal();
+            } catch (e) {
+                rateDisplay.innerHTML =
+                    '⚠️ <span data-i18n="vpn_notice">برای دریافت نرخ، فیلترشکن را روشن کنید</span> <button class="refresh-btn" onclick="fetchRates()"><i class="fas fa-sync-alt"></i></button>';
             }
-            if (prices.usdt) html += `💵 تتر: <span>$${prices.usdt}</span>`;
-            document.getElementById('rateDisplay').innerHTML = html || '📈 در حال دریافت نرخ...';
         }
 
         // ========== ذخیره/بازیابی ==========
@@ -852,7 +815,7 @@
             const container = document.getElementById('historyList');
             if (!container) return;
             if (transactions.length === 0) {
-                container.innerHTML = '<div class="empty-state">هیچ تراکنشی ثبت نشده</div>';
+                container.innerHTML = `<div class="empty-state" data-i18n="no_transaction">هیچ تراکنشی ثبت نشده</div>`;
                 return;
             }
             let html = '';
