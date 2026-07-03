@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>کیف پول من</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <!-- ===== کتابخانه آیکون‌های بانک‌ها ===== -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/iranianbanklogos/dist/ibl.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -168,7 +166,7 @@
         .manage-item .label { font-size: 14px; font-weight: 600; color: #fff; }
         .manage-item .desc { font-size: 11px; color: #8899aa; margin-top: 4px; }
         
-        /* ===== کارت‌های بانکی (نسخه نهایی با آیکون‌های واقعی) ===== */
+        /* ===== کارت‌های بانکی (با آیکون‌های ایموجی) ===== */
         .bank-card {
             border-radius: 20px;
             padding: 20px;
@@ -187,15 +185,13 @@
         .bank-card .bank-icon {
             width: 48px;
             height: 48px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 28px;
             flex-shrink: 0;
-            font-size: 32px;
-        }
-        .bank-card .bank-icon i {
-            font-size: 40px;
-            line-height: 1;
         }
         .bank-card .bank-name { font-weight: 700; font-size: 18px; color: #fff; }
         .bank-card .card-number { font-size: 13px; color: rgba(255,255,255,0.6); direction: ltr; letter-spacing: 2px; }
@@ -406,7 +402,6 @@
             .nav-item { min-width: 44px; padding: 2px 6px; }
             .nav-item i { font-size: 16px; }
             .bank-card .bank-menu { left: 0; right: 0; min-width: unset; }
-            .bank-card .bank-icon i { font-size: 32px; }
         }
     </style>
 </head>
@@ -505,7 +500,7 @@
         </div>
     </div>
 
-    <!-- ===== صفحه بانک‌ها (با آیکون‌های واقعی) ===== -->
+    <!-- ===== صفحه بانک‌ها (با آیکون‌های ایموجی) ===== -->
     <div id="page-banks" class="page">
         <div class="card">
             <button class="back-btn" onclick="switchPage('manage')"><i class="fas fa-arrow-right"></i> <span id="backToManage">بازگشت به مدیریت</span></button>
@@ -881,23 +876,23 @@
         }
 
         // ============================================================
-        //  مدیریت بانک‌ها (با آیکون‌های واقعی)
+        //  مدیریت بانک‌ها (با آیکون‌های ایموجی)
         // ============================================================
         let banks = [];
         let bankIdCounter = 0;
 
-        // ===== آیکون‌های واقعی بانک‌ها (با کتابخانه iranianbanklogos) =====
+        // ===== آیکون‌های بانک‌ها (ایموجی - همیشه کار میکنه) =====
         const bankIcons = {
-            'بانک تجارت': '<i class="ibl- بانک تجارت size-32"></i>',
-            'بانک ملی': '<i class="ibl- بانک ملی size-32"></i>',
-            'بانک صادرات': '<i class="ibl- بانک صادرات size-32"></i>',
-            'بانک ملت': '<i class="ibl- بانک ملت size-32"></i>',
-            'بانک کشاورزی': '<i class="ibl- بانک کشاورزی size-32"></i>',
-            'بانک مسکن': '<i class="ibl- بانک مسکن size-32"></i>',
-            'بانک سپه': '<i class="ibl- بانک سپه size-32"></i>',
-            'بانک پاسارگاد': '<i class="ibl- بانک پاسارگاد size-32"></i>',
-            'بانک سامان': '<i class="ibl- بانک سامان size-32"></i>',
-            'بانک پارسیان': '<i class="ibl- بانک پارسیان size-32"></i>'
+            'بانک تجارت': '🏦',
+            'بانک ملی': '🏛️',
+            'بانک صادرات': '🏧',
+            'بانک ملت': '🏢',
+            'بانک کشاورزی': '🌾',
+            'بانک مسکن': '🏠',
+            'بانک سپه': '⚔️',
+            'بانک پاسارگاد': '🏛️',
+            'بانک سامان': '💠',
+            'بانک پارسیان': '🪷'
         };
 
         // ===== رنگ‌های کارت بر اساس نام بانک =====
@@ -955,7 +950,7 @@
             let html = '';
             for (let bank of banks) {
                 const colorClass = bankColors[bank.name] || 'color-blue';
-                const iconHtml = bankIcons[bank.name] || '🏦';
+                const icon = bankIcons[bank.name] || '🏦';
                 const statusText = bank.active ? t.activeStatus : t.inactiveStatus;
                 const statusClass = bank.active ? 'active' : 'inactive';
 
@@ -963,7 +958,7 @@
                     <div class="bank-card ${colorClass}" id="bank-card-${bank.id}">
                         <div class="card-header">
                             <div style="display: flex; align-items: center; gap: 12px;">
-                                <div class="bank-icon">${iconHtml}</div>
+                                <div class="bank-icon">${icon}</div>
                                 <div>
                                     <div class="bank-name">${bank.name}</div>
                                     <div class="card-number">${bank.cardNumber}</div>
