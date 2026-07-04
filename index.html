@@ -179,9 +179,7 @@
             width: 48px; height: 48px;
             background: rgba(255,255,255,0.08);
             border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             font-size: 28px;
             flex-shrink: 0;
         }
@@ -392,6 +390,31 @@
         .sms-summary .stat.withdraw .num { color: #ef4444; }
         .sms-summary .stat.balance .num { color: #0088cc; }
         
+        .sms-filter {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+        .sms-filter button {
+            padding: 4px 16px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.06);
+            background: transparent;
+            color: #8899aa;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            font-family: inherit;
+            transition: .2s;
+        }
+        .sms-filter button.active {
+            background: rgba(0,136,204,0.15);
+            color: #4ade80;
+            border-color: rgba(0,136,204,0.2);
+        }
+        .sms-filter button:hover { background: rgba(255,255,255,0.03); }
+        
         .bottom-nav {
             position: fixed; bottom: 12px; left: 12px; right: 12px;
             background: rgba(15,21,30,0.85); backdrop-filter: blur(24px);
@@ -536,16 +559,22 @@
         </div>
     </div>
 
-    <!-- ===== صفحه پیامک‌ها ===== -->
+    <!-- ===== صفحه پیامک‌ها (با فیلتر) ===== -->
     <div id="page-sms" class="page">
         <div class="card">
             <h3 id="smsTitle">📩 پیامک‌های دریافتی</h3>
+            <div class="sms-filter" id="smsFilter">
+                <button class="active" data-filter="all" onclick="filterSms('all')">همه</button>
+                <button data-filter="deposit" onclick="filterSms('deposit')">واریز</button>
+                <button data-filter="withdraw" onclick="filterSms('withdraw')">برداشت</button>
+                <button data-filter="other" onclick="filterSms('other')">سایر</button>
+            </div>
             <div class="sms-summary" id="smsSummary">
                 <div class="stat deposit"><div class="num" id="smsTotalDeposit">۰</div><div class="label">مجموع واریز</div></div>
                 <div class="stat withdraw"><div class="num" id="smsTotalWithdraw">۰</div><div class="label">مجموع برداشت</div></div>
                 <div class="stat balance"><div class="num" id="smsBalance">۰</div><div class="label">تراز</div></div>
             </div>
-            <div id="smsList" style="margin-top:12px;"><div class="empty-state" id="noSms">هیچ پیامکی دریافت نشده</div></div>
+            <div id="smsList" style="margin-top:12px;"><div class="empty-state" id="noSms">در حال دریافت پیامک‌ها...</div></div>
         </div>
     </div>
 
@@ -563,7 +592,7 @@
             <div class="settings-item" onclick="alert('🔔 تنظیمات اعلان (به زودی...)')"><div class="left"><span class="icon"><i class="fas fa-bell"></i></span><span class="label" id="notifLabel">اعلان‌ها</span></div><span class="value" id="notifValue">فعال</span></div>
             <div class="settings-item" onclick="alert('🔐 تنظیمات امنیت (به زودی...)')"><div class="left"><span class="icon"><i class="fas fa-shield-alt"></i></span><span class="label" id="securityLabel">امنیت</span></div><span class="value" id="securityValue">اثر انگشت</span></div>
             <div class="settings-item" onclick="alert('💾 پشتیبان‌گیری (به زودی...)')"><div class="left"><span class="icon"><i class="fas fa-cloud-upload-alt"></i></span><span class="label" id="backupLabel">پشتیبان‌گیری</span></div><span class="value" id="backupValue">دستی</span></div>
-            <div class="settings-item" onclick="alert('ℹ️ نسخه v9.6.0')"><div class="left"><span class="icon"><i class="fas fa-info-circle"></i></span><span class="label" id="aboutLabel">درباره</span></div><span class="value">v9.6.0</span></div>
+            <div class="settings-item" onclick="alert('ℹ️ نسخه v10.0.0')"><div class="left"><span class="icon"><i class="fas fa-info-circle"></i></span><span class="label" id="aboutLabel">درباره</span></div><span class="value">v10.0.0</span></div>
         </div>
         <div class="card" style="border:1px solid rgba(239,68,68,0.1);">
             <div class="settings-item danger" onclick="alert('🚪 خروج از حساب (به زودی...)')"><div class="left"><span class="icon"><i class="fas fa-sign-out-alt"></i></span><span class="label" id="logoutLabel">خروج از حساب</span></div><span class="arrow"><i class="fas fa-chevron-left"></i></span></div>
@@ -599,7 +628,8 @@
                 backupLabel:'پشتیبان‌گیری',backupValue:'دستی',aboutLabel:'درباره',logoutLabel:'خروج از حساب',
                 navHome:'خانه',navWallet:'کیف پول',navManage:'مدیریت',navHistory:'تاریخچه',navSettings:'تنظیمات',
                 editBank:'ویرایش بانک',deactivateBank:'غیرفعال کردن',activateBank:'فعال کردن',deleteBank:'حذف بانک',
-                activeStatus:'فعال',inactiveStatus:'غیرفعال',emptyBanks:'هیچ بانکی ثبت نشده است'
+                activeStatus:'فعال',inactiveStatus:'غیرفعال',emptyBanks:'هیچ بانکی ثبت نشده است',
+                filterAll:'همه',filterDeposit:'واریز',filterWithdraw:'برداشت',filterOther:'سایر'
             },
             en: {
                 appTitle:'💰 Wallet',appBadge:'Pro',pricesTitle:'📊 Live Crypto Prices',loadingRate:'Fetching prices...',totalLabel:'Total Assets',
@@ -616,7 +646,8 @@
                 backupLabel:'Backup',backupValue:'Manual',aboutLabel:'About',logoutLabel:'Logout',
                 navHome:'Home',navWallet:'Wallet',navManage:'Manage',navHistory:'History',navSettings:'Settings',
                 editBank:'Edit Bank',deactivateBank:'Deactivate',activateBank:'Activate',deleteBank:'Delete Bank',
-                activeStatus:'Active',inactiveStatus:'Inactive',emptyBanks:'No banks registered'
+                activeStatus:'Active',inactiveStatus:'Inactive',emptyBanks:'No banks registered',
+                filterAll:'All',filterDeposit:'Deposit',filterWithdraw:'Withdraw',filterOther:'Other'
             },
             ar: {
                 appTitle:'💰 المحفظة',appBadge:'احترافي',pricesTitle:'📊 أسعار العملات لحظياً',loadingRate:'جاري تحميل الأسعار...',totalLabel:'إجمالي الأصول',
@@ -633,7 +664,8 @@
                 backupLabel:'النسخ الاحتياطي',backupValue:'يدوي',aboutLabel:'حول',logoutLabel:'تسجيل الخروج',
                 navHome:'الرئيسية',navWallet:'المحفظة',navManage:'إدارة',navHistory:'التاريخ',navSettings:'الإعدادات',
                 editBank:'تعديل البنك',deactivateBank:'إلغاء التنشيط',activateBank:'تنشيط',deleteBank:'حذف البنك',
-                activeStatus:'نشط',inactiveStatus:'غير نشط',emptyBanks:'لا توجد بنوك مسجلة'
+                activeStatus:'نشط',inactiveStatus:'غير نشط',emptyBanks:'لا توجد بنوك مسجلة',
+                filterAll:'الكل',filterDeposit:'إيداع',filterWithdraw:'سحب',filterOther:'أخرى'
             }
         };
 
@@ -656,6 +688,11 @@
                 elements.forEach(id => {
                     const el = document.getElementById(id);
                     if (el && t[id]) el.textContent = t[id];
+                });
+                // به‌روزرسانی دکمه‌های فیلتر
+                document.querySelectorAll('.sms-filter button').forEach(btn => {
+                    const key = 'filter' + btn.dataset.filter.charAt(0).toUpperCase() + btn.dataset.filter.slice(1);
+                    if (t[key]) btn.textContent = t[key];
                 });
                 renderBanks();
                 renderSms();
@@ -745,96 +782,96 @@
         }
 
         // ============================================================
-        //  مدیریت پیامک‌ها با تحلیل هوشمند
+        //  مدیریت پیامک‌ها (دریافت از بات تلگرام)
         // ============================================================
         let smsMessages = [];
+        let smsFilter = 'all';
 
-        // ===== تابع پارس کردن پیامک =====
-        function parseSms(text) {
-            let amount = 0;
-            let balance = 0;
-            let type = 'unknown';
-            
-            // استخراج مبلغ (اعداد با کاما یا بدون کاما)
-            const amountMatch = text.match(/([\d,]+)\s*ریال/);
-            if (amountMatch) {
-                amount = parseInt(amountMatch[1].replace(/,/g, ''));
-            }
-            
-            // استخراج موجودی
-            const balanceMatch = text.match(/([\d,]+)\s*ریال\s*(?:موجودی|مانده)/);
-            if (balanceMatch) {
-                balance = parseInt(balanceMatch[1].replace(/,/g, ''));
-            }
-            
-            // تشخیص نوع تراکنش بر اساس کلمات کلیدی
-            if (text.includes('واریز') || text.includes('شارژ')) {
-                type = 'deposit';
-            } else if (text.includes('برداشت') || text.includes('خرید') || text.includes('انتقال')) {
-                type = 'withdraw';
-            } else if (text.includes('کارمزد')) {
-                type = 'withdraw';
-            }
-            
-            return { amount, balance, type };
-        }
+        const BOT_TOKEN = '8878786553:AAF10-04W31gRfyja3GXezziQqikmF6DT-o';
+        const CHAT_ID = '7651961502';
 
-        // ===== تابع افزودن پیامک جدید با تحلیل =====
-        function addSms(sender, body, date) {
-            const parsed = parseSms(body);
-            const newSms = {
-                id: Date.now(),
-                sender: sender || 'TejaratBank',
-                body: body,
-                date: date || new Date().toLocaleString('fa-IR'),
-                type: parsed.type,
-                amount: parsed.amount,
-                balance: parsed.balance
-            };
-            
-            smsMessages.unshift(newSms);
-            saveSms();
-            
-            // بروزرسانی موجودی کارت بانک تجارت
-            if (parsed.balance > 0 && sender && sender.includes('Tejarat')) {
-                updateBankBalance('بانک تجارت', parsed.balance);
-            }
-            
-            renderSms();
-            return newSms;
-        }
+        // ===== دریافت پیام‌ها از بات تلگرام =====
+        async function fetchSmsFromBot() {
+            const container = document.getElementById('smsList');
+            if (!container) return;
+            const t = translations[currentLang] || translations.fa;
+            container.innerHTML = `<div class="empty-state">${t.loadingRate || 'در حال دریافت...'}</div>`;
 
-        // ===== تابع بروزرسانی موجودی بانک =====
-        function updateBankBalance(bankName, newBalance) {
-            const bank = banks.find(b => b.name === bankName);
-            if (bank) {
-                bank.balance = newBalance;
-                saveBanks();
-                renderBanks();
+            try {
+                const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/getUpdates`);
+                const data = await response.json();
+                
+                if (data.ok && data.result) {
+                    // استخراج پیام‌های جدید
+                    const newMessages = data.result
+                        .filter(update => update.message && update.message.text)
+                        .map(update => {
+                            const text = update.message.text;
+                            const date = new Date(update.message.date * 1000).toLocaleString('fa-IR');
+                            const sender = text.includes('فرستنده:') ? text.split('فرستنده:')[1]?.split('\n')[0]?.trim() || 'بانک تجارت' : 'بانک تجارت';
+                            const body = text.includes('متن:') ? text.split('متن:')[1]?.split('\n')[0]?.trim() || text : text;
+                            // تحلیل متن برای تشخیص نوع
+                            let type = 'other';
+                            let amount = 0;
+                            if (body.includes('واریز') || body.includes('شارژ')) {
+                                type = 'deposit';
+                                const match = body.match(/(\d{1,3}(?:,\d{3})*)/);
+                                if (match) amount = parseInt(match[1].replace(/,/g, ''));
+                            } else if (body.includes('برداشت') || body.includes('خرید') || body.includes('انتقال')) {
+                                type = 'withdraw';
+                                const match = body.match(/(\d{1,3}(?:,\d{3})*)/);
+                                if (match) amount = parseInt(match[1].replace(/,/g, ''));
+                            }
+                            return { id: update.update_id, sender, body, date, type, amount, balance: 0 };
+                        })
+                        .filter(msg => msg.sender.includes('98500012253') || msg.body.includes('بانک تجارت'));
+
+                    // ذخیره در localStorage
+                    const saved = localStorage.getItem('sms_data');
+                    let existing = saved ? JSON.parse(saved) : [];
+                    const allMessages = [...newMessages, ...existing];
+                    // حذف تکراری‌ها بر اساس id
+                    const unique = allMessages.filter((msg, index, self) => 
+                        index === self.findIndex(m => m.id === msg.id)
+                    );
+                    smsMessages = unique.slice(0, 100);
+                    localStorage.setItem('sms_data', JSON.stringify(smsMessages));
+                    renderSms();
+                } else {
+                    container.innerHTML = `<div class="empty-state">${t.noSms}</div>`;
+                }
+            } catch (error) {
+                console.warn('خطا در دریافت از بات:', error);
+                container.innerHTML = `<div class="empty-state">⚠️ خطا در دریافت پیامک‌ها</div>`;
             }
         }
 
         function loadSms() {
             try {
                 const saved = localStorage.getItem('sms_data');
-                if (saved) { smsMessages = JSON.parse(saved); } 
-                else {
-                    // داده‌های نمونه با تحلیل
-                    const sample1 = addSms('TejaratBank', 'مبلغ ۱,۲۵۰,۰۰۰ ریال واریز شد. موجودی: ۱۲,۵۰۰,۰۰۰ ریال', '۱۴۰۲/۱۰/۱۲ ۱۵:۳۰');
-                    const sample2 = addSms('TejaratBank', 'مبلغ ۵۰۰,۰۰۰ ریال برداشت شد. موجودی: ۱۲,۰۰۰,۰۰۰ ریال', '۱۴۰۲/۱۰/۱۲ ۱۶:۴۵');
-                    // اون‌ها رو از آرایه حذف می‌کنیم تا دوبار نمایش داده نشن
+                if (saved) {
+                    smsMessages = JSON.parse(saved);
+                } else {
                     smsMessages = [];
-                    saveSms();
                 }
-            } catch(e){ smsMessages = []; }
+                renderSms();
+                // دریافت از بات
+                fetchSmsFromBot();
+            } catch(e) { smsMessages = []; }
         }
-        function saveSms() { try { localStorage.setItem('sms_data', JSON.stringify(smsMessages)); } catch(e){} }
 
         function renderSms() {
             const container = document.getElementById('smsList');
             if (!container) return;
             const t = translations[currentLang] || translations.fa;
 
+            // فیلتر کردن
+            let filtered = smsMessages;
+            if (smsFilter === 'deposit') filtered = filtered.filter(msg => msg.type === 'deposit');
+            else if (smsFilter === 'withdraw') filtered = filtered.filter(msg => msg.type === 'withdraw');
+            else if (smsFilter === 'other') filtered = filtered.filter(msg => msg.type === 'other');
+
+            // محاسبه خلاصه
             let totalDeposit = 0, totalWithdraw = 0;
             for (let sms of smsMessages) {
                 if (sms.type === 'deposit') totalDeposit += sms.amount || 0;
@@ -850,14 +887,31 @@
             const dotEl = document.getElementById('smsDot');
             if (dotEl) dotEl.style.display = smsMessages.length > 0 ? 'block' : 'none';
 
-            if (smsMessages.length === 0) { container.innerHTML = `<div class="empty-state" id="noSms">${t.noSms}</div>`; return; }
+            if (filtered.length === 0) {
+                const msg = smsMessages.length === 0 ? t.noSms : 'هیچ پیامکی با این فیلتر وجود ندارد';
+                container.innerHTML = `<div class="empty-state">${msg}</div>`;
+                return;
+            }
+
             let html = '';
-            for (let sms of smsMessages) {
-                const amountClass = sms.type === 'deposit' ? 'deposit' : 'withdraw';
-                const amountSign = sms.type === 'deposit' ? '+' : '-';
-                html += `<div class="sms-item"><div class="header"><span class="sender">${sms.sender}</span><span class="date">${sms.date}</span></div><div class="body">${sms.body}</div><div class="amount ${amountClass}">${amountSign} ${sms.amount ? sms.amount.toLocaleString() : '۰'} ریال</div></div>`;
+            for (let sms of filtered) {
+                const amountClass = sms.type === 'deposit' ? 'deposit' : (sms.type === 'withdraw' ? 'withdraw' : '');
+                const amountSign = sms.type === 'deposit' ? '+' : (sms.type === 'withdraw' ? '-' : '');
+                html += `<div class="sms-item"><div class="header"><span class="sender">${sms.sender}</span><span class="date">${sms.date}</span></div><div class="body">${sms.body}</div>`;
+                if (sms.amount) {
+                    html += `<div class="amount ${amountClass}">${amountSign} ${sms.amount.toLocaleString()} ریال</div>`;
+                }
+                html += `</div>`;
             }
             container.innerHTML = html;
+        }
+
+        function filterSms(filter) {
+            smsFilter = filter;
+            document.querySelectorAll('.sms-filter button').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.filter === filter);
+            });
+            renderSms();
         }
 
         // ============================================================
@@ -1053,9 +1107,10 @@
             loadSms();
             renderAll();
             renderBanks();
-            renderSms();
             fetchPrices();
             setInterval(fetchPrices, 30000);
+            // بروزرسانی پیامک‌ها هر ۶۰ ثانیه
+            setInterval(fetchSmsFromBot, 60000);
         } catch(e){ console.warn('خطا در شروع برنامه:', e); }
     </script>
 </body>
