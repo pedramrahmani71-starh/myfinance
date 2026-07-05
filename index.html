@@ -420,6 +420,19 @@
             border-color: rgba(0,136,204,0.2) !important;
         }
         
+        .debug-btn {
+            padding: 4px 12px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.06);
+            background: transparent;
+            color: #8899aa;
+            cursor: pointer;
+            font-size: 12px;
+            font-family: inherit;
+            transition: .2s;
+        }
+        .debug-btn:hover { background: rgba(255,255,255,0.03); }
+        
         .bottom-nav {
             position: fixed; bottom: 12px; left: 12px; right: 12px;
             background: rgba(15,21,30,0.85); backdrop-filter: blur(24px);
@@ -564,7 +577,7 @@
         </div>
     </div>
 
-    <!-- ===== صفحه پیامک‌ها (با دکمه‌ی بروزرسانی) ===== -->
+    <!-- ===== صفحه پیامک‌ها (با دیباگ) ===== -->
     <div id="page-sms" class="page">
         <div class="card">
             <h3 id="smsTitle">📩 پیامک‌های دریافتی</h3>
@@ -574,6 +587,7 @@
                 <button data-filter="withdraw" onclick="filterSms('withdraw')">برداشت</button>
                 <button data-filter="other" onclick="filterSms('other')">سایر</button>
                 <button class="refresh-btn" onclick="fetchSmsFromBot()"><i class="fas fa-sync-alt"></i> بروزرسانی</button>
+                <button class="debug-btn" onclick="debugSms()">🐞 دیباگ</button>
             </div>
             <div class="sms-summary" id="smsSummary">
                 <div class="stat deposit"><div class="num" id="smsTotalDeposit">۰</div><div class="label">مجموع واریز</div></div>
@@ -589,16 +603,15 @@
         <div class="card"><h3 id="historyTitle">📜 تمام تراکنش‌ها</h3><div class="history-list" id="historyList"><div class="empty-state" id="noTransaction">هیچ تراکنشی ثبت نشده</div></div></div>
     </div>
 
-    <!-- ===== صفحه تنظیمات (با فرم بات) ===== -->
+    <!-- ===== صفحه تنظیمات ===== -->
     <div id="page-settings" class="page">
         <div class="card"><h3 id="languageTitle">🌐 زبان</h3><div class="lang-selector"><button class="lang-btn active" data-lang="fa" onclick="changeLang('fa')">فارسی</button><button class="lang-btn" data-lang="en" onclick="changeLang('en')">English</button><button class="lang-btn" data-lang="ar" onclick="changeLang('ar')">العربية</button></div></div>
         <div class="card">
-            <h3>🤖 تنظیمات بات تلگرام</h3>
+            <h3>🤖 تنظیمات بات</h3>
             <div class="bot-settings" style="display:flex;flex-direction:column;gap:10px;margin-top:8px;">
                 <input type="text" id="botTokenInput" placeholder="توکن بات (Bot Token)" dir="ltr" style="padding:10px 14px;border:none;border-radius:16px;background:rgba(30,38,48,0.6);color:#fff;font-size:14px;outline:none;font-family:inherit;direction:ltr;">
                 <input type="text" id="chatIdInput" placeholder="شناسه چت (Chat ID)" dir="ltr" style="padding:10px 14px;border:none;border-radius:16px;background:rgba(30,38,48,0.6);color:#fff;font-size:14px;outline:none;font-family:inherit;direction:ltr;">
-                <button onclick="saveBotSettings()" style="padding:12px;border:none;border-radius:16px;background:linear-gradient(135deg,#0088cc,#4ade80);color:#fff;font-weight:600;cursor:pointer;font-family:inherit;transition:.2s;">ذخیره تنظیمات</button>
-                <button onclick="testBotConnection()" style="padding:12px;border:none;border-radius:16px;background:linear-gradient(135deg,#4ade80,#0088cc);color:#fff;font-weight:600;cursor:pointer;font-family:inherit;transition:.2s;">تست اتصال</button>
+                <button onclick="saveBotSettings()" style="padding:12px;border:none;border-radius:16px;background:linear-gradient(135deg,#0088cc,#4ade80);color:#fff;font-weight:600;cursor:pointer;font-family:inherit;">ذخیره</button>
                 <span id="botStatus" style="font-size:12px;color:#8899aa;text-align:center;"></span>
             </div>
         </div>
@@ -797,7 +810,7 @@
         }
 
         // ============================================================
-        //  مدیریت پیامک‌ها (با پروکسی و دکمه‌ی بروزرسانی)
+        //  مدیریت پیامک‌ها (نسخه نهایی با دیباگ)
         // ============================================================
         let smsMessages = [];
         let smsFilter = 'all';
@@ -830,29 +843,15 @@
             if (settings.chatId) document.getElementById('chatIdInput').value = settings.chatId;
         }
 
-        async function testBotConnection() {
-            const settings = getBotSettings();
-            if (!settings.token || !settings.chatId) {
-                document.getElementById('botStatus').textContent = '❌ ابتدا تنظیمات را ذخیره کنید';
-                document.getElementById('botStatus').style.color = '#ef4444';
-                return;
-            }
-            document.getElementById('botStatus').textContent = '⏳ در حال تست...';
-            document.getElementById('botStatus').style.color = '#8899aa';
-            try {
-                const response = await fetch(`https://api.telegram.org/bot${settings.token}/getMe`);
-                const data = await response.json();
-                if (data.ok) {
-                    document.getElementById('botStatus').textContent = '✅ اتصال برقرار است!';
-                    document.getElementById('botStatus').style.color = '#4ade80';
-                } else {
-                    document.getElementById('botStatus').textContent = '❌ توکن نامعتبر است';
-                    document.getElementById('botStatus').style.color = '#ef4444';
-                }
-            } catch (e) {
-                document.getElementById('botStatus').textContent = '❌ خطا در اتصال';
-                document.getElementById('botStatus').style.color = '#ef4444';
-            }
+        function debugSms() {
+            const saved = localStorage.getItem('sms_data');
+            const count = smsMessages.length;
+            alert(`📊 وضعیت پیامک‌ها:
+        تعداد پیامک‌ها: ${count}
+        ذخیره‌شده در localStorage: ${saved ? 'بله' : 'خیر'}
+        فیلتر فعلی: ${smsFilter}
+        توکن: ${getBotSettings().token ? '✅ تنظیم شده' : '❌ تنظیم نشده'}
+        Chat ID: ${getBotSettings().chatId ? '✅ تنظیم شده' : '❌ تنظیم نشده'}`);
         }
 
         async function fetchSmsFromBot() {
@@ -867,53 +866,67 @@
                 return;
             }
 
-            try {
-                // ==== استفاده از پروکسی برای دور زدن CORS ====
-                const proxyUrl = 'https://api.allorigins.win/raw?url=';
-                const targetUrl = `https://api.telegram.org/bot${settings.token}/getUpdates`;
-                const response = await fetch(proxyUrl + encodeURIComponent(targetUrl));
-                const data = await response.json();
-                
-                if (data.ok && data.result) {
-                    const newMessages = data.result
-                        .filter(update => update.message && update.message.text)
-                        .map(update => {
-                            const text = update.message.text;
-                            const date = new Date(update.message.date * 1000).toLocaleString('fa-IR');
-                            const sender = text.includes('فرستنده:') ? text.split('فرستنده:')[1]?.split('\n')[0]?.trim() || 'بانک تجارت' : 'بانک تجارت';
-                            const body = text.includes('متن:') ? text.split('متن:')[1]?.split('\n')[0]?.trim() || text : text;
-                            let type = 'other';
-                            let amount = 0;
-                            if (body.includes('واریز') || body.includes('شارژ')) {
-                                type = 'deposit';
-                                const match = body.match(/(\d{1,3}(?:,\d{3})*)/);
-                                if (match) amount = parseInt(match[1].replace(/,/g, ''));
-                            } else if (body.includes('برداشت') || body.includes('خرید') || body.includes('انتقال')) {
-                                type = 'withdraw';
-                                const match = body.match(/(\d{1,3}(?:,\d{3})*)/);
-                                if (match) amount = parseInt(match[1].replace(/,/g, ''));
-                            }
-                            return { id: update.update_id, sender, body, date, type, amount, balance: 0 };
-                        })
-                        .filter(msg => msg.sender.includes('98500012253') || msg.body.includes('بانک تجارت'));
+            // ==== لیست پروکسی‌ها ====
+            const proxies = [
+                `https://api.telegram.org/bot${settings.token}/getUpdates`,
+                `https://corsproxy.io/?${encodeURIComponent(`https://api.telegram.org/bot${settings.token}/getUpdates`)}`,
+                `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://api.telegram.org/bot${settings.token}/getUpdates`)}`
+            ];
 
-                    const saved = localStorage.getItem('sms_data');
-                    let existing = saved ? JSON.parse(saved) : [];
-                    const allMessages = [...newMessages, ...existing];
-                    const unique = allMessages.filter((msg, index, self) => 
-                        index === self.findIndex(m => m.id === msg.id)
-                    );
-                    smsMessages = unique.slice(0, 100);
-                    localStorage.setItem('sms_data', JSON.stringify(smsMessages));
-                    renderSms();
-                    document.getElementById('botStatus').textContent = '✅ پیامک‌ها بروزرسانی شدند';
-                    document.getElementById('botStatus').style.color = '#4ade80';
-                } else {
-                    container.innerHTML = `<div class="empty-state">${t.noSms}</div>`;
+            let data = null;
+            let lastError = null;
+
+            for (let url of proxies) {
+                try {
+                    const response = await fetch(url);
+                    if (response.ok) {
+                        data = await response.json();
+                        if (data && data.ok) break;
+                    }
+                } catch (e) {
+                    lastError = e;
+                    console.warn('پروکسی ناموفق:', url);
                 }
-            } catch (error) {
-                console.warn('خطا در دریافت از بات:', error);
-                container.innerHTML = `<div class="empty-state">⚠️ خطا در دریافت پیامک‌ها. دکمه‌ی بروزرسانی را بزنید.</div>`;
+            }
+
+            if (data && data.ok && data.result) {
+                const newMessages = data.result
+                    .filter(update => update.message && update.message.text)
+                    .map(update => {
+                        const text = update.message.text;
+                        const date = new Date(update.message.date * 1000).toLocaleString('fa-IR');
+                        const sender = text.includes('فرستنده:') ? text.split('فرستنده:')[1]?.split('\n')[0]?.trim() || 'بانک تجارت' : 'بانک تجارت';
+                        const body = text.includes('متن:') ? text.split('متن:')[1]?.split('\n')[0]?.trim() || text : text;
+                        let type = 'other';
+                        let amount = 0;
+                        if (body.includes('واریز') || body.includes('شارژ')) {
+                            type = 'deposit';
+                            const match = body.match(/(\d{1,3}(?:,\d{3})*)/);
+                            if (match) amount = parseInt(match[1].replace(/,/g, ''));
+                        } else if (body.includes('برداشت') || body.includes('خرید') || body.includes('انتقال')) {
+                            type = 'withdraw';
+                            const match = body.match(/(\d{1,3}(?:,\d{3})*)/);
+                            if (match) amount = parseInt(match[1].replace(/,/g, ''));
+                        }
+                        return { id: update.update_id, sender, body, date, type, amount, balance: 0 };
+                    })
+                    .filter(msg => msg.sender.includes('98500012253') || msg.body.includes('بانک تجارت'));
+
+                const saved = localStorage.getItem('sms_data');
+                let existing = saved ? JSON.parse(saved) : [];
+                const allMessages = [...newMessages, ...existing];
+                const unique = allMessages.filter((msg, index, self) => 
+                    index === self.findIndex(m => m.id === msg.id)
+                );
+                smsMessages = unique.slice(0, 100);
+                localStorage.setItem('sms_data', JSON.stringify(smsMessages));
+                renderSms();
+                document.getElementById('botStatus').textContent = `✅ ${newMessages.length} پیام جدید دریافت شد`;
+                document.getElementById('botStatus').style.color = '#4ade80';
+            } else {
+                container.innerHTML = `<div class="empty-state">${t.noSms}</div>`;
+                document.getElementById('botStatus').textContent = '❌ خطا در دریافت: هیچ پیامی یافت نشد';
+                document.getElementById('botStatus').style.color = '#ef4444';
             }
         }
 
@@ -926,7 +939,6 @@
                     smsMessages = [];
                 }
                 renderSms();
-                // با تأخیر ۱ ثانیه‌ای دریافت کن تا صفحه کامل لود بشه
                 setTimeout(fetchSmsFromBot, 1000);
             } catch(e) { smsMessages = []; }
         }
