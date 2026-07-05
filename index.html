@@ -340,7 +340,9 @@
         }
         .sms-item:last-child { border-bottom: none; }
         .sms-item .header {
-            display: flex; justify-content: space-between; align-items: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         .sms-item .sender {
             font-weight: 600;
@@ -792,12 +794,11 @@
         }
 
         // ============================================================
-        //  مدیریت پیامک‌ها (با توکن جدید)
+        //  مدیریت پیامک‌ها (فیلتر دقیق روی فرمت From:98500012253)
         // ============================================================
         let smsMessages = [];
         let smsFilter = 'all';
 
-        // === توکن و Chat ID جدید ===
         const BOT_TOKEN = '8878786553:AAF10-O4W3lgRfyja3GXezziQqikmF6DT-o';
         const CHAT_ID = '7651961502';
 
@@ -825,7 +826,11 @@
                             if (match) amount = parseInt(match[1].replace(/,/g, ''));
                             return { id: update.update_id, sender, body, date, type, amount, balance: 0 };
                         })
-                        .filter(msg => msg.sender.includes('98500012253') || msg.body.includes('بانک تجارت'));
+                        // === فیلتر دقیق: فقط پیامک‌هایی که با "From:98500012253" شروع می‌شوند یا شامل آن هستند ===
+                        .filter(msg => {
+                            const text = msg.body || msg.sender || '';
+                            return text.includes('From:98500012253') || text.includes('فرستنده: 98500012253');
+                        });
 
                     const saved = localStorage.getItem('sms_data');
                     let existing = saved ? JSON.parse(saved) : [];
