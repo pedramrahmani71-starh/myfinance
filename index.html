@@ -810,7 +810,7 @@
         }
 
         // ============================================================
-        //  مدیریت پیامک‌ها (نسخه نهایی با دیباگ)
+        //  مدیریت پیامک‌ها (نسخه نهایی با ۳ پروکسی و دیباگ)
         // ============================================================
         let smsMessages = [];
         let smsFilter = 'all';
@@ -846,12 +846,13 @@
         function debugSms() {
             const saved = localStorage.getItem('sms_data');
             const count = smsMessages.length;
+            const settings = getBotSettings();
             alert(`📊 وضعیت پیامک‌ها:
         تعداد پیامک‌ها: ${count}
         ذخیره‌شده در localStorage: ${saved ? 'بله' : 'خیر'}
         فیلتر فعلی: ${smsFilter}
-        توکن: ${getBotSettings().token ? '✅ تنظیم شده' : '❌ تنظیم نشده'}
-        Chat ID: ${getBotSettings().chatId ? '✅ تنظیم شده' : '❌ تنظیم نشده'}`);
+        توکن: ${settings.token ? '✅ تنظیم شده' : '❌ تنظیم نشده'}
+        Chat ID: ${settings.chatId ? '✅ تنظیم شده' : '❌ تنظیم نشده'}`);
         }
 
         async function fetchSmsFromBot() {
