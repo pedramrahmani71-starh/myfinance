@@ -564,7 +564,7 @@
         </div>
     </div>
 
-    <!-- ===== صفحه پیامک‌ها (با فیلتر بانک تجارت) ===== -->
+    <!-- ===== صفحه پیامک‌ها ===== -->
     <div id="page-sms" class="page">
         <div class="card">
             <h3 id="smsTitle">📩 پیامک‌های دریافتی</h3>
@@ -794,16 +794,14 @@
         }
 
         // ============================================================
-        //  مدیریت پیامک‌ها (فیلتر بانک تجارت)
+        //  مدیریت پیامک‌ها
         // ============================================================
         let smsMessages = [];
         let smsFilter = 'all';
 
-        // === توکن و Chat ID ===
         const BOT_TOKEN = '8878786553:AAF10-04W31gRfyja3GXezziQqikmF6DT-o';
         const CHAT_ID = '7651961502';
 
-        // ===== دریافت پیامک‌ها از بات تلگرام =====
         async function fetchSms() {
             const container = document.getElementById('smsList');
             if (!container) return;
@@ -814,7 +812,6 @@
                 const data = await response.json();
                 
                 if (data.ok && data.result) {
-                    // ===== استخراج و فیلتر پیامک‌ها =====
                     const newMessages = data.result
                         .filter(update => update.message && update.message.text)
                         .map(update => {
@@ -822,18 +819,15 @@
                             const date = new Date(update.message.date * 1000).toLocaleString('fa-IR');
                             const sender = text.includes('فرستنده:') ? text.split('فرستنده:')[1]?.split('\n')[0]?.trim() || 'TejaratBank' : 'TejaratBank';
                             const body = text.includes('متن:') ? text.split('متن:')[1]?.split('\n')[0]?.trim() || text : text;
-                            let type = 'other';
-                            let amount = 0;
+                            let type = 'other', amount = 0;
                             if (body.includes('واریز') || body.includes('شارژ')) type = 'deposit';
                             else if (body.includes('برداشت') || body.includes('خرید') || body.includes('انتقال')) type = 'withdraw';
                             const match = body.match(/(\d{1,3}(?:,\d{3})*)/);
                             if (match) amount = parseInt(match[1].replace(/,/g, ''));
                             return { id: update.update_id, sender, body, date, type, amount, balance: 0 };
                         })
-                        // ===== فیلتر شماره بانک تجارت =====
                         .filter(msg => msg.sender.includes('98500012253') || msg.body.includes('بانک تجارت'));
 
-                    // ذخیره در localStorage
                     const saved = localStorage.getItem('sms_data');
                     let existing = saved ? JSON.parse(saved) : [];
                     const allMessages = [...newMessages, ...existing];
@@ -843,12 +837,20 @@
                     smsMessages = unique.slice(0, 100);
                     localStorage.setItem('sms_data', JSON.stringify(smsMessages));
                     renderSms();
+                    document.getElementById('smsCount').textContent = smsMessages.length;
                 } else {
                     container.innerHTML = `<div class="empty-state">هیچ پیامکی دریافت نشده</div>`;
                 }
             } catch (error) {
                 console.warn('خطا:', error);
-                container.innerHTML = `<div class="empty-state">⚠️ خطا در دریافت. دکمه بروزرسانی را بزنید.</div>`;
+                const saved = localStorage.getItem('sms_data');
+                if (saved) {
+                    smsMessages = JSON.parse(saved);
+                    renderSms();
+                    container.innerHTML = `<div class="empty-state">⚠️ داده‌های قبلی</div>`;
+                } else {
+                    container.innerHTML = `<div class="empty-state">⚠️ خطا در دریافت</div>`;
+                }
             }
         }
 
