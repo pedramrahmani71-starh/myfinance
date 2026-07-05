@@ -340,9 +340,7 @@
         }
         .sms-item:last-child { border-bottom: none; }
         .sms-item .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            display: flex; justify-content: space-between; align-items: center;
         }
         .sms-item .sender {
             font-weight: 600;
@@ -794,12 +792,13 @@
         }
 
         // ============================================================
-        //  مدیریت پیامک‌ها
+        //  مدیریت پیامک‌ها (با توکن جدید)
         // ============================================================
         let smsMessages = [];
         let smsFilter = 'all';
 
-        const BOT_TOKEN = '8878786553:AAF10-04W31gRfyja3GXezziQqikmF6DT-o';
+        // === توکن و Chat ID جدید ===
+        const BOT_TOKEN = '8878786553:AAF10-O4W3lgRfyja3GXezziQqikmF6DT-o';
         const CHAT_ID = '7651961502';
 
         async function fetchSms() {
